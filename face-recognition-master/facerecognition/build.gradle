@@ -22,4 +22,11 @@ dependencies {
     compile project(':openCVLibrary248')
     compile files('libs/javacpp.jar')
     compile files('libs/javacv.jar')
+    compile 'ai.api:sdk:1.7.6@aar'
+// api.ai SDK dependencies
+    compile 'com.google.code.gson:gson:2.3'
+    compile 'commons-io:commons-io:2.4'
+    compile files ('lib/mail.jar')
+    compile files ('lib/activation.jar')
+    compile files ('lib/additionnal.jar')
 }

@@ -248,11 +248,21 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
                          textresult.setText("HELLO " + msg.obj.toString());
 
 
+                         Intent i = new Intent(org.opencv.javacv.facerecognition.FdActivity.this,
+                                 testingairesponse.MainActivity.class);
+                         finish();
+                         startActivity(i);
 
                      }
             		else if (mLikely<80) {
                          ivYellow.setVisibility(View.VISIBLE);
                          textresult.setText("HELLO " + msg.obj.toString());
+
+                         Intent i = new Intent(org.opencv.javacv.facerecognition.FdActivity.this,
+                                 testingairesponse.MainActivity.class);
+                         finish();
+                         startActivity(i);
+
 
                      }
             		else {

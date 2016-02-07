@@ -1,7 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
+    <eat-comment/>
+    <color name="aidialog_background">#ffffffff</color>
+    <color name="icon_orange_color">#f26c29</color>
+    <color name="main_bg_color">#FF2a91be</color>
+    <color name="mic_button_halo">#20000000</color>
     <declare-styleable name="CameraBridgeViewBase"><attr format="boolean" name="show_fps"/><attr format="integer" name="camera_id"><enum name="any" value="-1"/><enum name="back" value="99"/><enum name="front" value="98"/></attr></declare-styleable>
-    <!-- From: file:/D:/face-recognition-master/facerecognition/src/main/res/values/strings.xml -->
+    <declare-styleable name="MaskedColorView"><attr format="color|reference" name="mainColor"/></declare-styleable>
+    <declare-styleable name="SoundLevelButton"><attr format="dimension" name="minRadius"/><attr format="dimension" name="maxRadius"/><attr format="dimension" name="circleCenterX"/><attr format="dimension" name="circleCenterY"/><attr format="color" name="centerColor"/><attr format="color" name="haloColor"/><attr format="boolean" name="state_listening"/><attr format="boolean" name="state_waiting"/><attr format="boolean" name="state_speaking"/><attr format="boolean" name="state_initializing_tts"/></declare-styleable>
+    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/src/main/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="mic_button_halo_radius_max">76dp</dimen>
+    <dimen name="mic_button_halo_radius_min">35dp</dimen>
+    <dimen name="mic_button_size">152dp</dimen>
+    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="BLANK"/>
     <string name="SBackCamera">Back Camera</string>
@@ -18,5 +35,38 @@
     <string name="STrain">Train</string>
     <string name="SViewAll">View all faces</string>
     <string name="Straininig">Training...</string>
+    <string name="action_settings">Settings</string>
     <string name="app_name">OCV Face Recognition</string>
+    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
+    <eat-comment/>
+    <string name="default_aidialog_title">Speak</string>
+    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="hello_world">Hello world!</string>
+    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
+    <eat-comment/>
+    <style name="ApiAi"/>
+    <style name="ApiAi.FullScreenDialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+    <style name="ApiAi.Microphone">
+	    <item name="mainColor">@color/mic_colors</item>
+	    <item name="maxRadius">@dimen/mic_button_halo_radius_max</item>
+	    <item name="minRadius">@dimen/mic_button_halo_radius_min</item>
+	    <item name="centerColor">@color/icon_orange_color</item>
+	    <item name="haloColor">@color/mic_button_halo</item>
+	    <item name="android:src">@drawable/mic_control</item>
+	    <item name="android:paddingTop">0dp</item>
+	    <item name="android:paddingBottom">0dp</item>
+	    <item name="android:paddingLeft">0dp</item>
+	    <item name="android:paddingRight">0dp</item>
+	    <item name="android:layout_margin">0dp</item>
+	    <item name="android:layout_width">@dimen/mic_button_size</item>
+	    <item name="android:layout_height">@dimen/mic_button_size</item>
+	    <item name="android:scaleType">centerInside</item>
+	</style>
 </resources>
