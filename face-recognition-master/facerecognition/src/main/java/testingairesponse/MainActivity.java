@@ -21,17 +21,21 @@ import ai.api.AIServiceException;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
-import sendingemail.GmailSender;
+import utilities.CommandExecution;
 
 
 public class MainActivity extends ListeningActivity{
 
     private LinearLayout content;
     private TextView text , textResult;
+    CommandExecution commandExecuter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+         commandExecuter=new CommandExecution();
 
 
         setContentView(R.layout.activity_main);
@@ -122,6 +126,7 @@ public class MainActivity extends ListeningActivity{
 
 
 
+                    checkResult(result);
 
 
                 }
@@ -136,6 +141,11 @@ public class MainActivity extends ListeningActivity{
 
     }
 
+
+    private void checkResult(Result result) {
+        commandExecuter.setResult(result);
+        commandExecuter.executeCommand();
+    }
 
 
 
@@ -165,62 +175,6 @@ public class MainActivity extends ListeningActivity{
 
 
 
-public class SendEmail extends AsyncTask<Void, Void, Integer>
-    {
-
-        @Override
-        protected void onPreExecute()
-        {
-//           Dialog.setMessage("Doing something...");
-            //     Dialog.show();
-
-            Log.e("111", "beforeee");
-        }
-
-        @Override
-        protected Integer doInBackground(Void... params)
-        {
-            Log.e("2","beforeee");
-
-            //Task for sending mail
-                            try {
-                    GmailSender sender = new GmailSender("sar.ai.assistant@gmail.com", "sarrobot123");
-                    sender.sendMail("This is Subject",
-                            "This is Body ya mosaheeeeeeeeeel hahahahaha",
-                            "sar.ai.assistant@gmail.com",
-                            "waleed.adel.mahmoud@gmail.com");
-
-                                Log.e("3333", "beforeee");
-
-
-                } catch (Exception e) {
-                    Log.e("SendMail", e.getMessage(), e);
-
-                }
-
-
-
-            return 0;
-        }
-
-        @Override
-        protected void onPostExecute(Integer result)
-        {
-
-            if(result==0)
-            {
-                Log.e("555", "after");
-              //  listenButton.setText("kkddk");
-
-//do some thing
-            }
-
-// after completed finished the progressbar
-            //       Dialog.dismiss();
-        }
-
-
-    }
 
 
 
