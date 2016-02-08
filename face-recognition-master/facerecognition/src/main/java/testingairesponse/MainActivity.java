@@ -143,7 +143,7 @@ public class MainActivity extends ListeningActivity{
 
 
     private void checkResult(Result result) {
-        commandExecuter.setResult(result);
+        commandExecuter.setResult(result , this);
         commandExecuter.executeCommand();
     }
 
@@ -156,6 +156,27 @@ public class MainActivity extends ListeningActivity{
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
+
+
+    @Override
+    protected void onPause() {
+
+//        restartListeningService();
+
+        super.onPause();
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        restartListeningService();
+
+        super.onResume();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

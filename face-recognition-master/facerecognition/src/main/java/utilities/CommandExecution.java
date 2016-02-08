@@ -1,12 +1,20 @@
 package utilities;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.util.Log;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import ai.api.model.Result;
 import sendingemail.SendEmail;
@@ -17,9 +25,11 @@ import sendingemail.SendEmail;
 public class CommandExecution {
 
     private Result result;
+    private Context context;
+    public void setResult(Result result , Context context){
 
-    public void setResult(Result result){
         this.result=result;
+        this.context = context;
     }
 
     public void executeCommand(){
@@ -32,7 +42,7 @@ public class CommandExecution {
                 doEditing(result);
                 break;
             case "apps.open":
-                doOpenning(result);
+                doOpenning(result , context);
                 break;
 
 
@@ -43,10 +53,76 @@ public class CommandExecution {
 
 
 
-    private void doOpenning(Result result) {
+    private void doOpenning(Result result , Context context) {
+        if (result.getParameters() != null && !result.getParameters().isEmpty()) {
+            for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
+                if(entry.getKey().equalsIgnoreCase("app_name")){
+                    Log.e("Testing here :" , "wid");
+
+                    Log.e("Testing here :" , entry.getValue().getAsString());
+                    final PackageManager pm = context.getPackageManager();
+
+                    List<PackageInfo> packs = pm.getInstalledPackages(0);
+                    final List<ApplicationInfo> apps = pm.getInstalledApplications(0);
+
+                    ArrayList<HashMap<String,Object>> items =new ArrayList<HashMap<String,Object>>();
+
+                    for (ApplicationInfo pi : apps) {
+//                        Log.e("Package : ", pi.loadLabel(pm) + "");
+                        if( (pi.loadLabel(pm)+"").toLowerCase().contains(entry.getValue().getAsString().toLowerCase())){
+                            HashMap<String, Object> map = new HashMap<String, Object>();
+                            map.put("appName", pi.loadLabel(pm));
+                            map.put("packageName", pi.packageName);
+                            items.add(map);
+
+                        }
+                    }
+                    if(items.size()>=1){
+
+                        for(int j = 1 ; j <= items.size() ; j++){
+                            String packageName = (String) items.get(j-1).get("packageName");
+                            Intent i = pm.getLaunchIntentForPackage(packageName);
+                            Log.d("debuggggg" , "inside loop");
+
+                            if (i != null ) {
+                                context.startActivity(i);
+                                Log.d("debuggggg" , "inside if");
+
+                                break;
+                            }
+//                        else
+//                            textView.setText("Not found2");
+
+                        }
+
+
+                    }
+                    else{
+                        // Application not found
+//                        textView.setText("Not found");
+                    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                }
+
+            }
+        }
 
 
     }
+
 
 
 
