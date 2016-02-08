@@ -1,2 +1,0 @@
-include ':openCVLibrary248'
-include ':facerecognition'
