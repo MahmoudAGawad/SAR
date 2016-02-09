@@ -18,6 +18,7 @@ import java.util.Map;
 
 import ai.api.model.Result;
 import sendingemail.SendEmail;
+import texttospeach.TextToSpeechHelper;
 
 /**
  * Created by wido on 2/8/2016.
@@ -26,6 +27,16 @@ public class CommandExecution {
 
     private Result result;
     private Context context;
+    private TextToSpeechHelper textToSpeechHelper;
+    public CommandExecution(TextToSpeechHelper textToSpeechHelper , Context context){
+
+        this.textToSpeechHelper = textToSpeechHelper;
+        this.context = context;
+
+
+
+    }
+
     public void setResult(Result result , Context context){
 
         this.result=result;
@@ -78,7 +89,8 @@ public class CommandExecution {
                         }
                     }
                     if(items.size()>=1){
-
+                        String toSpeak = "now opening "+entry.getValue().getAsString();
+                        textToSpeechHelper.speak(toSpeak);
                         for(int j = 1 ; j <= items.size() ; j++){
                             String packageName = (String) items.get(j-1).get("packageName");
                             Intent i = pm.getLaunchIntentForPackage(packageName);

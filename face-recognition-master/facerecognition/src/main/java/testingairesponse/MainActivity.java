@@ -21,6 +21,7 @@ import ai.api.AIServiceException;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
+import texttospeach.TextToSpeechHelper;
 import utilities.CommandExecution;
 
 
@@ -34,10 +35,8 @@ public class MainActivity extends ListeningActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-         commandExecuter=new CommandExecution();
-
-
+        TextToSpeechHelper textToSpeechHelper = new TextToSpeechHelper(getApplicationContext());
+        commandExecuter = new CommandExecution(textToSpeechHelper , getApplicationContext());
         setContentView(R.layout.activity_main);
 //        text = (TextView)findViewById(R.id.text);
 //        textResult = (TextView) findViewById(R.id.result);
