@@ -46,11 +46,7 @@ public class CommandExecution {
 
     public void executeCommand(){
 
-//        if(result.getAction().matches("(small)([a-z]*[A-Z]*)*")
-//                ||result.getAction().matches("(wisdom)([a-z]*[A-Z]*)*")){
-//            doTalk(result);
-//        }
-
+        //translation commands also needs to be handled
         if (result.getAction().startsWith("small")
                 || result.getAction().startsWith("wisdom")){
             doTalk(result);
