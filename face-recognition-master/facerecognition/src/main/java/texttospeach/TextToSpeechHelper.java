@@ -41,6 +41,9 @@ public class TextToSpeechHelper {
 
         textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
     }
+    public boolean isSpeaking(){
+        return textToSpeech.isSpeaking();
+    }
 
     protected  void closeSpeaking(){
         if(textToSpeech !=null){

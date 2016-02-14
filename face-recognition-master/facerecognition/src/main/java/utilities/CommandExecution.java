@@ -16,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ai.api.model.Fulfillment;
 import ai.api.model.Result;
 import sendingemail.SendEmail;
 import texttospeach.TextToSpeechHelper;
@@ -45,6 +46,17 @@ public class CommandExecution {
 
     public void executeCommand(){
 
+//        if(result.getAction().matches("(small)([a-z]*[A-Z]*)*")
+//                ||result.getAction().matches("(wisdom)([a-z]*[A-Z]*)*")){
+//            doTalk(result);
+//        }
+
+        if (result.getAction().startsWith("small")
+                || result.getAction().startsWith("wisdom")){
+            doTalk(result);
+            return;
+        }
+
         switch (result.getAction()) {
             case "email.write":
                 doSending(result);
@@ -60,8 +72,15 @@ public class CommandExecution {
         }
     }
 
+    private void doTalk(Result result) {
+        Fulfillment elem =result.getFulfillment();
+        String speach = elem.getSpeech();
+
+        textToSpeechHelper.speak(speach);
+        while (textToSpeechHelper.isSpeaking());
 
 
+    }
 
 
     private void doOpenning(Result result , Context context) {
