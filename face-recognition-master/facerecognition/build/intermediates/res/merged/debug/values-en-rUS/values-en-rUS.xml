@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/src/main/res/values-en-rUS/dimens.xml -->
+    <!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/src/main/res/values-en-rUS/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/src/main/res/values-en-rUS/strings.xml -->
+    <!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/src/main/res/values-en-rUS/strings.xml -->
     <eat-comment/>
     <string name="BLANK"/>
     <string name="SBackCamera">Back Camera</string>

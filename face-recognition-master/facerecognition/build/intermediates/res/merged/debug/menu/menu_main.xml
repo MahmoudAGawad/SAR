@@ -4,4 +4,4 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" />
 </menu>
-<!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/src/main/res/menu/menu_main.xml -->
+<!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/src/main/res/menu/menu_main.xml -->

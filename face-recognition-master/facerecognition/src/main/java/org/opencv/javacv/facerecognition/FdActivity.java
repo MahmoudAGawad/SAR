@@ -102,7 +102,8 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
     private  ImageView Iv;
     Bitmap mBitmap;
     Handler mHandler;
-  
+
+
     PersonRecognizer fr;
     ToggleButton toggleButtonGrabar,toggleButtonTrain,buttonSearch;
     Button buttonCatalog;
@@ -209,8 +210,10 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
    
         mOpenCvCameraView.setCvCameraViewListener(this);
        
-        Log.i("widoooooooooooo","ttttttttttt");
-        
+        Log.i("widoooooooooooo", "ttttttttttt");
+
+
+
         
         mPath=getFilesDir()+"/facerecogOCV/";
         		
@@ -258,7 +261,7 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
                          ivYellow.setVisibility(View.VISIBLE);
                          textresult.setText("HELLO " + msg.obj.toString());
 
-                         Intent i = new Intent(org.opencv.javacv.facerecognition.FdActivity.this,
+                           Intent i = new Intent(org.opencv.javacv.facerecognition.FdActivity.this,
                                  testingairesponse.MainActivity.class);
                          finish();
                          startActivity(i);

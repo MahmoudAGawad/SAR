@@ -4,4 +4,4 @@
     <item android:drawable="@drawable/speaker_silent" app:state_initializing_tts="true"/>
     <item android:drawable="@drawable/speaker" app:state_speaking="true"/>
     <item android:drawable="@drawable/microphone_control"/>
-</selector><!-- From: file:/Users/xvir/Projects/apiai-solution/api-ai-android-sdk/ailib/src/main/res/drawable/mic_control.xml --><!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/drawable/mic_control.xml -->
+</selector><!-- From: file:/Users/xvir/Projects/apiai-solution/api-ai-android-sdk/ailib/src/main/res/drawable/mic_control.xml --><!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/drawable/mic_control.xml -->

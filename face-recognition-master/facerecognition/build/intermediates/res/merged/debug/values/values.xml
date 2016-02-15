@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
+    <!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
     <eat-comment/>
     <color name="aidialog_background">#ffffffff</color>
     <color name="icon_orange_color">#f26c29</color>
@@ -9,16 +9,16 @@
     <declare-styleable name="CameraBridgeViewBase"><attr format="boolean" name="show_fps"/><attr format="integer" name="camera_id"><enum name="any" value="-1"/><enum name="back" value="99"/><enum name="front" value="98"/></attr></declare-styleable>
     <declare-styleable name="MaskedColorView"><attr format="color|reference" name="mainColor"/></declare-styleable>
     <declare-styleable name="SoundLevelButton"><attr format="dimension" name="minRadius"/><attr format="dimension" name="maxRadius"/><attr format="dimension" name="circleCenterX"/><attr format="dimension" name="circleCenterY"/><attr format="color" name="centerColor"/><attr format="color" name="haloColor"/><attr format="boolean" name="state_listening"/><attr format="boolean" name="state_waiting"/><attr format="boolean" name="state_speaking"/><attr format="boolean" name="state_initializing_tts"/></declare-styleable>
-    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/src/main/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/src/main/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
+    <!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
     <eat-comment/>
     <dimen name="mic_button_halo_radius_max">76dp</dimen>
     <dimen name="mic_button_halo_radius_min">35dp</dimen>
     <dimen name="mic_button_size">152dp</dimen>
-    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="BLANK"/>
     <string name="SBackCamera">Back Camera</string>
@@ -37,13 +37,13 @@
     <string name="Straininig">Training...</string>
     <string name="action_settings">Settings</string>
     <string name="app_name">OCV Face Recognition</string>
-    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
+    <!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
     <eat-comment/>
     <string name="default_aidialog_title">Speak</string>
-    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/src/main/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="hello_world">Hello world!</string>
-    <!-- From: file:/D:/face-recognition-master%20Working%20after%20merging%20AIResponse/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
+    <!-- From: file:/C:/Users/wido/Documents/GitHub/SAR/face-recognition-master/facerecognition/build/intermediates/exploded-aar/ai.api/sdk/1.7.6/res/values/values.xml -->
     <eat-comment/>
     <style name="ApiAi"/>
     <style name="ApiAi.FullScreenDialog">
