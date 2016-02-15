@@ -44,27 +44,25 @@ public class CommandExecution {
     }
 
     public void executeCommand(){
+                //translation commands also needs to be handled
+                if (result.getAction().startsWith("small")
+                        || result.getAction().startsWith("wisdom")){
+                    doTalk(result);
+                    return;
+                }
 
-        //translation commands also needs to be handled
-        if (result.getAction().startsWith("small")
-                || result.getAction().startsWith("wisdom")){
-            doTalk(result);
-            return;
-        }
+                switch (result.getAction()) {
+                    case "email.write":
+                        doSending(result);
+                        break;
+                    case "email.edit":
+                        doEditing(result);
+                        break;
+                    case "apps.open":
+                        doOpenning(result , context);
+                        break;
+                }
 
-        switch (result.getAction()) {
-            case "email.write":
-                doSending(result);
-               break;
-            case "email.edit":
-                doEditing(result);
-                break;
-            case "apps.open":
-                doOpenning(result , context);
-                break;
-
-
-        }
     }
 
     private void doTalk(Result result) {

@@ -99,37 +99,45 @@ public class MainActivity extends ListeningActivity{
                 return null;
             }
             @Override
-            protected void onPostExecute(AIResponse aiResponse) {
-                if (aiResponse != null) {
-                    // process aiResponse here
-                    final Result result = aiResponse.getResult();
+            protected void onPostExecute(final AIResponse aiResponse) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (aiResponse != null) {
+                            // process aiResponse here
+                            final Result result = aiResponse.getResult();
 
 // Get parameters
-                    String parameterString = "";
-                    if (result.getParameters() != null && !result.getParameters().isEmpty()) {
-                        for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
-                            parameterString += "(" + entry.getKey() + ", " + entry.getValue() + ") ";
-                        }
-                    }
+                            String parameterString = "";
+                            if (result.getParameters() != null && !result.getParameters().isEmpty()) {
+                                for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
+                                    parameterString += "(" + entry.getKey() + ", " + entry.getValue() + ") ";
+                                }
+                            }
 
-                    Log.e("Testing here :" , "widooooooooooooooooo");
-
-
+                            Log.e("Testing here :" , "widooooooooooooooooo");
 
 
-                    textResult.setText("helooooooooooo");
+
+
+                            textResult.setText("helooooooooooo");
 // Show results in TextView.
-                    textResult.setText("Query:" + result.getResolvedQuery() +
-                            "\nAction: " + result.getAction() +
-                            "\nParameters: " + parameterString);
+                            textResult.setText("Query:" + result.getResolvedQuery() +
+                                    "\nAction: " + result.getAction() +
+                                    "\nParameters: " + parameterString);
 
 
 
-                    checkResult(result);
+                            checkResult(result);
 
 
-                }
-                restartListeningService();
+                        }
+                        restartListeningService();
+
+                    }
+                }).start();
+
 
             }
 

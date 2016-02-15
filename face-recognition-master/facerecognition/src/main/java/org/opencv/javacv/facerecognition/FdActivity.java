@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,6 +22,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
+import com.google.gson.JsonElement;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -41,6 +44,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Map;
+
+import ai.api.AIConfiguration;
+import ai.api.AIDataService;
+import ai.api.AIServiceException;
+import ai.api.model.AIRequest;
+import ai.api.model.AIResponse;
+import ai.api.model.Result;
+import testingairesponse.ListeningActivity;
+import testingairesponse.VoiceRecognitionListener;
+import texttospeach.TextToSpeechHelper;
+import utilities.CommandExecution;
 
 //import java.io.FileNotFoundException;
 //import org.opencv.contrib.FaceRecognizer;
@@ -50,7 +65,7 @@ import java.util.ArrayList;
 
 
 
-public class FdActivity extends Activity implements CvCameraViewListener2 {
+public class FdActivity extends ListeningActivity implements CvCameraViewListener2 {
 
     private static final String    TAG                 = "OCVSample::Activity";
     private static final Scalar    FACE_RECT_COLOR     = new Scalar(0, 255, 0, 255);
@@ -121,6 +136,9 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
     int countImages=0;
     
     labels labelsFile;
+
+    private TextView textVoice , textResultVoice;
+    CommandExecution commandExecuter;
     
     
     private BaseLoaderCallback  mLoaderCallback = new BaseLoaderCallback(this) {
@@ -205,6 +223,23 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
 
         setContentView(R.layout.face_detect_surface_view);
 
+        textVoice = (TextView)findViewById(R.id.text);
+        textResultVoice = (TextView) findViewById(R.id.result);
+        ////
+        final TextToSpeechHelper textToSpeechHelper = new TextToSpeechHelper(getApplicationContext());
+        commandExecuter = new CommandExecution(textToSpeechHelper , getApplicationContext());
+
+        context = getApplicationContext(); // Needs to be set
+        VoiceRecognitionListener.getInstance().setListener(this); // Here we set the current listener
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+                startListening(); // starts listening
+//            }
+//        }).start();
+
+
+        ///////////////////////
         mOpenCvCameraView = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
    
         mOpenCvCameraView.setCvCameraViewListener(this);
@@ -248,21 +283,23 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
                          textresult.setText("HELLO " + msg.obj.toString());
 
 
-                         Intent i = new Intent(org.opencv.javacv.facerecognition.FdActivity.this,
-                                 testingairesponse.MainActivity.class);
-                         finish();
-                         startActivity(i);
+//                         Intent i = new Intent(org.opencv.javacv.facerecognition.FdActivity.this,
+//                                 testingairesponse.MainActivity.class);
+//                         finish();
+//                         startActivity(i);
+
+//                         textToSpeechHelper.speak("HELLO " + msg.obj.toString());
 
                      }
             		else if (mLikely<80) {
                          ivYellow.setVisibility(View.VISIBLE);
                          textresult.setText("HELLO " + msg.obj.toString());
 
-                         Intent i = new Intent(org.opencv.javacv.facerecognition.FdActivity.this,
-                                 testingairesponse.MainActivity.class);
-                         finish();
-                         startActivity(i);
-
+//                         Intent i = new Intent(org.opencv.javacv.facerecognition.FdActivity.this,
+//                                 testingairesponse.MainActivity.class);
+//                         finish();
+//                         startActivity(i);
+//                         textToSpeechHelper.speak("HELLO " + msg.obj.toString());
 
                      }
             		else {
@@ -442,6 +479,13 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
             mOpenCvCameraView.disableView();       
     }
 
+
+
+    private void checkResult(Result result) {
+        commandExecuter.setResult(result , this);
+        commandExecuter.executeCommand();
+    }
+
     @Override
     public void onResume()
     {
@@ -557,6 +601,7 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
         {
         nBackCam = menu.add(getResources().getString(R.string.SFrontCamera));
         mFrontCam = menu.add(getResources().getString(R.string.SBackCamera));
+
 //        mEigen = menu.add("EigenFaces");
 //        mLBPH.setChecked(true);
         }
@@ -624,6 +669,105 @@ public class FdActivity extends Activity implements CvCameraViewListener2 {
 //            }
 //        }
    }
+
+
+
+
+    @Override
+    public void processVoiceCommands(String... voiceCommands) {
+        //        content.removeAllViews();
+//        for (String command : voiceCommands) {
+//            TextView txt = new TextView(getApplicationContext());
+//            txt.setText(command);
+//            txt.setTextSize(20);
+//            txt.setTextColor(Color.BLACK);
+//            txt.setGravity(Gravity.CENTER);
+//            content.addView(txt);
+//        }
+//        restartListeningService();
+
+
+
+
+        text.setText(voiceCommands[0]);
+
+
+        final AIConfiguration config = new AIConfiguration("a7ee7ac49bac4559b295d1c38a18812f",
+                "9a44c559-6daa-45b7-adc4-375c71de82d7", AIConfiguration.SupportedLanguages.English,
+                AIConfiguration.RecognitionEngine.System);
+
+
+//        final AIConfiguration config = new AIConfiguration("a7ee7ac49bac4559b295d1c38a18812f",
+//                "9a44c559-6daa-45b7-adc4-375c71de82d7",
+//                AIConfiguration.SupportedLanguages.English,
+//                AIConfiguration.RecognitionEngine.System);
+        final AIDataService aiDataService = new AIDataService(context , config);
+
+        final AIRequest aiRequest = new AIRequest();
+//
+
+
+//
+        aiRequest.setQuery(voiceCommands[0]);
+        new AsyncTask<AIRequest, Void, AIResponse>() {
+            @Override
+            protected AIResponse doInBackground(AIRequest... requests) {
+                final AIRequest request = requests[0];
+                try {
+                    final AIResponse response = aiDataService.request(aiRequest);
+                    return response;
+                } catch (AIServiceException e) {
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(final AIResponse aiResponse) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        if (aiResponse != null) {
+                            // process aiResponse here
+                            final Result result = aiResponse.getResult();
+
+// Get parameters
+                            String parameterString = "";
+                            if (result.getParameters() != null && !result.getParameters().isEmpty()) {
+                                for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
+                                    parameterString += "(" + entry.getKey() + ", " + entry.getValue() + ") ";
+                                }
+                            }
+
+                            Log.e("Testing here :", "widooooooooooooooooo");
+
+                            final String finalParameterString = parameterString;
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    textResultVoice.setText("helooooooooooo");
+                                    // Show results in TextView.
+                                    textResultVoice.setText("Query:" + result.getResolvedQuery() +
+                                            "\nAction: " + result.getAction() +
+                                            "\nParameters: " + finalParameterString);
+                                }
+                            });
+                            checkResult(result);
+                        }
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                restartListeningService();
+                            }
+                        });
+                    }
+                }).start();
+
+
+            }
+
+        }.execute(aiRequest);
+
+    }
     
 
 }
