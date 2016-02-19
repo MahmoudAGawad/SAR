@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -61,6 +62,8 @@ public class CommandExecution {
                     case "apps.open":
                         doOpenning(result , context);
                         break;
+                    case "facebook.update":
+                        doPostOnFacebook(result, context);
                 }
 
     }
@@ -248,6 +251,25 @@ public class CommandExecution {
 
 
     }
+
+    private void doPostOnFacebook(Result result, Context context){
+
+        HashMap<String, JsonElement> parameters = result.getParameters();
+        if(parameters == null){
+            //   java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+//            Toast.makeText(context, "Nothing to post on facebook. Cancelling...", Toast.LENGTH_SHORT).show();
+        }else{
+            JsonElement toBePosted = parameters.get("text");
+            if(toBePosted == null){
+//                Toast.makeText(context, "Nothing to post on facebook. Cancelling...", Toast.LENGTH_SHORT).show();
+            }else{
+                // https://www.youtube.com/watch?v=-fs_PL-fLOY
+
+            }
+        }
+
+    }
+
 
 
 }

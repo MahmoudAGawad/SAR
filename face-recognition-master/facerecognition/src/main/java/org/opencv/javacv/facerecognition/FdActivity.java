@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.facebook.appevents.AppEventsLogger;
 import com.google.gson.JsonElement;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -60,7 +61,7 @@ import utilities.CommandExecution;
 //import java.io.FileNotFoundException;
 //import org.opencv.contrib.FaceRecognizer;
 
-
+import com.facebook.FacebookSdk;
 
 
 
@@ -476,7 +477,8 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     {
         super.onPause();
         if (mOpenCvCameraView != null)
-            mOpenCvCameraView.disableView();       
+            mOpenCvCameraView.disableView();
+        AppEventsLogger.deactivateApp(this); // facebook tracker
     }
 
 
@@ -491,8 +493,8 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     {
         super.onResume();
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
-       
-      	
+
+        AppEventsLogger.activateApp(this); // facebook tracker
     }
 
     public void onDestroy() {
