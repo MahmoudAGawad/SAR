@@ -3,12 +3,16 @@ package org.opencv.javacv.facerecognition;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -23,7 +27,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.gson.JsonElement;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -44,7 +53,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import ai.api.AIConfiguration;
@@ -141,7 +153,10 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     private TextView textVoice , textResultVoice;
     CommandExecution commandExecuter;
     
-    
+    // facebook
+    private CallbackManager callbackManager;
+    private LoginResult facebookLoginResult;
+
     private BaseLoaderCallback  mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -221,6 +236,49 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // facebook
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                facebookLoginResult = loginResult;
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // generate the KeyHash
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(
+                    "org.opencv.javacv.facerecognition",
+                    PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        } catch (NoSuchAlgorithmException e) {
+
+        }
+
+        // log into facebook.com
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
+
+
 
         setContentView(R.layout.face_detect_surface_view);
 
@@ -481,7 +539,11 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         AppEventsLogger.deactivateApp(this); // facebook tracker
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+    }
 
     private void checkResult(Result result) {
         commandExecuter.setResult(result , this);

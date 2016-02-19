@@ -9,7 +9,14 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="40230394-0df6-4420-b842-2b6fa554ac6e" name="Default" comment="" />
+    <list default="true" id="40230394-0df6-4420-b842-2b6fa554ac6e" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java" afterPath="$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java" afterPath="$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="face-recognition-master.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -36,25 +43,42 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CommandExecution.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java">
+      <file leaf-file-name="FdActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5222222">
-              <caret line="258" column="116" selection-start-line="258" selection-start-column="116" selection-end-line="258" selection-end-column="116" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="264" column="56" selection-start-line="264" selection-start-column="56" selection-end-line="264" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="class#4963:7539" expanded="false" />
+                <element signature="e#5536#5581#0" expanded="true" />
+                <element signature="method#FdActivity#0;class#FdActivity#0" expanded="false" />
+                <element signature="e#14852#14893#0" expanded="true" />
+                <element signature="e#15053#15097#0" expanded="true" />
+                <element signature="e#15384#15403#0" expanded="true" />
+                <element signature="e#15728#15773#0" expanded="true" />
+                <element signature="e#15842#15882#0" expanded="true" />
+                <element signature="e#16704#16752#0" expanded="true" />
+                <element signature="e#16850#16895#0" expanded="true" />
+                <element signature="e#17234#17274#0" expanded="true" />
+                <element signature="e#22013#22060#0" expanded="true" />
+                <element signature="e#22092#22138#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="FdActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java">
+      <file leaf-file-name="CommandExecution.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.7586207">
-              <caret line="494" column="0" selection-start-line="494" selection-start-column="0" selection-end-line="494" selection-end-column="0" />
+            <state vertical-scroll-proportion="-0.54814816">
+              <caret line="280" column="49" selection-start-line="280" selection-start-column="49" selection-end-line="280" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#3204#3228#0" expanded="true" />
+                <element signature="e#3547#3563#0" expanded="true" />
+                <element signature="e#10364#10659#0" expanded="true" />
+                <element signature="e#10658#10659#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -65,7 +89,21 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="32" column="49" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+                <element signature="e#2658#2659#0" expanded="false" />
+                <element signature="e#2721#2722#0" expanded="false" />
+                <element signature="e#4634#4635#0" expanded="false" />
+                <element signature="e#4697#4698#0" expanded="false" />
+                <element signature="e#5390#5391#0" expanded="false" />
+                <element signature="e#5462#5463#0" expanded="false" />
+                <element signature="e#7536#7537#0" expanded="false" />
+                <element signature="e#7631#7632#0" expanded="false" />
+                <element signature="e#11031#11032#0" expanded="false" />
+                <element signature="e#11126#11127#0" expanded="false" />
+                <element signature="e#16285#16286#0" expanded="false" />
+                <element signature="e#16330#16331#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -74,13 +112,9 @@
         <entry file="file://$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="46" />
               <folding>
-                <element signature="e#788#806#0" expanded="true" />
-                <element signature="e#1263#1281#0" expanded="true" />
-                <element signature="e#1661#1679#0" expanded="true" />
-                <element signature="e#1930#1948#0" expanded="true" />
-                <element signature="e#2104#2129#0" expanded="true" />
+                <element signature="e#521#539#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -99,7 +133,7 @@
       <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/facerecognition/src/main/res/values/strings.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-2.5185184">
+            <state vertical-scroll-proportion="0.0">
               <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
               <folding />
             </state>
@@ -109,14 +143,17 @@
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/facerecognition/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-14.666667">
-              <caret line="31" column="61" selection-start-line="31" selection-start-column="61" selection-end-line="31" selection-end-column="61" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
     </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GradleLocalSettings">
     <option name="availableProjects">
@@ -1734,8 +1771,8 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="5821176924215" />
-        <entry key="D:\Technicals\GP\code\SAR\face-recognition-master" value="5822583575984" />
+        <entry key="D:\Technicals\GP\code\SAR\face-recognition-master" value="5823009460804" />
+        <entry key="D:\face-recognition-master Working after merging AIResponse" value="5805192414433" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -2023,111 +2060,9 @@
                   </entry>
                 </map>
               </option>
-              <option name="name" value="openCVLibrary248" />
+              <option name="name" value="face-recognition-master" />
               <option name="projectBuildClasspath">
                 <list>
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/announce" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/antlr" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/base-services" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/base-services-groovy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/build-comparison" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/build-init" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/cli" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/code-quality" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/core" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/cunit" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/dependency-management" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/diagnostics" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ear" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ide" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ide-native" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/internal-integ-testing" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/internal-testing" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ivy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/jacoco" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/javascript" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/jetty" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/language-groovy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/language-java" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/language-jvm" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/language-native" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/launcher" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/maven" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/messaging" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/model-core" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/model-groovy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/native" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/open-api" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/osgi" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/platform-base" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/platform-jvm" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/platform-native" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/plugin-development" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/plugin-use" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/plugins" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/publish" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/reporting" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/resources" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/resources-http" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/scala" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/signing" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/sonar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/tooling-api" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/ui" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/src/wrapper" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/ant-1.9.3.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/ant-launcher-1.9.3.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-base-services-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-base-services-groovy-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-cli-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-core-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-docs-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-launcher-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-messaging-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-model-core-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-model-groovy-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-native-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-open-api-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-resources-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-tooling-api-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-ui-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/gradle-wrapper-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/groovy-all-2.3.6.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/ant-antlr-1.9.3.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-announce-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-antlr-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-build-comparison-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-build-init-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-code-quality-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-cunit-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-dependency-management-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-diagnostics-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-ear-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-ide-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-ide-native-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-ivy-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-jacoco-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-javascript-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-jetty-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-language-groovy-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-language-java-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-language-jvm-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-language-native-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-maven-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-osgi-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-platform-base-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-platform-jvm-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-platform-native-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-plugin-development-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-plugin-use-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-plugins-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-publish-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-reporting-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-resources-http-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-scala-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-signing-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/gradle-sonar-2.2.1.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.2.1-all/c64ydeuardnfqctvr1gm30w53/gradle-2.2.1/lib/plugins/ivy-2.2.0.jar" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/java" />
                   <option value="$PROJECT_DIR$/buildSrc/src/main/groovy" />
                 </list>
@@ -2146,11 +2081,11 @@
       <list>
         <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/facerecognition/build.gradle" />
-        <option value="$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java" />
         <option value="$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/facerecognition/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/openCVLibrary248/src/main/java/org/opencv/android/AsyncServiceHelper.java" />
         <option value="$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java" />
+        <option value="$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java" />
       </list>
     </option>
   </component>
@@ -2163,7 +2098,7 @@
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -2186,7 +2121,7 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2194,16 +2129,6 @@
               <option name="myItemId" value="face-recognition-master" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="Gradle Scripts" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidBuildScriptsGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="face-recognition-master" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2213,78 +2138,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="facerecognition" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="strings.xml" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResGroupNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="face-recognition-master" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="facerecognition" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="values" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="face-recognition-master" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="facerecognition" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="face-recognition-master" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="facerecognition" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="face-recognition-master" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="facerecognition" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="utilities" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -2321,27 +2174,22 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="ProjectPane" />
-      <pane id="Scratches" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="GoToClass.includeLibraries" value="false" />
-    <property name="GoToClass.toSaveIncludeLibraries" value="false" />
-    <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="MemberChooser.showClasses" value="true" />
-    <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="options.lastSelected" value="preferences.sourceCode" />
-    <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="options.searchVisible" value="true" />
+    <property name="android.sdk.path" value="D:/programming programs/android development/ACM Android Training/Resources/android-sdk-windows" />
     <property name="recentsLimit" value="5" />
-    <property name="settings.editor.selected.configurable" value="android.sdk-updates" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="141ffafd" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Gawad_API_21" />
+    <property name="OverrideImplement.combined" value="true" />
+    <property name="OverrideImplement.overriding.sorted" value="false" />
+    <property name="FullScreen" value="false" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
+    <property name="CpuMonitor.paused" value="false" />
   </component>
   <component name="RunManager" selected="Android Application.facerecognition">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -2365,26 +2213,6 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
-      <module name="" />
-      <option name="TESTING_TYPE" value="0" />
-      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
-      <option name="METHOD_NAME" value="" />
-      <option name="CLASS_NAME" value="" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="EXTRA_OPTIONS" value="" />
-      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="CLEAR_LOGCAT" value="false" />
-      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
-      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
-      <option name="FORCE_STOP_RUNNING_APP" value="true" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
-      <option name="PREFERRED_AVD" value="" />
-      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
-      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
-      <method />
-    </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" />
@@ -2400,22 +2228,6 @@
       <envs />
       <method />
     </configuration>
-    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list />
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <method />
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -2425,9 +2237,9 @@
       <option name="MAIN_CLASS_NAME" />
       <option name="METHOD_NAME" />
       <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" />
+      <option name="VM_PARAMETERS" value="-ea" />
       <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" />
+      <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
@@ -2439,11 +2251,6 @@
         <option name="Make" enabled="false" />
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
-    </configuration>
-    <configuration default="true" type="JarApplication" factoryName="JAR Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <envs />
-      <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
@@ -2472,7 +2279,7 @@
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
+        <value defaultName="singleModule" />
       </option>
       <option name="USE_DEFAULT_REPORTERS" value="false" />
       <option name="PROPERTIES_FILE" />
@@ -2517,45 +2324,53 @@
     <configuration name="&lt;template&gt;" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" default="true" selected="false">
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
     </configuration>
-    <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
-      <Host>localhost</Host>
-      <Port>5050</Port>
-    </configuration>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
       <changelist id="40230394-0df6-4420-b842-2b6fa554ac6e" name="Default" comment="" />
-      <created>1455541901073</created>
+      <created>1454878880145</created>
       <option name="number" value="Default" />
-      <updated>1455541901073</updated>
+      <updated>1454878880145</updated>
     </task>
     <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4969743" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5045386" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4923339" sideWeight="0.49546143" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4923339" sideWeight="0.4924357" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.49394855" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.49394855" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4923339" sideWeight="0.5075643" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2473525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
+      <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -2568,6 +2383,14 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
+  <component name="Vcs.Log.UiProperties">
+    <option name="RECENTLY_FILTERED_USER_GROUPS">
+      <collection />
+    </option>
+    <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
+      <collection />
+    </option>
+  </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
   </component>
@@ -2576,69 +2399,26 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/sendingemail/Mail.java">
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="82" column="44" selection-start-line="82" selection-start-column="44" selection-end-line="82" selection-end-column="44" />
+          <caret line="515" column="72" selection-start-line="515" selection-start-column="72" selection-end-line="515" selection-end-column="72" />
           <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#4711#4712#0" expanded="false" />
-            <element signature="e#4739#4740#0" expanded="false" />
-            <element signature="e#4780#4781#0" expanded="false" />
-            <element signature="e#4814#4815#0" expanded="false" />
-            <element signature="e#4849#4850#0" expanded="false" />
-            <element signature="e#4877#4878#0" expanded="false" />
-            <element signature="e#4925#4926#0" expanded="false" />
-            <element signature="e#4959#4960#0" expanded="false" />
-            <element signature="e#4997#4998#0" expanded="false" />
-            <element signature="e#5025#5026#0" expanded="false" />
-            <element signature="e#5073#5074#0" expanded="false" />
-            <element signature="e#5107#5108#0" expanded="false" />
-            <element signature="e#5139#5140#0" expanded="false" />
-            <element signature="e#5165#5166#0" expanded="false" />
-            <element signature="e#5205#5206#0" expanded="false" />
-            <element signature="e#5235#5236#0" expanded="false" />
-            <element signature="e#5267#5268#0" expanded="false" />
-            <element signature="e#5295#5296#0" expanded="false" />
-            <element signature="e#5337#5338#0" expanded="false" />
-            <element signature="e#5371#5372#0" expanded="false" />
-            <element signature="e#5403#5404#0" expanded="false" />
-            <element signature="e#5431#5432#0" expanded="false" />
-            <element signature="e#5473#5474#0" expanded="false" />
-            <element signature="e#5507#5508#0" expanded="false" />
-            <element signature="e#5540#5541#0" expanded="false" />
-            <element signature="e#5569#5570#0" expanded="false" />
-            <element signature="e#5613#5614#0" expanded="false" />
-            <element signature="e#5649#5650#0" expanded="false" />
-            <element signature="e#5681#5682#0" expanded="false" />
-            <element signature="e#5709#5710#0" expanded="false" />
-            <element signature="e#5751#5752#0" expanded="false" />
-            <element signature="e#5785#5786#0" expanded="false" />
-            <element signature="e#5820#5821#0" expanded="false" />
-            <element signature="e#5851#5852#0" expanded="false" />
-            <element signature="e#5899#5900#0" expanded="false" />
-            <element signature="e#5939#5940#0" expanded="false" />
-            <element signature="e#5971#5972#0" expanded="false" />
-            <element signature="e#5999#6000#0" expanded="false" />
-            <element signature="e#6042#6043#0" expanded="false" />
-            <element signature="e#6076#6077#0" expanded="false" />
-            <element signature="e#6114#6115#0" expanded="false" />
-            <element signature="e#6148#6149#0" expanded="false" />
-            <element signature="e#6203#6204#0" expanded="false" />
-            <element signature="e#6249#6250#0" expanded="false" />
-            <element signature="e#6289#6290#0" expanded="false" />
-            <element signature="e#6322#6323#0" expanded="false" />
-            <element signature="e#6377#6378#0" expanded="false" />
-            <element signature="e#6421#6422#0" expanded="false" />
+            <element signature="imports" expanded="true" />
+            <element signature="class#4963:7539" expanded="false" />
+            <element signature="e#5536#5581#0" expanded="true" />
+            <element signature="method#FdActivity#0;class#FdActivity#0" expanded="false" />
+            <element signature="e#14852#14893#0" expanded="true" />
+            <element signature="e#15053#15097#0" expanded="true" />
+            <element signature="e#15384#15403#0" expanded="true" />
+            <element signature="e#15728#15773#0" expanded="true" />
+            <element signature="e#15842#15882#0" expanded="true" />
+            <element signature="e#16704#16752#0" expanded="true" />
+            <element signature="e#16850#16895#0" expanded="true" />
+            <element signature="e#17234#17274#0" expanded="true" />
+            <element signature="e#22013#22060#0" expanded="true" />
+            <element signature="e#22092#22138#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/sendingemail/SendEmail.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2648,7 +2428,74 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3204#3228#0" expanded="true" />
+            <element signature="e#3547#3563#0" expanded="true" />
+            <element signature="e#10364#10659#0" expanded="true" />
+            <element signature="e#10658#10659#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/openCVLibrary248/src/main/java/org/opencv/android/AsyncServiceHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="49" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2658#2659#0" expanded="false" />
+            <element signature="e#2721#2722#0" expanded="false" />
+            <element signature="e#4634#4635#0" expanded="false" />
+            <element signature="e#4697#4698#0" expanded="false" />
+            <element signature="e#5390#5391#0" expanded="false" />
+            <element signature="e#5462#5463#0" expanded="false" />
+            <element signature="e#7536#7537#0" expanded="false" />
+            <element signature="e#7631#7632#0" expanded="false" />
+            <element signature="e#11031#11032#0" expanded="false" />
+            <element signature="e#11126#11127#0" expanded="false" />
+            <element signature="e#16285#16286#0" expanded="false" />
+            <element signature="e#16330#16331#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
+          <folding>
+            <element signature="e#521#539#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/sendingemail/Mail.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="82" column="44" selection-start-line="82" selection-start-column="44" selection-end-line="82" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -2657,11 +2504,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="65" selection-start-line="6" selection-start-column="65" selection-end-line="6" selection-end-column="65" />
           <folding>
-            <element signature="e#788#806#0" expanded="true" />
-            <element signature="e#1263#1281#0" expanded="true" />
-            <element signature="e#1661#1679#0" expanded="true" />
-            <element signature="e#1930#1948#0" expanded="true" />
-            <element signature="e#2104#2129#0" expanded="true" />
+            <element signature="e#521#539#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2678,7 +2521,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2686,7 +2528,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2694,57 +2535,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="82" column="44" selection-start-line="82" selection-start-column="44" selection-end-line="82" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#4711#4712#0" expanded="false" />
-            <element signature="e#4739#4740#0" expanded="false" />
-            <element signature="e#4780#4781#0" expanded="false" />
-            <element signature="e#4814#4815#0" expanded="false" />
-            <element signature="e#4849#4850#0" expanded="false" />
-            <element signature="e#4877#4878#0" expanded="false" />
-            <element signature="e#4925#4926#0" expanded="false" />
-            <element signature="e#4959#4960#0" expanded="false" />
-            <element signature="e#4997#4998#0" expanded="false" />
-            <element signature="e#5025#5026#0" expanded="false" />
-            <element signature="e#5073#5074#0" expanded="false" />
-            <element signature="e#5107#5108#0" expanded="false" />
-            <element signature="e#5139#5140#0" expanded="false" />
-            <element signature="e#5165#5166#0" expanded="false" />
-            <element signature="e#5205#5206#0" expanded="false" />
-            <element signature="e#5235#5236#0" expanded="false" />
-            <element signature="e#5267#5268#0" expanded="false" />
-            <element signature="e#5295#5296#0" expanded="false" />
-            <element signature="e#5337#5338#0" expanded="false" />
-            <element signature="e#5371#5372#0" expanded="false" />
-            <element signature="e#5403#5404#0" expanded="false" />
-            <element signature="e#5431#5432#0" expanded="false" />
-            <element signature="e#5473#5474#0" expanded="false" />
-            <element signature="e#5507#5508#0" expanded="false" />
-            <element signature="e#5540#5541#0" expanded="false" />
-            <element signature="e#5569#5570#0" expanded="false" />
-            <element signature="e#5613#5614#0" expanded="false" />
-            <element signature="e#5649#5650#0" expanded="false" />
-            <element signature="e#5681#5682#0" expanded="false" />
-            <element signature="e#5709#5710#0" expanded="false" />
-            <element signature="e#5751#5752#0" expanded="false" />
-            <element signature="e#5785#5786#0" expanded="false" />
-            <element signature="e#5820#5821#0" expanded="false" />
-            <element signature="e#5851#5852#0" expanded="false" />
-            <element signature="e#5899#5900#0" expanded="false" />
-            <element signature="e#5939#5940#0" expanded="false" />
-            <element signature="e#5971#5972#0" expanded="false" />
-            <element signature="e#5999#6000#0" expanded="false" />
-            <element signature="e#6042#6043#0" expanded="false" />
-            <element signature="e#6076#6077#0" expanded="false" />
-            <element signature="e#6114#6115#0" expanded="false" />
-            <element signature="e#6148#6149#0" expanded="false" />
-            <element signature="e#6203#6204#0" expanded="false" />
-            <element signature="e#6249#6250#0" expanded="false" />
-            <element signature="e#6289#6290#0" expanded="false" />
-            <element signature="e#6322#6323#0" expanded="false" />
-            <element signature="e#6377#6378#0" expanded="false" />
-            <element signature="e#6421#6422#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2752,15 +2542,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/sendingemail/SendEmail.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2775,7 +2556,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="35" column="37" selection-start-line="35" selection-start-column="37" selection-end-line="35" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2791,7 +2571,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="40" column="13" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2799,7 +2578,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2807,14 +2585,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-3.148148">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/facerecognition/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-14.666667">
-          <caret line="31" column="61" selection-start-line="31" selection-start-column="61" selection-end-line="31" selection-end-column="61" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
           <folding />
         </state>
       </provider>
@@ -2855,39 +2632,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.18579236">
           <caret line="16" column="13" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-          <folding>
-            <element signature="e#788#806#0" expanded="true" />
-            <element signature="e#1263#1281#0" expanded="true" />
-            <element signature="e#1661#1679#0" expanded="true" />
-            <element signature="e#1930#1948#0" expanded="true" />
-            <element signature="e#2104#2129#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/facerecognition/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.5185184">
+        <state vertical-scroll-proportion="0.0">
           <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.7586207">
-          <caret line="494" column="0" selection-start-line="494" selection-start-column="0" selection-end-line="494" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2895,16 +2647,67 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="49" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
-          <folding />
+          <folding>
+            <element signature="imports" expanded="false" />
+            <element signature="e#2658#2659#0" expanded="false" />
+            <element signature="e#2721#2722#0" expanded="false" />
+            <element signature="e#4634#4635#0" expanded="false" />
+            <element signature="e#4697#4698#0" expanded="false" />
+            <element signature="e#5390#5391#0" expanded="false" />
+            <element signature="e#5462#5463#0" expanded="false" />
+            <element signature="e#7536#7537#0" expanded="false" />
+            <element signature="e#7631#7632#0" expanded="false" />
+            <element signature="e#11031#11032#0" expanded="false" />
+            <element signature="e#11126#11127#0" expanded="false" />
+            <element signature="e#16285#16286#0" expanded="false" />
+            <element signature="e#16330#16331#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="46" />
+          <folding>
+            <element signature="e#521#539#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="264" column="56" selection-start-line="264" selection-start-column="56" selection-end-line="264" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#4963:7539" expanded="false" />
+            <element signature="e#5536#5581#0" expanded="true" />
+            <element signature="method#FdActivity#0;class#FdActivity#0" expanded="false" />
+            <element signature="e#14852#14893#0" expanded="true" />
+            <element signature="e#15053#15097#0" expanded="true" />
+            <element signature="e#15384#15403#0" expanded="true" />
+            <element signature="e#15728#15773#0" expanded="true" />
+            <element signature="e#15842#15882#0" expanded="true" />
+            <element signature="e#16704#16752#0" expanded="true" />
+            <element signature="e#16850#16895#0" expanded="true" />
+            <element signature="e#17234#17274#0" expanded="true" />
+            <element signature="e#22013#22060#0" expanded="true" />
+            <element signature="e#22092#22138#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5222222">
-          <caret line="258" column="116" selection-start-line="258" selection-start-column="116" selection-end-line="258" selection-end-column="116" />
+        <state vertical-scroll-proportion="-0.54814816">
+          <caret line="280" column="49" selection-start-line="280" selection-start-column="49" selection-end-line="280" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#3204#3228#0" expanded="true" />
+            <element signature="e#3547#3563#0" expanded="true" />
+            <element signature="e#10364#10659#0" expanded="true" />
+            <element signature="e#10658#10659#0" expanded="true" />
           </folding>
         </state>
       </provider>
