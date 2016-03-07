@@ -49,6 +49,7 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
+import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
@@ -627,6 +628,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         mRgba = inputFrame.rgba();
         mGray = inputFrame.gray();
 
+
         if (mAbsoluteFaceSize == 0) {
             int height = mGray.rows();
             if (Math.round(height * mRelativeFaceSize) > 0) {
@@ -706,8 +708,9 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         if(facesArray.length>0){
             moveSAR(facesArray[0]);
         }
-        Log.i("detected faces", facesArray.length+"");
+        Log.i("detected faces", facesArray.length + "");
 
+//        Core.flip(mRgba.t(), mRgba.t(), -1);
 
       //  if(facesArray.length>1){
        //     controller.goUp();
@@ -716,7 +719,13 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         // }
 
 
-        return mRgba;
+        if(mChooseCamera == backCam){
+            return mRgba;
+        }else{
+            Mat mRgbaT = mRgba.clone();
+            Core.flip(mRgba, mRgbaT, 1);
+            return mRgbaT;
+        }
     }
 
     private void moveSAR(Rect rect){
@@ -772,7 +781,7 @@ Log.e("center y",center.y+"");
 
             Log.e("leffffffft","going to left");
 
-        }else if(opencvDisCenterY + 10 < center.y){
+        }else if(opencvDisCenterY + 10 < center.y) {
             controller.goDown();
 
             Log.e("rightttttt","going right");
