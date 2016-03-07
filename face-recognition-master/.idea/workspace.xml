@@ -6,15 +6,17 @@
     </shared>
   </component>
   <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="40230394-0df6-4420-b842-2b6fa554ac6e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java" afterPath="$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/BluetoothConnectionManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/BluetoothDataManager.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/Controller.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java" afterPath="$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/facerecognition/src/main/res/layout/face_detect_surface_view.xml" afterPath="$PROJECT_DIR$/facerecognition/src/main/res/layout/face_detect_surface_view.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="face-recognition-master.iws" />
@@ -43,66 +45,80 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="FdActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="FdActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="264" column="56" selection-start-line="264" selection-start-column="56" selection-end-line="264" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.49554896">
+              <caret line="773" column="0" selection-start-line="773" selection-start-column="0" selection-end-line="773" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="class#4963:7539" expanded="false" />
-                <element signature="e#5536#5581#0" expanded="true" />
-                <element signature="method#FdActivity#0;class#FdActivity#0" expanded="false" />
-                <element signature="e#14852#14893#0" expanded="true" />
-                <element signature="e#15053#15097#0" expanded="true" />
-                <element signature="e#15384#15403#0" expanded="true" />
-                <element signature="e#15728#15773#0" expanded="true" />
-                <element signature="e#15842#15882#0" expanded="true" />
-                <element signature="e#16704#16752#0" expanded="true" />
-                <element signature="e#16850#16895#0" expanded="true" />
-                <element signature="e#17234#17274#0" expanded="true" />
-                <element signature="e#22013#22060#0" expanded="true" />
-                <element signature="e#22092#22138#0" expanded="true" />
+                <element signature="class#5038:7515" expanded="false" />
+                <element signature="e#11116#11420#0" expanded="true" />
+                <element signature="e#11419#11420#0" expanded="true" />
+                <element signature="e#11446#14689#0" expanded="true" />
+                <element signature="e#14688#14689#0" expanded="true" />
+                <element signature="e#15664#15972#0" expanded="true" />
+                <element signature="e#15971#15972#0" expanded="true" />
+                <element signature="e#16007#16376#0" expanded="true" />
+                <element signature="e#16375#16376#0" expanded="true" />
+                <element signature="e#16421#17580#0" expanded="true" />
+                <element signature="e#17579#17580#0" expanded="true" />
+                <element signature="e#17632#17724#0" expanded="true" />
+                <element signature="e#17723#17724#0" expanded="true" />
+                <element signature="e#17764#18035#0" expanded="true" />
+                <element signature="e#18034#18035#0" expanded="true" />
+                <element signature="e#18079#19163#0" expanded="true" />
+                <element signature="e#19162#19163#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CommandExecution.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java">
+      <file leaf-file-name="face_detect_surface_view.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/res/layout/face_detect_surface_view.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.54814816">
-              <caret line="280" column="49" selection-start-line="280" selection-start-column="49" selection-end-line="280" selection-end-column="49" />
+            <state vertical-scroll-proportion="-2.2068965">
+              <caret line="31" column="55" selection-start-line="31" selection-start-column="55" selection-end-line="31" selection-end-column="55" />
               <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#3204#3228#0" expanded="true" />
-                <element signature="e#3547#3563#0" expanded="true" />
-                <element signature="e#10364#10659#0" expanded="true" />
-                <element signature="e#10658#10659#0" expanded="true" />
+                <element signature="e#895#913#0" expanded="true" />
+                <element signature="e#2806#2821#0" expanded="true" />
+                <element signature="e#4160#4176#0" expanded="true" />
+                <element signature="e#4203#4219#0" expanded="true" />
+                <element signature="e#4245#4265#0" expanded="true" />
+                <element signature="e#4479#4498#0" expanded="true" />
+                <element signature="e#5051#5068#0" expanded="true" />
+                <element signature="e#5095#5112#0" expanded="true" />
+                <element signature="e#5138#5159#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="BluetoothConnectionManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/BluetoothConnectionManager.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AsyncServiceHelper.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/openCVLibrary248/src/main/java/org/opencv/android/AsyncServiceHelper.java">
+      <file leaf-file-name="Controller.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/Controller.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="32" column="49" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
+              <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
               <folding>
-                <element signature="imports" expanded="false" />
-                <element signature="e#2658#2659#0" expanded="false" />
-                <element signature="e#2721#2722#0" expanded="false" />
-                <element signature="e#4634#4635#0" expanded="false" />
-                <element signature="e#4697#4698#0" expanded="false" />
-                <element signature="e#5390#5391#0" expanded="false" />
-                <element signature="e#5462#5463#0" expanded="false" />
-                <element signature="e#7536#7537#0" expanded="false" />
-                <element signature="e#7631#7632#0" expanded="false" />
-                <element signature="e#11031#11032#0" expanded="false" />
-                <element signature="e#11126#11127#0" expanded="false" />
-                <element signature="e#16285#16286#0" expanded="false" />
-                <element signature="e#16330#16331#0" expanded="false" />
+                <element signature="e#741#1003#0" expanded="true" />
+                <element signature="e#1002#1003#0" expanded="true" />
+                <element signature="e#1142#1386#0" expanded="true" />
+                <element signature="e#1385#1386#0" expanded="true" />
+                <element signature="e#1558#1681#0" expanded="true" />
+                <element signature="e#1680#1681#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -112,39 +128,17 @@
         <entry file="file://$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="46" />
-              <folding>
-                <element signature="e#521#539#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+              <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/res/values/strings.xml">
+      <file leaf-file-name="BluetoothDataManager.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/BluetoothDataManager.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/facerecognition/build.gradle">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
+              <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -2085,6 +2079,10 @@
         <option value="$PROJECT_DIR$/facerecognition/src/main/res/values/strings.xml" />
         <option value="$PROJECT_DIR$/openCVLibrary248/src/main/java/org/opencv/android/AsyncServiceHelper.java" />
         <option value="$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java" />
+        <option value="$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/MainActivity.java" />
+        <option value="$PROJECT_DIR$/facerecognition/src/main/res/layout/face_detect_surface_view.xml" />
+        <option value="$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/BluetoothConnectionManager.java" />
+        <option value="$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/Controller.java" />
         <option value="$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java" />
       </list>
     </option>
@@ -2121,7 +2119,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="ProjectPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -2139,6 +2136,38 @@
               <option name="myItemId" value="facerecognition" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="face-recognition-master" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="facerecognition" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="res" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="layout" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="face-recognition-master" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="facerecognition" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -2168,21 +2197,36 @@
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="facerecognition" />
+              <option name="myItemId" value="control" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="face-recognition-master" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="facerecognition" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="manifests" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="ProjectPane" />
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="android.sdk.path" value="D:/programming programs/android development/ACM Android Training/Resources/android-sdk-windows" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="141ffafd" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="15cadaf7" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Gawad_API_21" />
     <property name="OverrideImplement.combined" value="true" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
@@ -2190,6 +2234,11 @@
     <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="CpuMonitor.paused" value="false" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Technicals\GP\code\SAR\face-recognition-master\facerecognition\src\main\java\bluethooth\remote\control" />
+    </key>
   </component>
   <component name="RunManager" selected="Android Application.facerecognition">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -2211,6 +2260,26 @@
       <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <option name="DEEP_LINK" value="" />
       <option name="ACTIVITY_CLASS" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="EXTRA_OPTIONS" value="" />
+      <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SKIP_NOOP_APK_INSTALLATIONS" value="true" />
+      <option name="FORCE_STOP_RUNNING_APP" value="true" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2251,6 +2320,11 @@
         <option name="Make" enabled="false" />
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
       </method>
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
+      <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
@@ -2349,25 +2423,26 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4969743" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60477" sideWeight="0.51059" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4923339" sideWeight="0.4924357" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6609881" sideWeight="0.48940998" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.49394855" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.49394855" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32879046" sideWeight="0.49394855" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4923339" sideWeight="0.5075643" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2473525" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.18910742" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -2402,22 +2477,26 @@
     <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="515" column="72" selection-start-line="515" selection-start-column="72" selection-end-line="515" selection-end-column="72" />
+          <caret line="264" column="56" selection-start-line="264" selection-start-column="56" selection-end-line="264" selection-end-column="56" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="class#4963:7539" expanded="false" />
-            <element signature="e#5536#5581#0" expanded="true" />
-            <element signature="method#FdActivity#0;class#FdActivity#0" expanded="false" />
-            <element signature="e#14852#14893#0" expanded="true" />
-            <element signature="e#15053#15097#0" expanded="true" />
-            <element signature="e#15384#15403#0" expanded="true" />
-            <element signature="e#15728#15773#0" expanded="true" />
-            <element signature="e#15842#15882#0" expanded="true" />
-            <element signature="e#16704#16752#0" expanded="true" />
-            <element signature="e#16850#16895#0" expanded="true" />
-            <element signature="e#17234#17274#0" expanded="true" />
-            <element signature="e#22013#22060#0" expanded="true" />
-            <element signature="e#22092#22138#0" expanded="true" />
+            <element signature="class#5038:7515" expanded="false" />
+            <element signature="e#11116#11420#0" expanded="true" />
+            <element signature="e#11419#11420#0" expanded="true" />
+            <element signature="e#11446#14689#0" expanded="true" />
+            <element signature="e#14688#14689#0" expanded="true" />
+            <element signature="e#15664#15972#0" expanded="true" />
+            <element signature="e#15971#15972#0" expanded="true" />
+            <element signature="e#16007#16376#0" expanded="true" />
+            <element signature="e#16375#16376#0" expanded="true" />
+            <element signature="e#16421#17580#0" expanded="true" />
+            <element signature="e#17579#17580#0" expanded="true" />
+            <element signature="e#17632#17724#0" expanded="true" />
+            <element signature="e#17723#17724#0" expanded="true" />
+            <element signature="e#17764#18035#0" expanded="true" />
+            <element signature="e#18034#18035#0" expanded="true" />
+            <element signature="e#18079#19163#0" expanded="true" />
+            <element signature="e#19162#19163#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2427,11 +2506,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3204#3228#0" expanded="true" />
-            <element signature="e#3547#3563#0" expanded="true" />
-            <element signature="e#10364#10659#0" expanded="true" />
-            <element signature="e#10658#10659#0" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2440,21 +2515,84 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="49" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="17" selection-start-line="13" selection-start-column="17" selection-end-line="13" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/res/values/strings.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="4" column="29" selection-start-line="4" selection-start-column="29" selection-end-line="4" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="515" column="72" selection-start-line="515" selection-start-column="72" selection-end-line="515" selection-end-column="72" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="class#5038:7515" expanded="false" />
+            <element signature="e#11116#11420#0" expanded="true" />
+            <element signature="e#11419#11420#0" expanded="true" />
+            <element signature="e#11446#14689#0" expanded="true" />
+            <element signature="e#14688#14689#0" expanded="true" />
+            <element signature="e#15664#15972#0" expanded="true" />
+            <element signature="e#15971#15972#0" expanded="true" />
+            <element signature="e#16007#16376#0" expanded="true" />
+            <element signature="e#16375#16376#0" expanded="true" />
+            <element signature="e#16421#17580#0" expanded="true" />
+            <element signature="e#17579#17580#0" expanded="true" />
+            <element signature="e#17632#17724#0" expanded="true" />
+            <element signature="e#17723#17724#0" expanded="true" />
+            <element signature="e#17764#18035#0" expanded="true" />
+            <element signature="e#18034#18035#0" expanded="true" />
+            <element signature="e#18079#19163#0" expanded="true" />
+            <element signature="e#19162#19163#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="false" />
-            <element signature="e#2658#2659#0" expanded="false" />
-            <element signature="e#2721#2722#0" expanded="false" />
-            <element signature="e#4634#4635#0" expanded="false" />
-            <element signature="e#4697#4698#0" expanded="false" />
-            <element signature="e#5390#5391#0" expanded="false" />
-            <element signature="e#5462#5463#0" expanded="false" />
-            <element signature="e#7536#7537#0" expanded="false" />
-            <element signature="e#7631#7632#0" expanded="false" />
-            <element signature="e#11031#11032#0" expanded="false" />
-            <element signature="e#11126#11127#0" expanded="false" />
-            <element signature="e#16285#16286#0" expanded="false" />
-            <element signature="e#16330#16331#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/openCVLibrary248/src/main/java/org/opencv/android/AsyncServiceHelper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="32" column="49" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2462,9 +2600,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="12" column="33" selection-start-line="12" selection-start-column="33" selection-end-line="12" selection-end-column="33" />
-          <folding>
-            <element signature="e#521#539#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2503,9 +2639,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="6" column="65" selection-start-line="6" selection-start-column="65" selection-end-line="6" selection-end-column="65" />
-          <folding>
-            <element signature="e#521#539#0" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -2588,14 +2722,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/facerecognition/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2643,71 +2769,115 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.510929">
+          <caret line="272" column="35" selection-start-line="272" selection-start-column="35" selection-end-line="272" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6284153">
+          <caret line="31" column="41" selection-start-line="31" selection-start-column="41" selection-end-line="31" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/openCVLibrary248/src/main/java/org/opencv/android/AsyncServiceHelper.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="32" column="49" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="false" />
-            <element signature="e#2658#2659#0" expanded="false" />
-            <element signature="e#2721#2722#0" expanded="false" />
-            <element signature="e#4634#4635#0" expanded="false" />
-            <element signature="e#4697#4698#0" expanded="false" />
-            <element signature="e#5390#5391#0" expanded="false" />
-            <element signature="e#5462#5463#0" expanded="false" />
-            <element signature="e#7536#7537#0" expanded="false" />
-            <element signature="e#7631#7632#0" expanded="false" />
-            <element signature="e#11031#11032#0" expanded="false" />
-            <element signature="e#11126#11127#0" expanded="false" />
-            <element signature="e#16285#16286#0" expanded="false" />
-            <element signature="e#16330#16331#0" expanded="false" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/facerecognition/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="2" column="13" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="46" />
+          <caret line="16" column="17" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/res/layout/face_detect_surface_view.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.2068965">
+          <caret line="31" column="55" selection-start-line="31" selection-start-column="55" selection-end-line="31" selection-end-column="55" />
           <folding>
-            <element signature="e#521#539#0" expanded="true" />
+            <element signature="e#895#913#0" expanded="true" />
+            <element signature="e#2806#2821#0" expanded="true" />
+            <element signature="e#4160#4176#0" expanded="true" />
+            <element signature="e#4203#4219#0" expanded="true" />
+            <element signature="e#4245#4265#0" expanded="true" />
+            <element signature="e#4479#4498#0" expanded="true" />
+            <element signature="e#5051#5068#0" expanded="true" />
+            <element signature="e#5095#5112#0" expanded="true" />
+            <element signature="e#5138#5159#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/BluetoothDataManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="16" column="24" selection-start-line="16" selection-start-column="24" selection-end-line="16" selection-end-column="24" />
+          <folding>
+            <element signature="e#741#1003#0" expanded="true" />
+            <element signature="e#1002#1003#0" expanded="true" />
+            <element signature="e#1142#1386#0" expanded="true" />
+            <element signature="e#1385#1386#0" expanded="true" />
+            <element signature="e#1558#1681#0" expanded="true" />
+            <element signature="e#1680#1681#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/bluethooth/remote/control/BluetoothConnectionManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/org/opencv/javacv/facerecognition/FdActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="264" column="56" selection-start-line="264" selection-start-column="56" selection-end-line="264" selection-end-column="56" />
+        <state vertical-scroll-proportion="0.49554896">
+          <caret line="773" column="0" selection-start-line="773" selection-start-column="0" selection-end-line="773" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="class#4963:7539" expanded="false" />
-            <element signature="e#5536#5581#0" expanded="true" />
-            <element signature="method#FdActivity#0;class#FdActivity#0" expanded="false" />
-            <element signature="e#14852#14893#0" expanded="true" />
-            <element signature="e#15053#15097#0" expanded="true" />
-            <element signature="e#15384#15403#0" expanded="true" />
-            <element signature="e#15728#15773#0" expanded="true" />
-            <element signature="e#15842#15882#0" expanded="true" />
-            <element signature="e#16704#16752#0" expanded="true" />
-            <element signature="e#16850#16895#0" expanded="true" />
-            <element signature="e#17234#17274#0" expanded="true" />
-            <element signature="e#22013#22060#0" expanded="true" />
-            <element signature="e#22092#22138#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/facerecognition/src/main/java/utilities/CommandExecution.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.54814816">
-          <caret line="280" column="49" selection-start-line="280" selection-start-column="49" selection-end-line="280" selection-end-column="49" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#3204#3228#0" expanded="true" />
-            <element signature="e#3547#3563#0" expanded="true" />
-            <element signature="e#10364#10659#0" expanded="true" />
-            <element signature="e#10658#10659#0" expanded="true" />
+            <element signature="class#5038:7515" expanded="false" />
+            <element signature="e#11116#11420#0" expanded="true" />
+            <element signature="e#11419#11420#0" expanded="true" />
+            <element signature="e#11446#14689#0" expanded="true" />
+            <element signature="e#14688#14689#0" expanded="true" />
+            <element signature="e#15664#15972#0" expanded="true" />
+            <element signature="e#15971#15972#0" expanded="true" />
+            <element signature="e#16007#16376#0" expanded="true" />
+            <element signature="e#16375#16376#0" expanded="true" />
+            <element signature="e#16421#17580#0" expanded="true" />
+            <element signature="e#17579#17580#0" expanded="true" />
+            <element signature="e#17632#17724#0" expanded="true" />
+            <element signature="e#17723#17724#0" expanded="true" />
+            <element signature="e#17764#18035#0" expanded="true" />
+            <element signature="e#18034#18035#0" expanded="true" />
+            <element signature="e#18079#19163#0" expanded="true" />
+            <element signature="e#19162#19163#0" expanded="true" />
           </folding>
         </state>
       </provider>
