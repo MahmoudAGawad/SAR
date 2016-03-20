@@ -728,11 +728,60 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     private void moveSAR(Rect rect){
         Point topLeft = rect.tl();
         Point bottomRight = rect.br();
-        Log.e("Top Leftttttttttttttt", ""+topLeft.toString());
-        Log.e("Bottom Rightttttttttt", ""+bottomRight.toString());
+        Log.e("Top Leftttttttttttttt", "" + topLeft.toString());
+        Log.e("Bottom Rightttttttttt", "" + bottomRight.toString());
 
         Point center = new Point((topLeft.x+bottomRight.x)/2, (topLeft.y+bottomRight.y)/2);
 
+        Tutorial3View opencvDis=(Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
+
+        int opencvDisHeight =  opencvDis.getHeight();
+        int opencvDisWidth = opencvDis.getWidth();
+
+        Log.e("Screen Widthhhhhhhhhhhhhhhh", "" + opencvDisWidth+"");
+        Log.e("Screen Heighttttttttttttttt", "" + opencvDisHeight+"");
+
+        int horizontalBlock=checkHorizontalGrid(center.x, opencvDisWidth);
+
+        Log.e("Horizontal blockkkkkkkkkkkkkkkkk",horizontalBlock+"");
+
+        int verticalBlock=checkVerticalGrid(center.y, opencvDisHeight);
+
+        Log.e("Vertical blockkkkkkkkkkkkkkkkk",verticalBlock+"");
+
+        if(horizontalBlock == 2 && verticalBlock == 1){
+            return; // almost in center
+        }
+
+        // horizontal
+        switch (horizontalBlock){
+            case 0: // far left
+                Log.e("Go","Lefttttttttttttttttttttttttttttttttttttttt");
+                controller.goLeft(10);
+                break;
+            case 1: // left
+                Log.e("Go","Leftttttttttttttttttttttttttttttttttttttt");
+                controller.goLeft(5);
+                break;
+            case 3: // rgiht
+                Log.e("Go","Rightttttttttttttttttttttttttttttttttttttt");
+                controller.goRight(5);
+                break;
+            case 4: // far right
+                Log.e("Go","Rightttttttttttttttttttttttttttttttttttttt");
+                controller.goRight(10);
+                break;
+        }
+
+        switch (verticalBlock){
+            case 0:
+                controller.goUp(5);
+                break;
+            case 2:
+                controller.goDown(5);
+                break;
+        }
+       /*
 //        Display display = getWindowManager().getDefaultDisplay();
 //        android.graphics.Point size = new android.graphics.Point();
 //        display.getSize(size);
@@ -806,6 +855,28 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //
 //            Log.e("rightttttt","going right");
 //        }
+
+*/
+    }
+
+    private int checkVerticalGrid(double y, int opencvDisHeight) {
+
+         int tempGrid = (int)y/(opencvDisHeight/10);
+
+        if(tempGrid<=2){return 0;}
+        if(tempGrid>=7){return 2;}
+        else{
+            return 1;
+        }
+    }
+
+    private int checkHorizontalGrid(double x, int opencvDisWidth) {
+
+
+        return (int)x/(opencvDisWidth/5);
+
+
+
 
 
     }
