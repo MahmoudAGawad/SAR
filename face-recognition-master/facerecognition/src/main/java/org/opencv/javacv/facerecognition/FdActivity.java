@@ -719,13 +719,10 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         // }
 
 
-        if(mChooseCamera == backCam){
-            return mRgba;
-        }else{
-            Mat mRgbaT = mRgba.clone();
-            Core.flip(mRgba, mRgbaT, 1);
-            return mRgbaT;
+        if(mChooseCamera != backCam){
+            Core.flip(mRgba, mRgba, 1);
         }
+        return mRgba;
     }
 
     private void moveSAR(Rect rect){
@@ -749,47 +746,69 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //        int displayCenterY = height/2;
 
         Log.e("center x",center.x+"");
-Log.e("center y",center.y+"");
+        Log.e("center y",center.y+"");
 
 //        Log.e("displaycenter x",displayCenterX+"");
 
 //        displayCenterX/=2;
 
-        Tutorial3View opencvDis=(Tutorial3View)        findViewById(R.id.tutorial3_activity_java_surface_view);
+        Tutorial3View opencvDis=(Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
 
         int opencvDisHeight =  opencvDis.getHeight();
         int opencvDisWidth = opencvDis.getWidth();
-
         Log.e("Heightttttttttttttttttt", "" + opencvDisHeight);
         Log.e("Widthhhhhhhhhhhhhhhhhhh", "" + opencvDisWidth);
+
         int opencvDisCenterX = opencvDisWidth / 2;
         int opencvDisCenterY = opencvDisHeight / 2;
 
-        if(opencvDisCenterX - 100 > center.x){
-            controller.goRight();
 
-            Log.e("leffffffft","going to left");
+        // we calculate the distance between the person and the screen
+        int sign = center.x - opencvDisCenterX > 0 ? 1 : 0;
 
-        }else if(opencvDisCenterX + 100 < center.x){
-            controller.goLeft();
+        double x = Math.abs(center.x - opencvDisCenterX);
+        double y = Math.abs(topLeft.x - bottomRight.x);
+        double depthFactor = 29600;
 
-            Log.e("rightttttt","going right");
+        int theta = -1;
+//        if(y != 0){
+            theta = (int) Math.toDegrees(Math.atan( (y * x) / (depthFactor+10*y)));
+            Log.i("Thetaaaaaaaaaaaaaaa",theta+" "+sign);
+//        }
+
+        if(theta != -1) {
+            if (sign == 1) {
+                controller.goRight(theta);
+            } else {
+                controller.goLeft(theta);
+            }
         }
 
-        if(opencvDisCenterY - 10 > center.y){
-            controller.goUp();
 
-            Log.e("leffffffft","going to left");
-
-        }else if(opencvDisCenterY + 10 < center.y) {
-            controller.goDown();
-
-            Log.e("rightttttt","going right");
-        }
+//        if(opencvDisCenterX - 100 > center.x){
+//            controller.goRight();
+//
+//            Log.e("leffffffft","going to left");
+//
+//        }else if(opencvDisCenterX + 100 < center.x){
+//            controller.goLeft();
+//
+//            Log.e("rightttttt","going right");
+//        }
+//
+//        if(opencvDisCenterY - 10 > center.y){
+//            controller.goUp();
+//
+//            Log.e("leffffffft","going to left");
+//
+//        }else if(opencvDisCenterY + 10 < center.y) {
+//            controller.goDown();
+//
+//            Log.e("rightttttt","going right");
+//        }
 
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

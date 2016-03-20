@@ -68,16 +68,16 @@ public class Controller {
         myThread.start();
     }
 
-    public void goRight() {
+    public void goRight(int theta) {
 
 
-        horizontalAngle = Math.min(horizontalAngle + step, 179);
+        horizontalAngle = Math.max(horizontalAngle - theta, 0);
         move((byte) horizontalAngle);
     }
 
-    public void goLeft() {
+    public void goLeft(int theta) {
 
-        horizontalAngle = Math.max(horizontalAngle - step, 0);
+        horizontalAngle = Math.min(horizontalAngle + theta, 179);
         move((byte) horizontalAngle);
     }
 
@@ -91,6 +91,10 @@ public class Controller {
         move((byte) (verticalAngle +180));
     }
 
+    public void moveWithAngle(int angle){
+
+        move((byte) angle);
+    }
 
 
 }
