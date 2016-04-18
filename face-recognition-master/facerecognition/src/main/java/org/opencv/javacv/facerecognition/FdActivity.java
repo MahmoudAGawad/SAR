@@ -775,9 +775,11 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
         switch (verticalBlock){
             case 0:
+                Log.e("Go", "Uppppppppppppppppppppppppppppppppp");
                 controller.goUp(5);
                 break;
             case 2:
+                Log.e("Go", "Downnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
                 controller.goDown(5);
                 break;
         }
