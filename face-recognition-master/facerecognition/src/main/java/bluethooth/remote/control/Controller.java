@@ -1,7 +1,13 @@
 package bluethooth.remote.control;
 
+import android.os.Bundle;
+import android.app.Activity;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -15,16 +21,14 @@ public class Controller {
     private BluetoothConnectionManager bcm;
     private BluetoothDataManager bdm;
 
-    private AtomicBoolean acceptHorizontalData;
-    private AtomicBoolean acceptVerticalData;
+    private AtomicBoolean acceptData;
 
     public Controller() {
         horizontalAngle = 110;
         verticalAngle = 45;
-        acceptHorizontalData = new AtomicBoolean(true);
-        acceptVerticalData =  new AtomicBoolean(true);
-        move((byte)horizontalAngle , acceptHorizontalData);
-        move((byte) (verticalAngle + 180) , acceptVerticalData);
+        acceptData = new AtomicBoolean(true);
+        move((byte)horizontalAngle);
+        move((byte) (verticalAngle + 180));
     }
 
     public void connectToSAR() {
@@ -57,7 +61,7 @@ public class Controller {
         myThread.start();
     }
 
-    private void move(final byte b, final AtomicBoolean acceptData) {
+    private void move(final byte b) {
         if(bdm == null) return;
         acceptData.set(false);
         synchronized (acceptData) {
@@ -75,45 +79,41 @@ public class Controller {
     }
 
     public void goRight(int theta) {
-        Log.e("right boleaaaaaaaaaan", acceptHorizontalData.toString());
-        if (acceptHorizontalData.get()) {
+        Log.e("boleaaaaaaaaaaaaan", acceptData.toString());
+        if (acceptData.get()) {
             horizontalAngle = Math.max(horizontalAngle - theta, 0);
             Log.e("Hori. SAAAAAAAAAAAAR", horizontalAngle + "");
-            move((byte) horizontalAngle ,acceptHorizontalData );
+            move((byte) horizontalAngle);
         }
     }
 
     public void goLeft(int theta) {
-        Log.e("left boleaaaaaaaaaan", acceptHorizontalData.toString());
-        if(acceptHorizontalData.get()) {
+        Log.e("boleaaaaaaaaaaaaan", acceptData.toString());
+        if(acceptData.get()) {
             horizontalAngle = Math.min(horizontalAngle + theta, 179);
             Log.e("Hori. SAAAAAAAAAAAR", horizontalAngle + "");
-            move((byte) horizontalAngle, acceptHorizontalData);
+            move((byte) horizontalAngle);
         }
     }
 
     public void goDown(int theta) {
-        Log.e("down boleaaaaaaaaaan", acceptVerticalData.toString());
-        if(acceptVerticalData.get()) {
+        if(acceptData.get()) {
             verticalAngle = Math.max(verticalAngle - theta, 0);
-            Log.e("Vert. SAAAAAAAAAAAR", (verticalAngle + 180) + "");
-            move((byte) (verticalAngle + 180), acceptVerticalData);
+            move((byte) (verticalAngle + 180));
         }
     }
 
     public void goUp(int theta) {
-        Log.e("up boleaaaaaaaaaan", acceptVerticalData.toString());
-        if(acceptVerticalData.get()) {
+        if(acceptData.get()) {
             verticalAngle = Math.min(verticalAngle + theta, 70);
-            Log.e("Vert. SAAAAAAAAAAAR", (verticalAngle + 180) + "");
-            move((byte) (verticalAngle + 180), acceptVerticalData);
+            move((byte) (verticalAngle + 180));
         }
     }
-//
-//    public void moveWithAngle(int angle){
-//
-//        move((byte) angle);
-//    }
+
+    public void moveWithAngle(int angle){
+
+        move((byte) angle);
+    }
 
 
 }

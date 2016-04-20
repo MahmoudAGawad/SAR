@@ -1,39 +1,25 @@
 package org.opencv.javacv.facerecognition;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.google.gson.JsonElement;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -49,17 +35,13 @@ import org.opencv.core.Point;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 import ai.api.AIConfiguration;
@@ -76,8 +58,6 @@ import utilities.CommandExecution;
 
 //import java.io.FileNotFoundException;
 //import org.opencv.contrib.FaceRecognizer;
-
-import com.facebook.FacebookSdk;
 
 
 
@@ -97,7 +77,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     private static final int backCam =2;
 
 
-    private int faceState=IDLE;
+    private int faceState=SEARCHING;
 //    private int countTrain=0;
 
 //    private MenuItem               mItemFace50;
@@ -129,17 +109,16 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     private Tutorial3View   mOpenCvCameraView;
     private int mChooseCamera = backCam;
 
-    EditText text;
-    TextView textresult;
+
+
     private  ImageView Iv;
     Bitmap mBitmap;
     Handler mHandler;
 
     PersonRecognizer fr;
-    ToggleButton toggleButtonGrabar,toggleButtonTrain,buttonSearch;
-    Button buttonCatalog;
+    ToggleButton toggleButtonGrabar;
     ImageView ivGreen,ivYellow,ivRed;
-    ImageButton imCamera;
+
 
     TextView textState;
     com.googlecode.javacv.cpp.opencv_contrib.FaceRecognizer faceRecognizer;
@@ -158,8 +137,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     CommandExecution commandExecuter;
 
     // facebook
-    private CallbackManager callbackManager;
-    private LoginResult facebookLoginResult;
 
     private Controller controller;
 
@@ -239,31 +216,23 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
+        boolean traingFlag=false;
+
         Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
+
+
+
+                setContentView(R.layout.face_detect_surface_view);
+
+
+
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 
-        // facebook
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
 
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                facebookLoginResult = loginResult;
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
-            }
-        });
 
         // generate the KeyHash
         // Add code to print out the key hash
@@ -287,7 +256,27 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
 
 
-        setContentView(R.layout.face_detect_surface_view);
+        final ToggleButton bluetoothOnOff = (ToggleButton) findViewById(R.id.toggleButton2);
+
+        bluetoothOnOff.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(bluetoothOnOff.isChecked()){
+
+                    Intent trainingIntent= new Intent(org.opencv.javacv.facerecognition.FdActivity.this,org.opencv.javacv.facerecognition.TrainingActivity.class);
+                    startActivity(trainingIntent);
+
+                   //  controller.connectToSAR();
+
+
+                }else{
+                   //    controller.disconnectToSAR();
+
+
+                }
+            }
+        });
+
 
         textVoice = (TextView)findViewById(R.id.text);
         textResultVoice = (TextView) findViewById(R.id.result);
@@ -310,33 +299,16 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
         mOpenCvCameraView.setCvCameraViewListener(this);
 
-        Log.i("widoooooooooooo","ttttttttttt");
+        Log.i("widoooooooooooo", "ttttttttttt");
 
 
         mPath=getFilesDir()+"/facerecogOCV/";
 
         labelsFile= new labels(mPath);
 
-        Iv=(ImageView)findViewById(R.id.imageView1);
-        textresult = (TextView) findViewById(R.id.textView1);
 
         // Gawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaad
         controller = new Controller();
-        final ToggleButton bluetoothOnOff = (ToggleButton) findViewById(R.id.toggleButton2);
-
-        bluetoothOnOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(bluetoothOnOff.isChecked()){
-                    controller.connectToSAR();
-
-
-                }else{
-                    controller.disconnectToSAR();
-                }
-            }
-        });
-
 
 
 
@@ -345,18 +317,9 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
             public void handleMessage(Message msg) {
             	if (msg.obj=="IMG")
             	{
-            	 Canvas canvas = new Canvas();
-                 canvas.setBitmap(mBitmap);
-                 Iv.setImageBitmap(mBitmap);
-                 if (countImages>=MAXIMG-1)
-                 {
-                	 toggleButtonGrabar.setChecked(false);
-                 	 grabarOnclick();
-                 }
             	}
             	else
             	{
-            		textresult.setText(msg.obj.toString());
 
             		 ivGreen.setVisibility(View.INVISIBLE);
             	     ivYellow.setVisibility(View.INVISIBLE);
@@ -366,7 +329,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
             	     else if (mLikely<50) {
                          ivGreen.setVisibility(View.VISIBLE);
-                         textresult.setText("HELLO " + msg.obj.toString());
 
 //                         if(msg.obj.toString().equals("mostafa")){
 //                             controller.goUp();
@@ -391,7 +353,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
                      }
             		else if (mLikely<80) {
                          ivYellow.setVisibility(View.VISIBLE);
-                         textresult.setText("HELLO " + msg.obj.toString());
 //                         if(msg.obj.toString().equals("mostafa")){
 //                            controller.goUp();
 //                         }else if (msg.obj.toString().equals("diaa")){
@@ -417,167 +378,41 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
             }
         };
 
-        text=(EditText)findViewById(R.id.editText1);
-        buttonCatalog=(Button)findViewById(R.id.buttonCat);
-        toggleButtonGrabar=(ToggleButton)findViewById(R.id.toggleButtonGrabar);
-        buttonSearch=(ToggleButton)findViewById(R.id.buttonBuscar);
-        toggleButtonTrain=(ToggleButton)findViewById(R.id.toggleButton1);
         textState= (TextView)findViewById(R.id.textViewState);
         ivGreen=(ImageView)findViewById(R.id.imageView3);
         ivYellow=(ImageView)findViewById(R.id.imageView4);
         ivRed=(ImageView)findViewById(R.id.imageView2);
-        imCamera=(ImageButton)findViewById(R.id.imageButton1);
 
         ivGreen.setVisibility(View.INVISIBLE);
         ivYellow.setVisibility(View.INVISIBLE);
         ivRed.setVisibility(View.INVISIBLE);
-        text.setVisibility(View.INVISIBLE);
-        textresult.setVisibility(View.INVISIBLE);
 
 
 
-        toggleButtonGrabar.setVisibility(View.INVISIBLE);
-
-        buttonCatalog.setOnClickListener(new View.OnClickListener() {
-        	public void onClick(View view) {
-        		Intent i = new Intent(org.opencv.javacv.facerecognition.FdActivity.this,
-        				org.opencv.javacv.facerecognition.ImageGallery.class);
-        		i.putExtra("path", mPath);
-        		startActivity(i);
-        	};
-        	});
-
-
-        text.setOnKeyListener(new View.OnKeyListener() {
-        	public boolean onKey(View v, int keyCode, KeyEvent event) {
-        		if ((text.getText().toString().length()>0)&&(toggleButtonTrain.isChecked()))
-        			toggleButtonGrabar.setVisibility(View.VISIBLE);
-        		else
-        			toggleButtonGrabar.setVisibility(View.INVISIBLE);
-
-                return false;
-        	}
-        });
 
 
 
-		toggleButtonTrain.setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				if (toggleButtonTrain.isChecked()) {
-					textState.setText(getResources().getString(R.string.SEnter));
-					buttonSearch.setVisibility(View.INVISIBLE);
-					textresult.setVisibility(View.VISIBLE);
-					text.setVisibility(View.VISIBLE);
-					textresult.setText(getResources().getString(R.string.SFaceName));
-					if (text.getText().toString().length() > 0)
-						toggleButtonGrabar.setVisibility(View.VISIBLE);
-
-
-					ivGreen.setVisibility(View.INVISIBLE);
-					ivYellow.setVisibility(View.INVISIBLE);
-					ivRed.setVisibility(View.INVISIBLE);
-
-
-				} else {
-					textState.setText(R.string.Straininig);
-					textresult.setText("");
-					text.setVisibility(View.INVISIBLE);
-
-					buttonSearch.setVisibility(View.VISIBLE);
-					;
-					textresult.setText("");
-					{
-						toggleButtonGrabar.setVisibility(View.INVISIBLE);
-						text.setVisibility(View.INVISIBLE);
-					}
-			        Toast.makeText(getApplicationContext(),getResources().getString(R.string.Straininig), Toast.LENGTH_LONG).show();
-					fr.train();
-					textState.setText(getResources().getString(R.string.SIdle));
-
-				}
-			}
-
-		});
 
 
 
-        toggleButtonGrabar.setOnClickListener(new View.OnClickListener() {
 
-			public void onClick(View v) {
-				grabarOnclick();
-			}
-		});
 
-        imCamera.setOnClickListener(new View.OnClickListener() {
 
-			public void onClick(View v) {
 
-				if (mChooseCamera==frontCam)
-				{
-					mChooseCamera=backCam;
-					mOpenCvCameraView.setCamBack();
-				}
-				else
-				{
-					mChooseCamera=frontCam;
-					mOpenCvCameraView.setCamFront();
 
-				}
-			}
-		});
 
-        buttonSearch.setOnClickListener(new View.OnClickListener() {
 
-     			public void onClick(View v) {
-     				if (buttonSearch.isChecked())
-     				{
-     					if (!fr.canPredict())
-     						{
-     						buttonSearch.setChecked(false);
-     			            Toast.makeText(getApplicationContext(), getResources().getString(R.string.SCanntoPredic), Toast.LENGTH_LONG).show();
-     			            return;
-     						}
-     					textState.setText(getResources().getString(R.string.SSearching));
-     					toggleButtonGrabar.setVisibility(View.INVISIBLE);
-     					toggleButtonTrain.setVisibility(View.INVISIBLE);
-     					text.setVisibility(View.INVISIBLE);
-     					faceState=SEARCHING;
-     					textresult.setVisibility(View.VISIBLE);
-     				}
-     				else
-     				{
-     					faceState=IDLE;
-     					textState.setText(getResources().getString(R.string.SIdle));
-     					toggleButtonGrabar.setVisibility(View.INVISIBLE);
-     					toggleButtonTrain.setVisibility(View.VISIBLE);
-     					text.setVisibility(View.INVISIBLE);
-     					textresult.setVisibility(View.INVISIBLE);
-
-     				}
-     			}
-     		});
 
         boolean success=(new File(mPath)).mkdirs();
         if (!success)
         {
         	Log.e("Error","Error creating directory");
         }
-    }
-
-    void grabarOnclick()
-    {
-    	if (toggleButtonGrabar.isChecked())
-			faceState=TRAINING;
-			else
-			{ if (faceState==TRAINING)	;
-			 // train();
-			  //fr.train();
-			  countImages=0;
-			  faceState=IDLE;
-			}
 
 
     }
+
+
 
     @Override
     public void onPause()
@@ -585,13 +420,11 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         super.onPause();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
-        AppEventsLogger.deactivateApp(this); // facebook tracker
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void checkResult(Result result) {
@@ -604,8 +437,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     {
         super.onResume();
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
-
-        AppEventsLogger.activateApp(this); // facebook tracker
     }
 
     public void onDestroy() {
@@ -654,56 +485,45 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
         Rect[] facesArray = faces.toArray();
 
-        if ((facesArray.length==1)&&(faceState==TRAINING)&&(countImages<MAXIMG)&&( (text.getText().toString())!=""   ))
-        {
 
+            Core.flip(mRgba, mRgba, 1);
 
-        Mat m=new Mat();
-        Rect r=facesArray[0];
-
-
-        m=mRgba.submat(r);
-        mBitmap = Bitmap.createBitmap(m.width(),m.height(), Bitmap.Config.ARGB_8888);
-
-
-        Utils.matToBitmap(m, mBitmap);
-       // SaveBmp(mBitmap,"/sdcard/db/I("+countTrain+")"+countImages+".jpg");
-
-        Message msg = new Message();
-        String textTochange = "IMG";
-        msg.obj = textTochange;
-        mHandler.sendMessage(msg);
-        if (countImages<MAXIMG)
-        {
-        	fr.add(m, text.getText().toString());
-        	countImages++;
-        }
-
-        }
-        else
-        	 if ((facesArray.length>0)&& (faceState==SEARCHING))
+        	 if ((facesArray.length>0)&& (faceState==SEARCHING)&&fr.canPredict())
           {
-        	  Mat m=new Mat();
-        	  m=mGray.submat(facesArray[0]);
-        	  mBitmap = Bitmap.createBitmap(m.width(),m.height(), Bitmap.Config.ARGB_8888);
+
+              for (int i = 0; i < facesArray.length; i++) {
+
+                  Mat m = new Mat();
+                  m = mGray.submat(facesArray[i]);
+                  mBitmap = Bitmap.createBitmap(m.width(), m.height(), Bitmap.Config.ARGB_8888);
 
 
-              Utils.matToBitmap(m, mBitmap);
-              Message msg = new Message();
-              String textTochange = "IMG";
-              msg.obj = textTochange;
-              mHandler.sendMessage(msg);
+                  Utils.matToBitmap(m, mBitmap);
+                  Message msg = new Message();
+                  String textTochange = "IMG";
+                  msg.obj = textTochange;
+                  mHandler.sendMessage(msg);
 
-              textTochange=fr.predict(m);
-              mLikely=fr.getProb();
-        	  msg = new Message();
-        	  msg.obj = textTochange;
-        	  mHandler.sendMessage(msg);
 
+                  textTochange = fr.predict(m);
+                  mLikely = fr.getProb();
+
+                  msg = new Message();
+                  msg.obj = textTochange;
+                  final String textTochangeTemp = textTochange;
+
+                  mHandler.sendMessage(msg);
+
+                  Core.rectangle(mRgba, new Point(mRgba.width()-facesArray[i].br().x,facesArray[i].tl().y), new Point(mRgba.width()-facesArray[i].tl().x,facesArray[i].br().y), FACE_RECT_COLOR, 3);
+//                    if(mLikely < 70)
+                  Core.putText(mRgba, textTochange, new Point(mRgba.width()-facesArray[i].br().x,facesArray[i].tl().y), 3, 1, new Scalar(255, 0, 0, 255));
+              }
           }
-        for (int i = 0; i < facesArray.length; i++){
-            Core.rectangle(mRgba, facesArray[i].tl(), facesArray[i].br(), FACE_RECT_COLOR, 3);
-        }
+
+//        for (int i = 0; i < facesArray.length; i++){
+//            Core.rectangle(mRgba, facesArray[i].tl(), facesArray[i].br(), FACE_RECT_COLOR, 3);
+//            Core.putText();
+//        }
 
         if(facesArray.length>0){
             moveSAR(facesArray[0]);
@@ -719,9 +539,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         // }
 
 
-        if(mChooseCamera != backCam){
-            Core.flip(mRgba, mRgba, 1);
-        }
+
         return mRgba;
     }
 
@@ -775,11 +593,9 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
         switch (verticalBlock){
             case 0:
-                Log.e("Go", "Uppppppppppppppppppppppppppppppppp");
                 controller.goUp(5);
                 break;
             case 2:
-                Log.e("Go", "Downnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn");
                 controller.goDown(5);
                 break;
         }
@@ -894,10 +710,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //        mEigen = menu.add("EigenFaces");
 //        mLBPH.setChecked(true);
         }
-        else
-        {imCamera.setVisibility(View.INVISIBLE);
-
-        }
         //mOpenCvCameraView.setAutofocus();
         return true;
     }
@@ -978,7 +790,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
 
 
-        text.setText(voiceCommands[0]);
 
 
         final AIConfiguration config = new AIConfiguration("a7ee7ac49bac4559b295d1c38a18812f",
