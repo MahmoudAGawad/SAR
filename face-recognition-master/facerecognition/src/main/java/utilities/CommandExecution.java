@@ -1,17 +1,28 @@
 package utilities;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,27 +55,27 @@ public class CommandExecution {
     }
 
     public void executeCommand(){
+                //translation commands also needs to be handled
+                if (result.getAction().startsWith("small")
+                        || result.getAction().startsWith("wisdom")){
+                    doTalk(result);
+                    return;
+                }
 
-        //translation commands also needs to be handled
-        if (result.getAction().startsWith("small")
-                || result.getAction().startsWith("wisdom")){
-            doTalk(result);
-            return;
-        }
+                switch (result.getAction()) {
+                    case "email.write":
+                        doSending(result);
+                        break;
+                    case "email.edit":
+                        doEditing(result);
+                        break;
+                    case "apps.open":
+                        doOpenning(result , context);
+                        break;
+                    case "facebook.update":
+                        doPostOnFacebook(result, context);
+                }
 
-        switch (result.getAction()) {
-            case "email.write":
-                doSending(result);
-               break;
-            case "email.edit":
-                doEditing(result);
-                break;
-            case "apps.open":
-                doOpenning(result , context);
-                break;
-
-
-        }
     }
 
     private void doTalk(Result result) {
@@ -250,6 +261,70 @@ public class CommandExecution {
 
 
     }
+
+    private void doPostOnFacebook(Result result, Context context){
+
+        HashMap<String, JsonElement> parameters = result.getParameters();
+        if(parameters == null){
+            //   java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+//            Toast.makeText(context, "Nothing to post on facebook. Cancelling...", Toast.LENGTH_SHORT).show();
+        }else{
+            JsonElement toBePosted = parameters.get("text");
+            if(toBePosted == null){
+//                Toast.makeText(context, "Nothing to post on facebook. Cancelling...", Toast.LENGTH_SHORT).show();
+            }else{
+                // https://www.youtube.com/watch?v=-fs_PL-fLOY
+
+
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                if(!accessToken.getPermissions().contains("publish_actions")){
+                    // (Activity) context? error?
+                    LoginManager.getInstance().logInWithPublishPermissions((Activity) context, Arrays.asList("publish_actions"));
+                }
+
+                // TODO: do the posting action here
+                /* Graph API request example:
+                GraphRequest request = GraphRequest.newMeRequest(
+                        accessToken,
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                // Application code
+                                try {
+                                    Object name = object.get("name");
+                                    System.out.println("nameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: "+ name.toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                Bundle requestParameters = new Bundle();
+                requestParameters.putString("fields", "id,name,link");
+                request.setParameters(requestParameters);
+                request.executeAsync();
+                */
+                GraphRequest request = GraphRequest.newPostRequest(accessToken, "me/feed", null,
+                        new GraphRequest.Callback() {
+                            @Override
+                            public void onCompleted(GraphResponse response) {
+                                Log.d("facebook.update", "Successfully Posted on facebook!");
+                            }
+                        });
+
+                Bundle postParams = request.getParameters();
+
+                postParams.putString("message", toBePosted.getAsString());
+
+                request.setParameters(postParams);
+
+                request.executeAsync();
+            }
+        }
+
+    }
+
 
 
 }

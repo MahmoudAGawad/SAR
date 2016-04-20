@@ -36,10 +36,12 @@ public class TextToSpeechHelper {
 
 
 
-    public void speak(String toSpeak){
-        while (!isReadyToSpeak){}
+    public void speak(final String toSpeak){
 
-        textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+                while (!isReadyToSpeak){}
+
+                textToSpeech.speak(toSpeak, TextToSpeech.QUEUE_FLUSH, null);
+
     }
     public boolean isSpeaking(){
         return textToSpeech.isSpeaking();

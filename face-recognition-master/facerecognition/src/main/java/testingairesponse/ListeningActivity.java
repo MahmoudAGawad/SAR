@@ -70,6 +70,12 @@ public abstract class ListeningActivity extends Activity implements IVoiceContro
     }
 
     @Override
+    protected void onResume(){
+        startListening();
+        super.onResume();
+    }
+
+    @Override
     protected void onStop() {
         stopListening();
         super.onStop();
@@ -98,7 +104,7 @@ public abstract class ListeningActivity extends Activity implements IVoiceContro
         super.onPause();
     }
 
-    //is abstract so the inheriting classes need to implement it. Here you put your code which should be executed once a command was found
+    //is abstract so the inheriting classes need to implement it. Here you put y    our code which should be executed once a command was found
     @Override
     public abstract void processVoiceCommands(String ... voiceCommands);
 
