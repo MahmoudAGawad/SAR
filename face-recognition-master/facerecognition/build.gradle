@@ -29,5 +29,4 @@ dependencies {
     compile files ('lib/mail.jar')
     compile files ('lib/activation.jar')
     compile files ('lib/additionnal.jar')
-    compile 'com.facebook.android:facebook-android-sdk:4.10.0'
 }

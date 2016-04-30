@@ -28,12 +28,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.login.LoginManager;
-import com.facebook.login.LoginResult;
 import com.google.gson.JsonElement;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -77,7 +71,6 @@ import utilities.CommandExecution;
 //import java.io.FileNotFoundException;
 //import org.opencv.contrib.FaceRecognizer;
 
-import com.facebook.FacebookSdk;
 
 
 
@@ -157,9 +150,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     private TextView textVoice , textResultVoice;
     CommandExecution commandExecuter;
 
-    // facebook
-    private CallbackManager callbackManager;
-    private LoginResult facebookLoginResult;
 
     private Controller controller;
 
@@ -242,49 +232,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-
-        // facebook
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        callbackManager = CallbackManager.Factory.create();
-        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                facebookLoginResult = loginResult;
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        // generate the KeyHash
-        // Add code to print out the key hash
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    "org.opencv.javacv.facerecognition",
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//
-//        } catch (NoSuchAlgorithmException e) {
-//
-//        }
-
-        // log into facebook.com
-//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
-
 
 
         setContentView(R.layout.face_detect_surface_view);
@@ -585,13 +532,11 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         super.onPause();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
-        AppEventsLogger.deactivateApp(this); // facebook tracker
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void checkResult(Result result) {
@@ -605,7 +550,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         super.onResume();
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
 
-        AppEventsLogger.activateApp(this); // facebook tracker
     }
 
     public void onDestroy() {
