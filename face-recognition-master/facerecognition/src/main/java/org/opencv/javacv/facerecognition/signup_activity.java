@@ -7,20 +7,29 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import utilities.DatabaseHelper;
 
 public class signup_activity extends Activity {
 
+     EditText username;
+     EditText email;
+     EditText pass;
+    static int counter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        counter=0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_activity);
-
-
-
         Button signUp = (Button)findViewById(R.id.signup);
         Button train = (Button) findViewById(R.id.training);
-        final EditText username = (EditText)findViewById(R.id.usrname);
+        username=(EditText)findViewById(R.id.usrname);
+        email= (EditText)findViewById(R.id.email);
+        pass= (EditText)findViewById(R.id.password);
+
+
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,7 +37,27 @@ public class signup_activity extends Activity {
                 editor.putBoolean("signedup",true);
                 editor.commit();
                 Intent intent = new Intent(getApplicationContext(),org.opencv.javacv.facerecognition.FdActivity.class);
+
+                DatabaseHelper db=new DatabaseHelper(getApplicationContext());
+
+                try {
+                    db.open();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                db.createEntry(username.getText().toString(), email.getText().toString(), pass.getText().toString());
+                // insert to database
+
+              //  db.printAll();
+
+
+                if(counter==1)
                 startActivity(intent);
+
+
+                counter++;
+
             }
         });
 

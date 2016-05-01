@@ -3,23 +3,20 @@ package org.opencv.javacv.facerecognition;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+
 import com.google.gson.JsonElement;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -55,6 +52,7 @@ import testingairesponse.ListeningActivity;
 import testingairesponse.VoiceRecognitionListener;
 import texttospeach.TextToSpeechHelper;
 import utilities.CommandExecution;
+import utilities.DatabaseHelper;
 
 //import java.io.FileNotFoundException;
 //import org.opencv.contrib.FaceRecognizer;
@@ -132,6 +130,12 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     int countImages=0;
 
     labels labelsFile;
+
+    String curUser;
+    String curUserEmail;
+    String curUserPassword;
+
+
 
     private TextView textVoice , textResultVoice;
     CommandExecution commandExecuter;
@@ -512,11 +516,29 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
                   msg.obj = textTochange;
                   final String textTochangeTemp = textTochange;
 
+
+
                   mHandler.sendMessage(msg);
 
                   Core.rectangle(mRgba, new Point(mRgba.width()-facesArray[i].br().x,facesArray[i].tl().y), new Point(mRgba.width()-facesArray[i].tl().x,facesArray[i].br().y), FACE_RECT_COLOR, 3);
 //                    if(mLikely < 70)
                   Core.putText(mRgba, textTochange, new Point(mRgba.width()-facesArray[i].br().x,facesArray[i].tl().y), 3, 1, new Scalar(255, 0, 0, 255));
+
+                  DatabaseHelper db=new DatabaseHelper(getApplicationContext());
+
+                  try {
+                      db.open();
+                  } catch (Exception e) {
+                      e.printStackTrace();
+                  }
+
+                  String testMail=db.getEmail(textTochange);
+
+                  System.out.println(testMail);
+
+                 // db.printAll();
+
+
               }
           }
 
