@@ -17,6 +17,7 @@ public class signup_activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_activity);
 
+        Button deleteDb = (Button)findViewById(R.id.deleteDb);
         Button signUp = (Button)findViewById(R.id.signup);
         Button train = (Button) findViewById(R.id.training);
         final EditText username = (EditText)findViewById(R.id.usrname);
@@ -50,6 +51,28 @@ public class signup_activity extends Activity {
                 }
             }
         });
+
+    deleteDb.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+
+            DatabaseHelper db=new DatabaseHelper(getApplicationContext());
+
+            try {
+                db.open();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            db.deleteEntrries();
+
+        }
+
+                                }
+       );
+
+
+
     }
 
     private void addUserToDatabase(EditText username, EditText email, EditText pass) {

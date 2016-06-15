@@ -110,9 +110,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
     private static String userName="",userPassword="",userEmail="";
 
-
-
-    com.googlecode.javacv.cpp.opencv_contrib.FaceRecognizer faceRecognizer;
+      com.googlecode.javacv.cpp.opencv_contrib.FaceRecognizer faceRecognizer;
 
 
     static final long MAXIMG = 10;
@@ -460,6 +458,26 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         Core.putText(mRgba, listenState, new Point(30, 90), 3, 4, new Scalar(255, 0, 0, 255));
         return mRgba;
     }
+
+
+
+    public static String getUserPassword() {
+        return userPassword;
+    }
+
+    public static void setUserPassword(String userPassword) {
+        FdActivity.userPassword = userPassword;
+    }
+
+    public static String getUserEmail() {
+        return userEmail;
+    }
+
+    public static void setUserEmail(String userEmail) {
+        FdActivity.userEmail = userEmail;
+    }
+
+
 
     private void moveSAR(Rect rect) {
         Point topLeft = rect.tl();

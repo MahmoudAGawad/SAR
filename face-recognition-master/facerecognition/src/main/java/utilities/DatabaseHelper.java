@@ -174,13 +174,14 @@ public class DatabaseHelper  {
 
     }
 
+*/
+    public void deleteEntrries() {
 
-    public void deleteEntry(long lrow) {
-        ourDatabase.delete(Database_table, rowId+"="+lrow, null);
+        database.delete(Database_table, null, null);
 
     }
 
-*/
+
 
 
     public void printAll()
