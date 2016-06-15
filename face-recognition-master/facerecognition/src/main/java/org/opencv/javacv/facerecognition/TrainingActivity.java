@@ -117,7 +117,7 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
     PersonRecognizer fr;
     ToggleButton toggleButtonGrabar;
 
-    TextView textState;
+//    TextView textState;
     com.googlecode.javacv.cpp.opencv_contrib.FaceRecognizer faceRecognizer;
 
 
@@ -277,7 +277,7 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
 
 
         toggleButtonGrabar=(ToggleButton)findViewById(R.id.toggleButtonGrabar);
-        textState= (TextView)findViewById(R.id.textViewState);
+//        textState= (TextView)findViewById(R.id.textViewState);
 
 
 

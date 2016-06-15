@@ -16,11 +16,10 @@ public class signup_activity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_activity);
 
-
-
         Button signUp = (Button)findViewById(R.id.signup);
         Button train = (Button) findViewById(R.id.training);
         final EditText username = (EditText)findViewById(R.id.usrname);
+
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -29,9 +28,9 @@ public class signup_activity extends Activity {
                 editor.commit();
                 Intent intent = new Intent(getApplicationContext(),org.opencv.javacv.facerecognition.FdActivity.class);
                 startActivity(intent);
+                finish();
             }
         });
-
 
         train.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,21 +39,9 @@ public class signup_activity extends Activity {
                     Intent intent = new Intent(getApplicationContext(),org.opencv.javacv.facerecognition.TrainingActivity.class);
                     intent.putExtra("usrname",username.getText().toString());
                     startActivity(intent);
+                    finish();
                 }
             }
         });
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

@@ -113,45 +113,17 @@ public class CommandExecution {
                         for(int j = 1 ; j <= items.size() ; j++){
                             String packageName = (String) items.get(j-1).get("packageName");
                             Intent i = pm.getLaunchIntentForPackage(packageName);
-                            Log.d("debuggggg" , "inside loop");
-
                             if (i != null ) {
                                 context.startActivity(i);
-                                Log.d("debuggggg" , "inside if");
-
                                 break;
                             }
-//                        else
-//                            textView.setText("Not found2");
 
                         }
-
-
                     }
-                    else{
-                        // Application not found
-//                        textView.setText("Not found");
-                    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 }
 
             }
         }
-
-
     }
 
 
@@ -200,9 +172,6 @@ public class CommandExecution {
                 recEmail = "waleed.adel.mahmoud@gmail.com";
                 new SendEmail().execute(recEmail, newMessage);
             }
-
-
-
         }
         catch (Exception e){
             Log.e("exception here ", e.toString());
@@ -215,10 +184,7 @@ public class CommandExecution {
 
 
     private void doSending(Result result) {
-
-
         try {
-
             HashMap<String, JsonElement> hm = result.getParameters();
             JsonElement mes = hm.get("message");
             Log.e("messageeee", mes.toString());
@@ -245,9 +211,6 @@ public class CommandExecution {
                 recEmail = "waleed.adel.mahmoud@gmail.com";
                 new SendEmail().execute(recEmail, mes.toString());
             }
-
-
-
         }
         catch (Exception e){
          Log.e("exception here ", e.toString());
