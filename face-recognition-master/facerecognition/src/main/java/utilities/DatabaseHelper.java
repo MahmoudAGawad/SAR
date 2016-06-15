@@ -114,7 +114,7 @@ public class DatabaseHelper  {
         Cursor c;
 
         try {
-         c=database.query(Database_table, columns, userName + "='" + name+"'", null, null, null, null);
+            c=database.query(Database_table, columns, userName + "='" + name+"'", null, null, null, null);
 
             if(c!=null){
 
@@ -140,14 +140,22 @@ public class DatabaseHelper  {
 
         String columns[]={emailpassword};
 
-        Cursor c=database.query(Database_table, columns, userName+"='"+name+"'", null, null, null,null);
-        int iPassword=c.getColumnIndex(emailpassword);
+        Cursor c;
 
-        if(c!=null){
-            c.moveToFirst();
-            return c.getString(iPassword);
+        try {
+            c = database.query(Database_table, columns, userName + "='" + name + "'", null, null, null, null);
+            int iPassword = c.getColumnIndex(emailpassword);
+
+            if (c != null) {
+                c.moveToFirst();
+                return c.getString(iPassword);
+            }
         }
-        return null;
+        catch (Exception e){
+            return "not found";
+        }
+
+        return "not found";
 
     }
 

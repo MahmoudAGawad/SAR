@@ -8,6 +8,7 @@ package testingairesponse;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
 import android.os.Bundle;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -39,6 +40,15 @@ public abstract class ListeningActivity extends Activity implements IVoiceContro
         } catch(Exception ex) {
             Log.d("SpeechRecognitio", "Bei ");
         }
+    }
+
+    protected void mute(){
+        AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
+        amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
+        amanager.setStreamMute(AudioManager.STREAM_ALARM, true);
+        amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        amanager.setStreamMute(AudioManager.STREAM_RING, true);
+        amanager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
     }
 
     // stops the service

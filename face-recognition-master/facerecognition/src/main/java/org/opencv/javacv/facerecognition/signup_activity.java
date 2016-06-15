@@ -12,22 +12,17 @@ import utilities.DatabaseHelper;
 
 public class signup_activity extends Activity {
 
-     EditText username;
-     EditText email;
-     EditText pass;
-    static int counter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        counter=0;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup_activity);
+
         Button signUp = (Button)findViewById(R.id.signup);
         Button train = (Button) findViewById(R.id.training);
-        username=(EditText)findViewById(R.id.usrname);
-        email= (EditText)findViewById(R.id.email);
-        pass= (EditText)findViewById(R.id.password);
-
+        final EditText username = (EditText)findViewById(R.id.usrname);
+        final EditText email= (EditText)findViewById(R.id.email);
+        final EditText pass= (EditText)findViewById(R.id.password);
+        final EditText passConfirm= (EditText)findViewById(R.id.cpassword);
 
 
         signUp.setOnClickListener(new View.OnClickListener() {
@@ -36,54 +31,38 @@ public class signup_activity extends Activity {
                 SharedPreferences.Editor editor = getSharedPreferences("first_use_flag", MODE_PRIVATE).edit();
                 editor.putBoolean("signedup",true);
                 editor.commit();
+
+                addUserToDatabase(username,email,pass);
+
                 Intent intent = new Intent(getApplicationContext(),org.opencv.javacv.facerecognition.FdActivity.class);
-
-                DatabaseHelper db=new DatabaseHelper(getApplicationContext());
-
-                try {
-                    db.open();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                db.createEntry(username.getText().toString(), email.getText().toString(), pass.getText().toString());
-                // insert to database
-
-              //  db.printAll();
-
-
-                if(counter==1)
                 startActivity(intent);
-
-
-                counter++;
-
+                finish();
             }
         });
-
 
         train.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(username.getText().length()!=0){
-                    Intent intent = new Intent(getApplicationContext(),org.opencv.javacv.facerecognition.TrainingActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), org.opencv.javacv.facerecognition.TrainingActivity.class);
                     intent.putExtra("usrname",username.getText().toString());
                     startActivity(intent);
                 }
             }
         });
+    }
 
+    private void addUserToDatabase(EditText username, EditText email, EditText pass) {
 
+        DatabaseHelper db=new DatabaseHelper(getApplicationContext());
 
+        try {
+            db.open();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-
-
-
-
-
-
-
-
+        db.createEntry(username.getText().toString(), email.getText().toString(), pass.getText().toString());
 
     }
 }
