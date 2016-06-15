@@ -8,6 +8,8 @@ android {
         applicationId "org.opencv.javacv.facerecognition"
         minSdkVersion 17
         targetSdkVersion 23
+        // Enabling multidex support.
+        multiDexEnabled true
     }
 
     buildTypes {
