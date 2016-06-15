@@ -76,6 +76,11 @@
                             android:layout_height="wrap_content"
                             android:src="@drawable/ic_green" />
 
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="popup"
+                            android:id="@+id/popupStart"/>
 
                     </LinearLayout>
 
@@ -93,10 +98,7 @@
 
 
             </LinearLayout>
-
         </RelativeLayout>
-
-
     </LinearLayout>
     
 </LinearLayout>

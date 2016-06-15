@@ -39,7 +39,6 @@ public class signup_activity extends Activity {
                     Intent intent = new Intent(getApplicationContext(),org.opencv.javacv.facerecognition.TrainingActivity.class);
                     intent.putExtra("usrname",username.getText().toString());
                     startActivity(intent);
-                    finish();
                 }
             }
         });

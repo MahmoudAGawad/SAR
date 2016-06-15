@@ -1,15 +1,20 @@
 package org.opencv.javacv.facerecognition;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +23,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -108,6 +115,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     PersonRecognizer fr;
     ToggleButton toggleButtonGrabar;
     Button addUser;
+    Button popUp;
     ImageView ivGreen, ivYellow, ivRed;
     String listenState = "";
 
@@ -259,6 +267,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         textVoice = (TextView) findViewById(R.id.text);
         textResultVoice = (TextView) findViewById(R.id.result);
         addUser = (Button) findViewById(R.id.adduser);
+        popUp = (Button) findViewById(R.id.popupStart);
         ////
         final TextToSpeechHelper textToSpeechHelper = new TextToSpeechHelper(getApplicationContext());
         commandExecuter = new CommandExecution(textToSpeechHelper, getApplicationContext());
@@ -269,6 +278,14 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         startListening(); // starts listening
         Log.d("State", "Ready to listen");
         listenState = "Ready to listen";
+
+
+        popUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopup(FdActivity.this,new Point(150,50),"123456789","123456789");
+            }
+        });
 
         addUser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -626,5 +643,46 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
             }
 
         }.execute(aiRequest);
+    }
+
+
+    private void showPopup( Activity context, Point p, String name, String phone) {
+        int popupWidth = 600;
+        int popupHeight = 480;
+
+        // Inflate the popup_layout.xml
+        LinearLayout viewGroup = (LinearLayout) context.findViewById(R.id.popup);
+        LayoutInflater layoutInflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View layout = layoutInflater.inflate(R.layout.popup_layout, viewGroup);
+
+        Log.d("Layout", (layout == null) + "");
+
+        // Creating the PopupWindow
+        PopupWindow popup = new PopupWindow(context);
+        popup.setContentView(layout);
+        popup.setWidth(popupWidth);
+        popup.setHeight(popupHeight);
+        popup.setFocusable(true);
+
+        // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
+        int OFFSET_X = 30;
+        int OFFSET_Y = 30;
+
+        TextView nameText = (TextView) layout.findViewById(R.id.sender_name);
+        TextView phoneText = (TextView) layout.findViewById(R.id.sender_phone);
+
+        nameText.setTextColor(Color.WHITE);
+        phoneText.setTextColor(Color.WHITE);
+
+        nameText.setText(name);
+        phoneText.setText(phone);
+
+
+        // Clear the default translucent background
+        popup.setBackgroundDrawable(new BitmapDrawable());
+
+        // Displaying the popup at the specified location, + offsets.
+        popup.showAtLocation(layout, Gravity.NO_GRAVITY, (int)(p.x + OFFSET_X), (int)(p.y + OFFSET_Y));
     }
 }
