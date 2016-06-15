@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
@@ -13,15 +12,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -64,6 +60,7 @@ import testingairesponse.ListeningActivity;
 import testingairesponse.VoiceRecognitionListener;
 import texttospeach.TextToSpeechHelper;
 import utilities.CommandExecution;
+import utilities.DatabaseHelper;
 
 //import java.io.FileNotFoundException;
 //import org.opencv.contrib.FaceRecognizer;
@@ -119,7 +116,9 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     ImageView ivGreen, ivYellow, ivRed;
     String listenState = "";
 
-    com.googlecode.javacv.cpp.opencv_contrib.FaceRecognizer faceRecognizer;
+    private static String userName="",userPassword="",userEmail="";
+
+      com.googlecode.javacv.cpp.opencv_contrib.FaceRecognizer faceRecognizer;
 
 
     static final long MAXIMG = 10;
@@ -437,6 +436,22 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //                    if(mLikely < 70)
                 Core.putText(mRgba, textTochange, new Point(mRgba.width() - facesArray[0].br().x, facesArray[0].tl().y), 3, 4, new Scalar(255, 0, 0, 255));
 //            }
+
+
+            DatabaseHelper db=new DatabaseHelper(getApplicationContext());
+
+            try {
+                db.open();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            String testMail=db.getEmail(textTochange);
+            String testPassword=db.getPassword(textTochange);
+
+            if(!testMail.equals("not found")){userEmail=testMail;}
+            if(!testPassword.equals("not found")){userPassword=testPassword;}
+
         }
 
 //        for (int i = 0; i < facesArray.length; i++){
@@ -460,6 +475,26 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         Core.putText(mRgba, listenState, new Point(30, 90), 3, 4, new Scalar(255, 0, 0, 255));
         return mRgba;
     }
+
+
+
+    public static String getUserPassword() {
+        return userPassword;
+    }
+
+    public static void setUserPassword(String userPassword) {
+        FdActivity.userPassword = userPassword;
+    }
+
+    public static String getUserEmail() {
+        return userEmail;
+    }
+
+    public static void setUserEmail(String userEmail) {
+        FdActivity.userEmail = userEmail;
+    }
+
+
 
     private void moveSAR(Rect rect) {
         Point topLeft = rect.tl();

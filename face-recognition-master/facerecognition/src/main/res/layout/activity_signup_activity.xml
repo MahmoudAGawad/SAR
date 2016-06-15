@@ -62,6 +62,12 @@
             android:text="SignUp"
             android:id="@+id/signup"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Delete database"
+            android:id="@+id/deleteDb"/>
+
     </LinearLayout>
 
 
