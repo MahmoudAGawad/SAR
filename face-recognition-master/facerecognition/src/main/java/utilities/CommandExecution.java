@@ -80,9 +80,18 @@ public class CommandExecution {
 
     private void doTalk(Result result) {
         Fulfillment elem =result.getFulfillment();
-        String speach = elem.getSpeech();
+        String speech = elem.getSpeech();
 
-        textToSpeechHelper.speak(speach);
+        StringBuilder builder = new StringBuilder();
+        short cnt = 2;
+        for (int i = 0; i < speech.length() && cnt > 0; i++){
+            if(speech.charAt(i) == '.'){
+                cnt--;
+            }
+            builder.append(speech.charAt(i));
+        }
+
+        textToSpeechHelper.speak(builder.toString());
         while (textToSpeechHelper.isSpeaking());
 
 
