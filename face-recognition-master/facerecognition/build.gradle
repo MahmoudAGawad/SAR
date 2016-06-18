@@ -8,6 +8,8 @@ android {
         applicationId "org.opencv.javacv.facerecognition"
         minSdkVersion 17
         targetSdkVersion 23
+        // Enabling multidex support.
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -22,11 +24,13 @@ dependencies {
     compile project(':openCVLibrary248')
     compile files('libs/javacpp.jar')
     compile files('libs/javacv.jar')
+    // api.ai SDK dependencies
+    compile files('lib/mail.jar')
+    compile files('lib/activation.jar')
+    compile files('lib/additionnal.jar')
     compile 'ai.api:sdk:1.7.6@aar'
-// api.ai SDK dependencies
     compile 'com.google.code.gson:gson:2.3'
     compile 'commons-io:commons-io:2.4'
-    compile files ('lib/mail.jar')
-    compile files ('lib/activation.jar')
-    compile files ('lib/additionnal.jar')
+    compile 'com.android.support:support-v4:23.3.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }

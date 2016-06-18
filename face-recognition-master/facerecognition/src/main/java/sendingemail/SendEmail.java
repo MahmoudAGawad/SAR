@@ -3,6 +3,8 @@ package sendingemail;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.opencv.javacv.facerecognition.FdActivity;
+
 /**
  * Created by wido on 2/8/2016.
  */
@@ -26,15 +28,23 @@ public class SendEmail extends AsyncTask<String, Void, Integer>
 
         //Task for sending mail
         try {
-            GmailSender sender = new GmailSender("sar.ai.assistant@gmail.com", "sarrobot123");
+
+
+            String useremail= FdActivity.getUserEmail();
+            String userPass= FdActivity.getUserPassword();
+
+          //  GmailSender sender = new GmailSender("sar.ai.assistant@gmail.com", "sarrobot123");
+
+            GmailSender sender = new GmailSender(useremail, userPass);
 
             Log.e("emaillllll",params[0]);
             Log.e("bodyyyy",params[1]);
 
             sender.sendMail("This is Subject",
                     params[1],
-                    "sar.ai.assistant@gmail.com",
+                    useremail,
                     params[0]);
+
 
             Log.e("3333", "beforeee");
 
