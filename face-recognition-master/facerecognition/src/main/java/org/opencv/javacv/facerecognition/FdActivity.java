@@ -25,6 +25,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.gson.JsonElement;
 
 import org.opencv.android.BaseLoaderCallback;
@@ -47,6 +53,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 
 import ai.api.AIConfiguration;
@@ -61,6 +68,9 @@ import testingairesponse.VoiceRecognitionListener;
 import texttospeach.TextToSpeechHelper;
 import utilities.CommandExecution;
 import utilities.DatabaseHelper;
+
+
+import com.facebook.FacebookSdk;
 
 //import java.io.FileNotFoundException;
 //import org.opencv.contrib.FaceRecognizer;
@@ -135,6 +145,10 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
 
     private Controller controller;
+
+    // facebook
+    private CallbackManager callbackManager;
+    private LoginResult facebookLoginResult;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -219,6 +233,26 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
+        // facebook
+        FacebookSdk.sdkInitialize(getApplicationContext());
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+            facebookLoginResult = loginResult;
+            }
+
+            @Override
+            public void onCancel() {
+            Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+            Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
+            }
+            });
 
         // generate the KeyHash
         // Add code to print out the key hash
@@ -237,8 +271,8 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //
 //        }
 
-        // log into facebook.com
-//        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
+//         log into facebook.com
+        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
 
 
         final ToggleButton bluetoothOnOff = (ToggleButton) findViewById(R.id.toggleButton2);
@@ -342,11 +376,14 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         super.onPause();
         if (mOpenCvCameraView != null)
             mOpenCvCameraView.disableView();
+        AppEventsLogger.deactivateApp(this); // facebook tracker
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // facebook
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void checkResult(Result result) {
@@ -358,7 +395,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     public void onResume() {
         super.onResume();
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
-
+        AppEventsLogger.activateApp(this); // facebook tracker
     }
 
     public void onDestroy() {
