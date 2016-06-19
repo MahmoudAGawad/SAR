@@ -10,6 +10,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -71,20 +75,31 @@ public class CommandExecution {
                     case "clock.alarm_set":
 
                         break;
+                    case "facebook.update":
+                        doPostOnFacebook(result, context);
+                        break;
                 }
 
     }
 
     private void doTalk(Result result) {
         Fulfillment elem =result.getFulfillment();
-        String speach = elem.getSpeech();
+        String speech = elem.getSpeech();
 
-        textToSpeechHelper.speak(speach);
+        StringBuilder builder = new StringBuilder();
+        short cnt = 2;
+        for (int i = 0; i < speech.length() && cnt > 0; i++){
+            if(speech.charAt(i) == '.'){
+                cnt--;
+            }
+            builder.append(speech.charAt(i));
+        }
+
+        textToSpeechHelper.speak(builder.toString());
         while (textToSpeechHelper.isSpeaking());
 
 
     }
-
 
     private void doOpenning(Result result , Context context) {
         if (result.getParameters() != null && !result.getParameters().isEmpty()) {
@@ -128,10 +143,6 @@ public class CommandExecution {
             }
         }
     }
-
-
-
-
 
 
     private void doEditing(Result result) {
@@ -219,4 +230,67 @@ public class CommandExecution {
          Log.e("exception here ", e.toString());
         }
     }
+
+
+
+
+
+
+     private void doPostOnFacebook(Result result, Context context){
+
+        HashMap<String, JsonElement> parameters = result.getParameters();
+        if(parameters == null){
+        //   java.lang.RuntimeException: Can't create handler inside thread that has not called Looper.prepare()
+        //            Toast.makeText(context, "Nothing to post on facebook. Cancelling...", Toast.LENGTH_SHORT).show();
+        }else{
+            JsonElement toBePosted = parameters.get("text");
+            if(toBePosted == null){
+//                Toast.makeText(context, "Nothing to post on facebook. Cancelling...", Toast.LENGTH_SHORT).show();
+            }else {
+                // https://www.youtube.com/watch?v=-fs_PL-fLOY
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+                if (!accessToken.getPermissions().contains("publish_actions")) {
+                    // (Activity) context? error?
+                    LoginManager.getInstance().logInWithPublishPermissions((Activity) context, Arrays.asList("publish_actions"));
+                }
+
+            /* Graph API request example:
+                GraphRequest request = GraphRequest.newMeRequest(
+                        accessToken,
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(
+                                    JSONObject object,
+                                    GraphResponse response) {
+                                // Application code
+                                try {
+                                    Object name = object.get("name");
+                                    System.out.println("nameeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: "+ name.toString());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+                Bundle requestParameters = new Bundle();
+                requestParameters.putString("fields", "id,name,link");
+                request.setParameters(requestParameters);
+                request.executeAsync();
+                */
+                GraphRequest request = GraphRequest.newPostRequest(accessToken, "me/feed", null,
+                        new GraphRequest.Callback() {
+                            @Override
+                            public void onCompleted(GraphResponse response) {
+                                Log.d("facebook.update", "Successfully Posted on facebook!");
+                            }
+                        });
+
+                Bundle postParams = request.getParameters();
+                postParams.putString("message", toBePosted.getAsString());
+                request.setParameters(postParams);
+                request.executeAsync();
+            }
+        }
+    }
+
+
 }

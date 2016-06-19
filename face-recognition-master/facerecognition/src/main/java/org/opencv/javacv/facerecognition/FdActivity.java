@@ -32,6 +32,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 import com.android.internal.telephony.ITelephony;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.gson.JsonElement;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -51,6 +58,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Map;
 import ai.api.AIConfiguration;
 import ai.api.AIDataService;
@@ -66,6 +74,13 @@ import utilities.CommandExecution;
 import utilities.DatabaseHelper;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+
+
+import com.facebook.FacebookSdk;
+
+//import java.io.FileNotFoundException;
+//import org.opencv.contrib.FaceRecognizer;
+
 
 public class FdActivity extends ListeningActivity implements CvCameraViewListener2 {
 
@@ -104,7 +119,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
     String mPath = "";
 
-    private Tutorial3View mTutorial3View;
+    private Tutorial3View mOpenCvCameraView;
     private int mChooseCamera = backCam;
 
 
@@ -191,7 +206,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //                        Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
 //                    }
 //
-//                    mTutorial3View.enableView();
+//                    mOpenCvCameraView.enableView();
 //
 //                }
 //                break;
@@ -204,6 +219,9 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //            }
 //        }
 //    };
+    // facebook
+    private CallbackManager callbackManager;
+    private LoginResult facebookLoginResult;
 
     public FdActivity() {
         mDetectorName = new String[2];
@@ -264,7 +282,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
                             Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
                         }
 
-                        mTutorial3View.enableView();
+                        mOpenCvCameraView.enableView();
 
                     }
                     break;
@@ -288,25 +306,45 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-
-        // generate the KeyHash
-        // Add code to print out the key hash
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    "org.opencv.javacv.facerecognition",
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+        // facebook
+//        FacebookSdk.sdkInitialize(getApplicationContext());
+//        callbackManager = CallbackManager.Factory.create();
+//        LoginManager.getInstance().registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+//
+//            @Override
+//            public void onSuccess(LoginResult loginResult) {
+//            facebookLoginResult = loginResult;
 //            }
-//        } catch (PackageManager.NameNotFoundException e) {
 //
-//        } catch (NoSuchAlgorithmException e) {
+//            @Override
+//            public void onCancel() {
+//            Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
+//            }
 //
-//        }
-
-        // log into facebook.com
+//            @Override
+//            public void onError(FacebookException error) {
+//            Toast.makeText(context, "Couldn't log into facebook!", Toast.LENGTH_SHORT).show();
+//            }
+//            });
+//
+//        // generate the KeyHash
+//        // Add code to print out the key hash
+////        try {
+////            PackageInfo info = getPackageManager().getPackageInfo(
+////                    "org.opencv.javacv.facerecognition",
+////                    PackageManager.GET_SIGNATURES);
+////            for (Signature signature : info.signatures) {
+////                MessageDigest md = MessageDigest.getInstance("SHA");
+////                md.update(signature.toByteArray());
+////                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+////            }
+////        } catch (PackageManager.NameNotFoundException e) {
+////
+////        } catch (NoSuchAlgorithmException e) {
+////
+////        }
+//
+////         log into facebook.com
 //        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
 
 
@@ -390,9 +428,9 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //            }
 //        });
 
-        mTutorial3View = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
+        mOpenCvCameraView = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
 
-        mTutorial3View.setCvCameraViewListener(this);
+        mOpenCvCameraView.setCvCameraViewListener(this);
         mPath = getFilesDir() + "/facerecogOCV/";
 
         labelsFile = new labels(mPath);
@@ -435,13 +473,18 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     @Override
     public void onPause() {
         super.onPause();
-//        if (mTutorial3View != null)
-//            mTutorial3View.disableView();
+//        if (mOpenCvCameraView != null)
+//            mOpenCvCameraView.disableView();
+        if (mOpenCvCameraView != null)
+            mOpenCvCameraView.disableView();
+//        AppEventsLogger.deactivateApp(this); // facebook tracker
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        // facebook
+//        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     private void checkResult(Result result) {
@@ -453,12 +496,12 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     public void onResume() {
         super.onResume();
         OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
-
+//        AppEventsLogger.activateApp(this); // facebook tracker
     }
 
     public void onDestroy() {
         super.onDestroy();
-//        mTutorial3View.disableView();
+//        mOpenCvCameraView.disableView();
     }
 
     public void onCameraViewStarted(int width, int height) {

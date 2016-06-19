@@ -28,6 +28,7 @@ public abstract class ListeningActivity extends Activity implements IVoiceContro
     // starts the service
     protected void startListening() {
         try {
+            Log.d("start_activity", "staaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaart");
             initSpeech();
             Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
             intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,RecognizerIntent.LANGUAGE_MODEL_WEB_SEARCH);
