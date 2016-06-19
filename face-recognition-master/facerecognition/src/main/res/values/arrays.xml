@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="faces2">
+        <item>@drawable/face1</item>
+        <item>@drawable/face2</item>
+        <item>@drawable/face3</item>
+        <item>@drawable/face4</item>
+        <item>@drawable/face5</item>
+        <item>@drawable/face6</item>
+        <item>@drawable/face7</item>
+        <item>@drawable/face8</item>
+    </array>
+</resources>

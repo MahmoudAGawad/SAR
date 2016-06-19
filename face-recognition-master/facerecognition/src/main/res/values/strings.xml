@@ -2,7 +2,7 @@
 <resources>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="app_name">OCV Face Recognition</string>
+    <string name="app_name">SAR (Smart Assistant Robot)</string>
     <string name="BLANK"></string>
     <string name="STrain">Train</string>
     <string name="SViewAll">View all faces</string>

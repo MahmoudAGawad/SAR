@@ -68,6 +68,9 @@ public class CommandExecution {
                     case "apps.open":
                         doOpenning(result , context);
                         break;
+                    case "clock.alarm_set":
+
+                        break;
                 }
 
     }
@@ -215,9 +218,5 @@ public class CommandExecution {
         catch (Exception e){
          Log.e("exception here ", e.toString());
         }
-
-
     }
-
-
 }

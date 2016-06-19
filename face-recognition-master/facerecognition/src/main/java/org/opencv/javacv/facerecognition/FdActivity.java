@@ -1,15 +1,22 @@
 package org.opencv.javacv.facerecognition;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -24,16 +31,14 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
-
+import com.android.internal.telephony.ITelephony;
 import com.google.gson.JsonElement;
-
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfRect;
 import org.opencv.core.Point;
@@ -41,14 +46,12 @@ import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.objdetect.CascadeClassifier;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
-
 import ai.api.AIConfiguration;
 import ai.api.AIDataService;
 import ai.api.AIServiceException;
@@ -61,10 +64,8 @@ import testingairesponse.VoiceRecognitionListener;
 import texttospeach.TextToSpeechHelper;
 import utilities.CommandExecution;
 import utilities.DatabaseHelper;
-
-//import java.io.FileNotFoundException;
-//import org.opencv.contrib.FaceRecognizer;
-
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class FdActivity extends ListeningActivity implements CvCameraViewListener2 {
 
@@ -84,9 +85,11 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     private int faceState = SEARCHING;
     private MenuItem nBackCam;
     private MenuItem mFrontCam;
-    private MenuItem mEigen;
+    private MenuItem connectSAR;
+    private MenuItem addUserItem;
+//    private MenuItem
 
-
+    int x = 0;
     private Mat mRgba;
     private Mat mGray;
     private File mCascadeFile;
@@ -101,7 +104,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
     String mPath = "";
 
-    private Tutorial3View mOpenCvCameraView;
+    private Tutorial3View mTutorial3View;
     private int mChooseCamera = backCam;
 
 
@@ -111,14 +114,21 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
     PersonRecognizer fr;
     ToggleButton toggleButtonGrabar;
-    Button addUser;
-    Button popUp;
+//    Button addUser;
+    Button popUp, endCall;
     ImageView ivGreen, ivYellow, ivRed;
     String listenState = "";
+    ImageView listenIndicator;
+    TextView bubbleName,aiResponseText;
 
-    private static String userName="",userPassword="",userEmail="";
+    boolean callFromApp = false; // To control the call has been made from the application
+    boolean callFromOffHook = false; // To control the change to idle state is from the app call
+    TelephonyManager manager;
+    StatePhoneReceiver myPhoneStateListener;
 
-      com.googlecode.javacv.cpp.opencv_contrib.FaceRecognizer faceRecognizer;
+    private static String userName = "", userPassword = "", userEmail = "";
+
+    com.googlecode.javacv.cpp.opencv_contrib.FaceRecognizer faceRecognizer;
 
 
     static final long MAXIMG = 10;
@@ -136,63 +146,64 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
     private Controller controller;
 
-    private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
-        @Override
-        public void onManagerConnected(int status) {
-            switch (status) {
-                case LoaderCallbackInterface.SUCCESS: {
-
-                    fr = new PersonRecognizer(mPath);
-
-
-                    String s = getResources().getString(R.string.Straininig);
-                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                    fr.load();
-
-                    try {
-                        // load cascade file from application resources
-                        InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
-                        File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
-                        mCascadeFile = new File(cascadeDir, "lbpcascade.xml");
-                        FileOutputStream os = new FileOutputStream(mCascadeFile);
-
-                        byte[] buffer = new byte[4096];
-                        int bytesRead;
-                        while ((bytesRead = is.read(buffer)) != -1) {
-                            os.write(buffer, 0, bytesRead);
-                        }
-                        is.close();
-                        os.close();
-
-                        mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
-                        if (mJavaDetector.empty()) {
-                            Log.e(TAG, "Failed to load cascade classifier");
-                            mJavaDetector = null;
-                        } else
-                            Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
-
-                        //                 mNativeDetector = new DetectionBasedTracker(mCascadeFile.getAbsolutePath(), 0);
-
-                        cascadeDir.delete();
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
-                    }
-
-                    mOpenCvCameraView.enableView();
-
-                }
-                break;
-                default: {
-                    super.onManagerConnected(status);
-                }
-                break;
-
-
-            }
-        }
-    };
+    private BaseLoaderCallback mLoaderCallback;
+//    = new BaseLoaderCallback(this) {
+//        @Override
+//        public void onManagerConnected(int status) {
+//            switch (status) {
+//                case LoaderCallbackInterface.SUCCESS: {
+//
+//                    fr = new PersonRecognizer(mPath);
+//
+//
+//                    String s = getResources().getString(R.string.Straininig);
+//                    Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+//                    fr.load();
+//
+//                    try {
+//                        // load cascade file from application resources
+//                        InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
+//                        File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
+//                        mCascadeFile = new File(cascadeDir, "lbpcascade.xml");
+//                        FileOutputStream os = new FileOutputStream(mCascadeFile);
+//
+//                        byte[] buffer = new byte[4096];
+//                        int bytesRead;
+//                        while ((bytesRead = is.read(buffer)) != -1) {
+//                            os.write(buffer, 0, bytesRead);
+//                        }
+//                        is.close();
+//                        os.close();
+//
+//                        mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
+//                        if (mJavaDetector.empty()) {
+//                            Log.e(TAG, "Failed to load cascade classifier");
+//                            mJavaDetector = null;
+//                        } else
+//                            Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
+//
+//                        //                 mNativeDetector = new DetectionBasedTracker(mCascadeFile.getAbsolutePath(), 0);
+//
+//                        cascadeDir.delete();
+//
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                        Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
+//                    }
+//
+//                    mTutorial3View.enableView();
+//
+//                }
+//                break;
+//                default: {
+//                    super.onManagerConnected(status);
+//                }
+//                break;
+//
+//
+//            }
+//        }
+//    };
 
     public FdActivity() {
         mDetectorName = new String[2];
@@ -208,11 +219,69 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        boolean traingFlag = false;
+
+        mLoaderCallback = new BaseLoaderCallback(this) {
+            @Override
+            public void onManagerConnected(int status) {
+                switch (status) {
+                    case LoaderCallbackInterface.SUCCESS: {
+
+                        fr = new PersonRecognizer(mPath);
+
+
+                        String s = getResources().getString(R.string.Straininig);
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+                        fr.load();
+
+                        try {
+                            // load cascade file from application resources
+                            InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
+                            File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
+                            mCascadeFile = new File(cascadeDir, "lbpcascade.xml");
+                            FileOutputStream os = new FileOutputStream(mCascadeFile);
+
+                            byte[] buffer = new byte[4096];
+                            int bytesRead;
+                            while ((bytesRead = is.read(buffer)) != -1) {
+                                os.write(buffer, 0, bytesRead);
+                            }
+                            is.close();
+                            os.close();
+
+                            mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
+                            if (mJavaDetector.empty()) {
+                                Log.e(TAG, "Failed to load cascade classifier");
+                                mJavaDetector = null;
+                            } else
+                                Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
+
+                            //                 mNativeDetector = new DetectionBasedTracker(mCascadeFile.getAbsolutePath(), 0);
+
+                            cascadeDir.delete();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
+                        }
+
+                        mTutorial3View.enableView();
+
+                    }
+                    break;
+                    default: {
+                        super.onManagerConnected(status);
+                    }
+                    break;
+                }
+            }
+        };
+
 
         Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
 
+        myPhoneStateListener = new StatePhoneReceiver(this);
+        manager = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE));
 
         setContentView(R.layout.face_detect_surface_view);
 
@@ -241,33 +310,36 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("public_profile", "user_friends"));
 
 
-        final ToggleButton bluetoothOnOff = (ToggleButton) findViewById(R.id.toggleButton2);
-
-        bluetoothOnOff.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (bluetoothOnOff.isChecked()) {
-
-                    Intent trainingIntent = new Intent(org.opencv.javacv.facerecognition.FdActivity.this, org.opencv.javacv.facerecognition.TrainingActivity.class);
-                    startActivity(trainingIntent);
-
-                    //  controller.connectToSAR();
-
-
-                } else {
-                    //    controller.disconnectToSAR();
-
-
-                }
-            }
-        });
+//        final ToggleButton bluetoothOnOff = (ToggleButton) findViewById(R.id.toggleButton2);
+//
+//        bluetoothOnOff.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (bluetoothOnOff.isChecked()) {
+//
+////                    Intent trainingIntent = new Intent(org.opencv.javacv.facerecognition.FdActivity.this, org.opencv.javacv.facerecognition.TrainingActivity.class);
+////                    startActivity(trainingIntent);
+//
+//                    //  controller.connectToSAR();
+//
+//
+//                } else {
+//                    //    controller.disconnectToSAR();
+//
+//
+//                }
+//            }
+//        });
 
 
         textVoice = (TextView) findViewById(R.id.text);
         textResultVoice = (TextView) findViewById(R.id.result);
-        addUser = (Button) findViewById(R.id.adduser);
+//        addUser = (Button) findViewById(R.id.adduser);
         popUp = (Button) findViewById(R.id.popupStart);
-        ////
+        listenIndicator = (ImageView) findViewById(R.id.listen_indicator);
+        bubbleName = (TextView)findViewById(R.id.bubble_name);
+        aiResponseText = (TextView)findViewById(R.id.ai_response);
+
         final TextToSpeechHelper textToSpeechHelper = new TextToSpeechHelper(getApplicationContext());
         commandExecuter = new CommandExecution(textToSpeechHelper, getApplicationContext());
 
@@ -282,22 +354,45 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         popUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPopup(FdActivity.this,new Point(150,50),"123456789","123456789");
+                showPopup(FdActivity.this, new Point(150, 50), "123456789", "123456789");
+                TelephonyManager telephonyManager = (TelephonyManager) getApplicationContext().getSystemService(Context.TELEPHONY_SERVICE);
+                Class clazz = null;
+                try {
+                    clazz = Class.forName(telephonyManager.getClass().getName());
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                Method method = null;
+                try {
+                    method = clazz.getDeclaredMethod("getITelephony");
+                } catch (NoSuchMethodException e) {
+                    e.printStackTrace();
+                }
+                method.setAccessible(true);
+                ITelephony telephonyService = null;
+                try {
+                    telephonyService = (ITelephony) method.invoke(telephonyManager);
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (InvocationTargetException e) {
+                    e.printStackTrace();
+                }
+                telephonyService.endCall();
             }
         });
 
-        addUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), org.opencv.javacv.facerecognition.signup_activity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
+//        addUser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getApplicationContext(), org.opencv.javacv.facerecognition.signup_activity.class);
+//                startActivity(intent);
+//                finish();
+//            }
+//        });
 
-        mOpenCvCameraView = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
+        mTutorial3View = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
 
-        mOpenCvCameraView.setCvCameraViewListener(this);
+        mTutorial3View.setCvCameraViewListener(this);
         mPath = getFilesDir() + "/facerecogOCV/";
 
         labelsFile = new labels(mPath);
@@ -340,8 +435,8 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     @Override
     public void onPause() {
         super.onPause();
-        if (mOpenCvCameraView != null)
-            mOpenCvCameraView.disableView();
+//        if (mTutorial3View != null)
+//            mTutorial3View.disableView();
     }
 
     @Override
@@ -363,7 +458,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
     public void onDestroy() {
         super.onDestroy();
-        mOpenCvCameraView.disableView();
+//        mTutorial3View.disableView();
     }
 
     public void onCameraViewStarted(int width, int height) {
@@ -372,11 +467,12 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     }
 
     public void onCameraViewStopped() {
-        mGray.release();
-        mRgba.release();
+//        mGray.release();
+//        mRgba.release();
     }
 
     MatOfRect faces;
+
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 
         mRgba = inputFrame.rgba();
@@ -407,38 +503,48 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         Rect[] facesArray = faces.toArray();
 
 
-        Core.flip(mRgba, mRgba, 1);
+//        Core.flip(mRgba, mRgba, 1);
 
         if ((facesArray.length > 0) && (faceState == SEARCHING) && fr.canPredict()) {
 
 //            for (int i = 0; i < facesArray.length; i++) {
 
-                Mat m = new Mat();
-                m = mGray.submat(facesArray[0]);
-                mBitmap = Bitmap.createBitmap(m.width(), m.height(), Bitmap.Config.ARGB_8888);
+            Mat m = new Mat();
+            m = mGray.submat(facesArray[0]);
+            mBitmap = Bitmap.createBitmap(m.width(), m.height(), Bitmap.Config.ARGB_8888);
 
 
-                Utils.matToBitmap(m, mBitmap);
-                Message msg = new Message();
-                String textTochange = "IMG";
+            Utils.matToBitmap(m, mBitmap);
+            Message msg = new Message();
+            String textTochange = "IMG";
 
 
-                textTochange = fr.predict(m);
-                mLikely = fr.getProb();
+            textTochange = fr.predict(m);
+            mLikely = fr.getProb();
 
-                msg = new Message();
-                msg.obj = textTochange;
-                final String textTochangeTemp = textTochange;
+            msg = new Message();
+            msg.obj = textTochange;
+            final String textTochangeTemp = textTochange;
 
-                mHandler.sendMessage(msg);
+            mHandler.sendMessage(msg);
+            final Point p = facesArray[0].tl();
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    bubbleName.setVisibility(View.VISIBLE);
+                    bubbleName.setX((int) p.x );
+                    bubbleName.setY((int) p.y);
+                    bubbleName.setText(" "+textTochangeTemp);
+                }
+            });
 
-                Core.rectangle(mRgba, new Point(mRgba.width() - facesArray[0].br().x, facesArray[0].tl().y), new Point(mRgba.width() - facesArray[0].tl().x, facesArray[0].br().y), FACE_RECT_COLOR, 3);
+//            Core.rectangle(mRgba, new Point(mRgba.width() - facesArray[0].br().x, facesArray[0].tl().y), new Point(mRgba.width() - facesArray[0].tl().x, facesArray[0].br().y), FACE_RECT_COLOR, 3);
 //                    if(mLikely < 70)
-                Core.putText(mRgba, textTochange, new Point(mRgba.width() - facesArray[0].br().x, facesArray[0].tl().y), 3, 4, new Scalar(255, 0, 0, 255));
+//            Core.putText(mRgba, textTochange, new Point(mRgba.width() - facesArray[0].br().x, facesArray[0].tl().y), 3, 4, new Scalar(255, 0, 0, 255));
 //            }
 
 
-            DatabaseHelper db=new DatabaseHelper(getApplicationContext());
+            DatabaseHelper db = new DatabaseHelper(getApplicationContext());
 
             try {
                 db.open();
@@ -446,12 +552,23 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
                 e.printStackTrace();
             }
 
-            String testMail=db.getEmail(textTochange);
-            String testPassword=db.getPassword(textTochange);
+            String testMail = db.getEmail(textTochange);
+            String testPassword = db.getPassword(textTochange);
 
-            if(!testMail.equals("not found")){userEmail=testMail;}
-            if(!testPassword.equals("not found")){userPassword=testPassword;}
+            if (!testMail.equals("not found")) {
+                userEmail = testMail;
+            }
+            if (!testPassword.equals("not found")) {
+                userPassword = testPassword;
+            }
 
+        }else{
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    bubbleName.setVisibility(View.INVISIBLE);
+                }
+            });
         }
 
 //        for (int i = 0; i < facesArray.length; i++){
@@ -472,10 +589,9 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         //    controller.goRight();
         // }
 
-        Core.putText(mRgba, listenState, new Point(30, 90), 3, 4, new Scalar(255, 0, 0, 255));
+//        Core.putText(mRgba, listenState, new Point(30, 90), 3, 4, new Scalar(255, 0, 0, 255));
         return mRgba;
     }
-
 
 
     public static String getUserPassword() {
@@ -495,7 +611,6 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     }
 
 
-
     private void moveSAR(Rect rect) {
         Point topLeft = rect.tl();
         Point bottomRight = rect.br();
@@ -509,16 +624,16 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         int opencvDisHeight = opencvDis.getHeight();
         int opencvDisWidth = opencvDis.getWidth();
 
-        Log.e("Screen Widthhhhhhhhhhhhhhhh", "" + opencvDisWidth + "");
-        Log.e("Screen Heighttttttttttttttt", "" + opencvDisHeight + "");
+        Log.e("Screen Widthh", "" + opencvDisWidth + "");
+        Log.e("Screen Heighttt", "" + opencvDisHeight + "");
 
         int horizontalBlock = checkHorizontalGrid(center.x, opencvDisWidth);
 
-        Log.e("Horizontal blockkkkkkkkkkkkkkkkk", horizontalBlock + "");
+        Log.e("Horizontal blockkkk", horizontalBlock + "");
 
         int verticalBlock = checkVerticalGrid(center.y, opencvDisHeight);
 
-        Log.e("Vertical blockkkkkkkkkkkkkkkkk", verticalBlock + "");
+        Log.e("Vertical blockkk", verticalBlock + "");
 
         if (horizontalBlock == 2 && verticalBlock == 1) {
             return; // almost in center
@@ -575,27 +690,50 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.i(TAG, "called onCreateOptionsMenu");
-        if (mOpenCvCameraView.numberCameras() > 1) {
-            nBackCam = menu.add(getResources().getString(R.string.SFrontCamera));
-            mFrontCam = menu.add(getResources().getString(R.string.SBackCamera));
-        }
+//        if (mOpenCvCameraView.numberCameras() > 1) {
+//            nBackCam = menu.add(getResources().getString(R.string.SFrontCamera));
+//            mFrontCam = menu.add(getResources().getString(R.string.SBackCamera));
+//
+//    }
+        connectSAR = menu.add("Connect");
+        addUserItem = menu.add("Add User");
+        addUserItem.setCheckable(true);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Log.i(TAG, "called onOptionsItemSelected; selected item: " + item);
-        nBackCam.setChecked(false);
-        mFrontCam.setChecked(false);
-        if (item == nBackCam) {
-            mOpenCvCameraView.setCamFront();
-            mChooseCamera = frontCam;
-        }
-        //fr.changeRecognizer(0);
-        else if (item == mFrontCam) {
-            mChooseCamera = backCam;
-            mOpenCvCameraView.setCamBack();
+//        nBackCam.setChecked(false);
+//        mFrontCam.setChecked(false);
+//        if (item == nBackCam) {
+//            mOpenCvCameraView.setCamFront();
+//            mChooseCamera = frontCam;
+//        }
+//        //fr.changeRecognizer(0);
+//        else if (item == mFrontCam) {
+//            mChooseCamera = backCam;
+//            mOpenCvCameraView.setCamBack();
+//
+//        }else
+        if( item == addUserItem ){
+            Intent intent = new Intent(getApplicationContext(), org.opencv.javacv.facerecognition.signup_activity.class);
+            startActivity(intent);
+            finish();
+        }else if(item == connectSAR){
+            if (!connectSAR.isChecked()) {
 
+//                    Intent trainingIntent = new Intent(org.opencv.javacv.facerecognition.FdActivity.this, org.opencv.javacv.facerecognition.TrainingActivity.class);
+//                    startActivity(trainingIntent);
+
+                //  controller.connectToSAR();
+                Log.d("SAR","Connect");
+                connectSAR.setChecked(true);
+            } else {
+                //    controller.disconnectToSAR();
+                Log.d("SAR","Disconnect");
+                connectSAR.setChecked(false);
+            }
         }
 
         item.setChecked(true);
@@ -611,8 +749,10 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
     @Override
     public void processVoiceCommands(String... voiceCommands) {
-        Log.d("State","Processing");
-        listenState ="Processing";
+        Log.d("State", "Processing");
+        listenState = "Processing";
+
+        listenIndicator.setImageResource(R.drawable.circle_red);
         final AIConfiguration config = new AIConfiguration("a7ee7ac49bac4559b295d1c38a18812f",
                 "9a44c559-6daa-45b7-adc4-375c71de82d7", AIConfiguration.SupportedLanguages.English,
                 AIConfiguration.RecognitionEngine.System);
@@ -620,6 +760,16 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         final AIDataService aiDataService = new AIDataService(context, config);
 
         final AIRequest aiRequest = new AIRequest();
+
+
+//        if (voiceCommands[0].matches("set alarm.*")) {
+//            try {
+//
+//            }catch (Exception e) {
+//
+//            }
+//        }
+
 
         aiRequest.setQuery(voiceCommands[0]);
         new AsyncTask<AIRequest, Void, AIResponse>() {
@@ -653,14 +803,53 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
                             }
 
                             final String finalParameterString = parameterString;
+
+                            if (result.getAction().equals("clock.alarm_set")) {
+                                Log.d("parameter12", finalParameterString);
+                                try {
+                                    String time = finalParameterString.split("T")[1];
+                                    String time1 = time.split(":")[0];
+                                    Log.d("parameter123", time.split(":")[0]+":"+time.split(":")[1]);
+                                    Intent serviceIntent = new Intent(FdActivity.this, AlarmService.class);
+                                    serviceIntent.putExtra("time", time.split(":")[0]+":"+time.split(":")[1]);
+                                    startService(serviceIntent);
+                                } catch (Exception e) {
+                                }
+                            }else if(result.getAction().equals("call.call")){
+                                manager.listen(myPhoneStateListener,
+                                        PhoneStateListener.LISTEN_CALL_STATE); // start listening to the phone changes
+                                callFromApp = true;
+                                Intent i = new Intent(android.content.Intent.ACTION_CALL,
+                                        Uri.parse("tel:+" + "400")); // Make the call
+
+                                if (ActivityCompat.checkSelfPermission(FdActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                                    return;
+                                }
+
+                                startActivity(i);
+                                try {
+                                    Thread.sleep(5000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                Intent intent1 = new Intent("org.opencv.javacv.facerecognition.StartUpActivity");
+                                intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                startActivity(intent1);
+                            }
+
+                            Log.d("MYPARA",result.getFulfillment().getSpeech());
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    textResultVoice.setText("helooooooooooo");
-                                    // Show results in TextView.
                                     textResultVoice.setText("Query:" + result.getResolvedQuery() +
                                             "\nAction: " + result.getAction() +
                                             "\nParameters: " + finalParameterString);
+                                    try {
+                                        aiResponseText.setText(result.getFulfillment().getSpeech().substring(0,50));
+                                    }catch (Exception e){
+                                        aiResponseText.setText(result.getFulfillment().getSpeech());
+                                    }
                                 }
                             });
                             checkResult(result);
@@ -669,6 +858,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
                             @Override
                             public void run() {
                                 restartListeningService();
+                                listenIndicator.setImageResource(R.drawable.circle_green);
                                 Log.d("State", "Ready to listen");
                                 listenState = "Ready to listen";
                             }
@@ -678,10 +868,39 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
             }
 
         }.execute(aiRequest);
+
+        if (voiceCommands[0].matches(".*call.*")) {
+
+        } else if (voiceCommands[0].matches(".*end.*")) {
+            TelephonyManager telephonyManager = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+            Class clazz = null;
+            try {
+                clazz = Class.forName(telephonyManager.getClass().getName());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            Method method = null;
+            try {
+                method = clazz.getDeclaredMethod("getITelephony");
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            }
+            method.setAccessible(true);
+            ITelephony telephonyService = null;
+            try {
+                telephonyService = (ITelephony) method.invoke(telephonyManager);
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            telephonyService.endCall();
+        }
+
     }
 
 
-    private void showPopup( Activity context, Point p, String name, String phone) {
+    private void showPopup(Activity context, Point p, String name, String phone) {
         int popupWidth = 600;
         int popupHeight = 480;
 
@@ -718,6 +937,53 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         popup.setBackgroundDrawable(new BitmapDrawable());
 
         // Displaying the popup at the specified location, + offsets.
-        popup.showAtLocation(layout, Gravity.NO_GRAVITY, (int)(p.x + OFFSET_X), (int)(p.y + OFFSET_Y));
+        popup.showAtLocation(layout, Gravity.NO_GRAVITY, (int) (p.x + OFFSET_X), (int) (p.y + OFFSET_Y));
     }
+
+    public class StatePhoneReceiver extends PhoneStateListener {
+        Context context;
+
+        public StatePhoneReceiver(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            super.onCallStateChanged(state, incomingNumber);
+
+            switch (state) {
+
+                case TelephonyManager.CALL_STATE_OFFHOOK: //Call is established
+                    if (callFromApp) {
+                        callFromApp = false;
+                        callFromOffHook = true;
+
+                        try {
+                            Thread.sleep(500); // Delay 0,5 seconds to handle better turning on loudspeaker
+                        } catch (InterruptedException e) {
+                        }
+
+                        //Activate loudspeaker
+                        AudioManager audioManager = (AudioManager)
+                                getSystemService(Context.AUDIO_SERVICE);
+                        audioManager.setMode(AudioManager.MODE_IN_CALL);
+                        audioManager.setSpeakerphoneOn(true);
+                    }
+                    break;
+
+                case TelephonyManager.CALL_STATE_IDLE: //Call is finished
+                    if (callFromOffHook) {
+                        callFromOffHook = false;
+                        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+                        audioManager.setMode(AudioManager.MODE_NORMAL); //Deactivate loudspeaker
+                        manager.listen(myPhoneStateListener, // Remove listener
+                                PhoneStateListener.LISTEN_NONE);
+                    }
+                    break;
+            }
+        }
+    }
+
+
+
 }

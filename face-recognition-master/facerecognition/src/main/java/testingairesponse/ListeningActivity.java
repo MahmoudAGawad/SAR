@@ -42,15 +42,6 @@ public abstract class ListeningActivity extends Activity implements IVoiceContro
         }
     }
 
-    protected void mute(){
-        AudioManager amanager=(AudioManager)getSystemService(Context.AUDIO_SERVICE);
-        amanager.setStreamMute(AudioManager.STREAM_NOTIFICATION, true);
-        amanager.setStreamMute(AudioManager.STREAM_ALARM, true);
-        amanager.setStreamMute(AudioManager.STREAM_MUSIC, true);
-        amanager.setStreamMute(AudioManager.STREAM_RING, true);
-        amanager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
-    }
-
     // stops the service
     protected void stopListening() {
         if (sr != null) {
@@ -107,7 +98,6 @@ public abstract class ListeningActivity extends Activity implements IVoiceContro
             sr.stopListening();
             sr.cancel();
             sr.destroy();
-
         }
         sr = null;
 
