@@ -26,6 +26,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import ai.api.model.Fulfillment;
 import ai.api.model.Result;
@@ -55,31 +56,106 @@ public class CommandExecution {
     }
 
     public void executeCommand(){
-                //translation commands also needs to be handled
-                if (result.getAction().startsWith("small")
-                        || result.getAction().startsWith("wisdom")){
-                    doTalk(result);
-                    return;
+        //translation commands also needs to be handled
+        if (result.getAction().startsWith("small")
+                || result.getAction().startsWith("wisdom")){
+            doTalk(result);
+            return;
+        }
+
+        switch (result.getAction()) {
+            case "email.write":
+                doSending(result);
+                break;
+            case "email.edit":
+                doEditing(result);
+                break;
+            case "apps.open":
+                doOpenning(result , context);
+                break;
+            case "facebook.update":
+                doPostOnFacebook(result, context);
+                break;
+            case "news.search":
+                checkNews(result);
+                break;
+            case "translate.text":
+                translateSentence(result);
+
+
+        }
+
+    }
+
+    private void translateSentence(Result result) {
+        String text = ""+result.getFulfillment().getSpeech();
+        textToSpeechHelper.speak(text);
+        while (textToSpeechHelper.isSpeaking());
+
+
+
+    }
+
+    private void checkNews(Result result) {
+        String parameterString = "";
+        if (result.getParameters() != null && !result.getParameters().isEmpty()) {
+            for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
+                String key = entry.getKey();
+                String URL = "";
+                if(key.equals("topic") || key.equals("keyword")){
+                    String topic = entry.getValue().getAsString();
+                    if(topic.equals("business")){
+                        URL = "b";
+                    }
+                    else if(topic.startsWith("Sport")){
+                        URL = "s";
+                    }
+                    else if(topic.equals("election")){
+                        URL = "el";
+                    }
+
+                    else if(topic.equals("tech")){
+                        URL = "tc";
+                    }
+                    else if(topic.equals("science")){
+                        URL = "snc";
+                    }
+                    else if(topic.equals("entertainment")){
+                        URL = "e";
+                    }
+                    else URL = "w";
+
+
+
+
+                }
+                String link = "https://news.google.com/news?ned=us&hl=en&topic="+URL+"&output=rss";
+
+//                                        String world = "w",sport = "s" , election = "el" , business = "b" , technology = "tc" , entertain = "e"
+//                            ,science = "snc" , health = "m";
+                HandleXML handle = new HandleXML(link);
+                handle.fetchXML();
+                while (handle.parsingComplete);
+
+                // now we have the news
+                int count = 0;
+                StringTokenizer str = new StringTokenizer(handle.getTitle() , "\n");
+
+                while (str.hasMoreTokens() && count < 3){
+                    String news = str.nextToken();
+                    textToSpeechHelper.speak(news);
+                    while (textToSpeechHelper.isSpeaking());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    count++;
                 }
 
-                switch (result.getAction()) {
-                    case "email.write":
-                        doSending(result);
-                        break;
-                    case "email.edit":
-                        doEditing(result);
-                        break;
-                    case "apps.open":
-                        doOpenning(result , context);
-                        break;
-                    case "clock.alarm_set":
-
-                        break;
-                    case "facebook.update":
-                        doPostOnFacebook(result, context);
-                        break;
-                }
-
+            }
+        }
     }
 
     private void doTalk(Result result) {

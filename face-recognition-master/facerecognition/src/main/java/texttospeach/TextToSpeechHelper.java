@@ -25,6 +25,7 @@ public class TextToSpeechHelper {
                 if(status != TextToSpeech.ERROR) {
                     isReadyToSpeak = true;
                     textToSpeech.setLanguage(Locale.UK);
+
                 }
             }
         });
