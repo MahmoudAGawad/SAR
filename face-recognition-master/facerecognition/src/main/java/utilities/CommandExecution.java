@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,6 +22,13 @@ import com.google.gson.JsonObject;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -40,11 +48,32 @@ public class CommandExecution {
 
     private Result result;
     private Context context;
+
+    private FileOutputStream fos;
+    private FileInputStream fis;
+    private BufferedReader bufferedReader;
+    private HashMap<String, String> tasksToRemind = new HashMap<String, String>();
+
     private TextToSpeechHelper textToSpeechHelper;
     public CommandExecution(TextToSpeechHelper textToSpeechHelper , Context context){
 
         this.textToSpeechHelper = textToSpeechHelper;
         this.context = context;
+
+        try {
+            fos = new FileOutputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fis = new FileInputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+            bufferedReader = new BufferedReader(isr);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
 // Test
     }
@@ -71,7 +100,7 @@ public class CommandExecution {
                 doEditing(result);
                 break;
             case "apps.open":
-                doOpenning(result , context);
+                doOpenning(result, context);
                 break;
             case "facebook.update":
                 doPostOnFacebook(result, context);
@@ -81,6 +110,12 @@ public class CommandExecution {
                 break;
             case "translate.text":
                 translateSentence(result);
+            case "notifications.add":
+                doAddingReminder(result);
+                break;
+            case "notifications.search":
+                doSearchingForReminder(result);
+                break;
 
 
         }
@@ -95,6 +130,114 @@ public class CommandExecution {
 
 
     }
+
+    private void doAddingReminder(Result result) {
+
+        HashMap<String, JsonElement> hm = result.getParameters();
+
+        JsonElement summary = hm.get("summary");
+
+        if (summary != null) {
+
+            String TaskToRemind = summary.toString();
+
+            String toCompare = TaskToRemind.toLowerCase();
+            if (!tasksToRemind.containsValue(toCompare)) {
+                try {
+                    tasksToRemind.put(TaskToRemind, TaskToRemind);
+                    fos.write(TaskToRemind.getBytes());
+                    fos.write('\n');
+                    textToSpeechHelper.speak(TaskToRemind + " is added");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
+
+        }
+
+
+    }
+
+    private void doSearchingForReminder(Result result) {
+
+        HashMap<String, JsonElement> hm = result.getParameters();
+
+
+        JsonElement summary = hm.get("summary");
+
+
+        if (summary != null) {
+            String taskToSearch = summary.toString();
+
+            String toCompare = taskToSearch.toLowerCase();
+
+
+
+            boolean found = false;
+            String line;
+            try {
+                while ((line = bufferedReader.readLine()) != null) {
+                    if (line.trim().toLowerCase().equals(toCompare))
+                        found = true;
+                    break;
+
+                }
+
+                if (found) {
+                    textToSpeechHelper.speak("Yes,  i plan to remind you about " + taskToSearch);
+                } else {
+
+                    textToSpeechHelper.speak("No, you do not ask me to remind you about  " + taskToSearch);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            //
+
+        }
+
+        JsonElement allNotifiacations = hm.get("all");
+
+        String allNotify = "";
+        if (allNotifiacations != null)
+            allNotify = allNotifiacations.toString();
+
+        if (allNotify.contains("true")) {
+
+
+            String line;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            try {
+
+                while ((line = bufferedReader.readLine()) != null) {
+
+                    stringBuilder.append(line);
+                    stringBuilder.append("   ");
+
+                }
+
+                textToSpeechHelper.speak("you want me to remind you about  " + stringBuilder.toString());
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+
+    }
+
+
 
     private void checkNews(Result result) {
         String parameterString = "";
