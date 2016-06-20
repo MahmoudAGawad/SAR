@@ -7,6 +7,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,12 +21,30 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.opencv.javacv.facerecognition.FdActivity;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.StringTokenizer;
+
+import javax.mail.Address;
+import javax.mail.BodyPart;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Store;
 
 import ai.api.model.Fulfillment;
 import ai.api.model.Result;
@@ -39,11 +58,32 @@ public class CommandExecution {
 
     private Result result;
     private Context context;
+
+    private FileOutputStream fos;
+    private FileInputStream fis;
+    private BufferedReader bufferedReader;
+    private HashMap<String, String> tasksToRemind = new HashMap<String, String>();
+
     private TextToSpeechHelper textToSpeechHelper;
     public CommandExecution(TextToSpeechHelper textToSpeechHelper , Context context){
 
         this.textToSpeechHelper = textToSpeechHelper;
         this.context = context;
+
+        try {
+            fos = new FileOutputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            fis = new FileInputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
+            InputStreamReader isr = new InputStreamReader(fis);
+            bufferedReader = new BufferedReader(isr);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
 // Test
     }
@@ -54,32 +94,279 @@ public class CommandExecution {
         this.context = context;
     }
 
+    public void speak(String text){
+
+        textToSpeechHelper.speak(text);
+        while (textToSpeechHelper.isSpeaking());
+
+    }
+
+
     public void executeCommand(){
-                //translation commands also needs to be handled
-                if (result.getAction().startsWith("small")
-                        || result.getAction().startsWith("wisdom")){
-                    doTalk(result);
-                    return;
+        //translation commands also needs to be handled
+        if (result.getAction().startsWith("small")
+                || result.getAction().startsWith("wisdom")){
+            doTalk(result);
+            return;
+        }
+
+        switch (result.getAction()) {
+                Log.e("reading my emailllllll", "here");
+
+                doReading(result);
+                break;
+            case "email.write":
+                doSending(result);
+                break;
+            case "email.edit":
+                doEditing(result);
+                break;
+            case "apps.open":
+                doOpenning(result, context);
+                break;
+            case "facebook.update":
+                doPostOnFacebook(result, context);
+                break;
+            case "news.search":
+                checkNews(result);
+                break;
+            case "translate.text":
+                translateSentence(result);
+            case "notifications.add":
+                doAddingReminder(result);
+                break;
+            case "notifications.search":
+                doSearchingForReminder(result);
+                break;
+
+
+        }
+
+    }
+
+    private void doReading(Result result) {
+        Properties props = new Properties();
+        props.setProperty("mail.store.protocol", "imaps");
+//        speak("inside Method");
+        try {
+            Session session = Session.getInstance(props, null);
+            Store store = session.getStore();
+            String userEmail = FdActivity.getUserEmail();
+            String password = FdActivity.getUserPassword();
+            store.connect("imap.gmail.com", "hamo220022@gmail.com", "159753221993");
+            // store.connect("imap.gmail.com", userEmail, password);
+
+            Folder inbox = store.getFolder("INBOX");
+            inbox.open(Folder.READ_ONLY);
+            Message msg = inbox.getMessage(1);
+            Address[] in = msg.getFrom();
+//            speak("before loop");
+            for (Address address : in) {
+                System.out.println("FROM:" + address.toString());
+                StringTokenizer str = new StringTokenizer(address.toString(),"<");
+                speak("from "+str.nextToken());
+            }
+
+            Multipart mp = (Multipart) msg.getContent();
+            BodyPart bp = mp.getBodyPart(0);
+
+            System.out.println("SENT DATE:" + msg.getSentDate());
+            System.out.println("SUBJECT:" + msg.getSubject());
+            System.out.println("CONTENT:" + bp.getContent());
+            textToSpeechHelper.speak(msg.getSubject()+"");
+            while (textToSpeechHelper.isSpeaking());
+
+
+        } catch (Exception mex) {
+//            speak(mex.toString());
+            Log.e("MYAPP", "exception: " + mex.toString());
+
+            mex.printStackTrace();
+
+        }
+
+
+    }
+
+
+
+    private void translateSentence(Result result) {
+        String text = ""+result.getFulfillment().getSpeech();
+        textToSpeechHelper.speak(text);
+        while (textToSpeechHelper.isSpeaking());
+
+
+
+    }
+
+    private void doAddingReminder(Result result) {
+
+        HashMap<String, JsonElement> hm = result.getParameters();
+
+        JsonElement summary = hm.get("summary");
+
+        if (summary != null) {
+
+            String TaskToRemind = summary.toString();
+
+            String toCompare = TaskToRemind.toLowerCase();
+            if (!tasksToRemind.containsValue(toCompare)) {
+                try {
+                    tasksToRemind.put(TaskToRemind, TaskToRemind);
+                    fos.write(TaskToRemind.getBytes());
+                    fos.write('\n');
+                    textToSpeechHelper.speak(TaskToRemind + " is added");
+
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
 
-                switch (result.getAction()) {
-                    case "email.write":
-                        doSending(result);
-                        break;
-                    case "email.edit":
-                        doEditing(result);
-                        break;
-                    case "apps.open":
-                        doOpenning(result , context);
-                        break;
-                    case "clock.alarm_set":
 
-                        break;
-                    case "facebook.update":
-                        doPostOnFacebook(result, context);
-                        break;
+            }
+
+
+        }
+
+
+    }
+
+    private void doSearchingForReminder(Result result) {
+
+        HashMap<String, JsonElement> hm = result.getParameters();
+
+
+        JsonElement summary = hm.get("summary");
+
+
+        if (summary != null) {
+            String taskToSearch = summary.toString();
+
+            String toCompare = taskToSearch.toLowerCase();
+
+
+
+            boolean found = false;
+            String line;
+            try {
+                while ((line = bufferedReader.readLine()) != null) {
+                    if (line.trim().toLowerCase().equals(toCompare))
+                        found = true;
+                    break;
+
                 }
 
+                if (found) {
+                    textToSpeechHelper.speak("Yes,  i plan to remind you about " + taskToSearch);
+                } else {
+
+                    textToSpeechHelper.speak("No, you do not ask me to remind you about  " + taskToSearch);
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+            //
+
+        }
+
+        JsonElement allNotifiacations = hm.get("all");
+
+        String allNotify = "";
+        if (allNotifiacations != null)
+            allNotify = allNotifiacations.toString();
+
+        if (allNotify.contains("true")) {
+
+
+            String line;
+            StringBuilder stringBuilder = new StringBuilder();
+
+            try {
+
+                while ((line = bufferedReader.readLine()) != null) {
+
+                    stringBuilder.append(line);
+                    stringBuilder.append("   ");
+
+                }
+
+                textToSpeechHelper.speak("you want me to remind you about  " + stringBuilder.toString());
+
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
+
+    }
+
+
+
+    private void checkNews(Result result) {
+        String parameterString = "";
+        if (result.getParameters() != null && !result.getParameters().isEmpty()) {
+            for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
+                String key = entry.getKey();
+                String URL = "";
+                if(key.equals("topic") || key.equals("keyword")){
+                    String topic = entry.getValue().getAsString();
+                    if(topic.equals("business")){
+                        URL = "b";
+                    }
+                    else if(topic.startsWith("Sport")){
+                        URL = "s";
+                    }
+                    else if(topic.equals("election")){
+                        URL = "el";
+                    }
+
+                    else if(topic.equals("tech")){
+                        URL = "tc";
+                    }
+                    else if(topic.equals("science")){
+                        URL = "snc";
+                    }
+                    else if(topic.equals("entertainment")){
+                        URL = "e";
+                    }
+                    else URL = "w";
+
+
+
+
+                }
+                String link = "https://news.google.com/news?ned=us&hl=en&topic="+URL+"&output=rss";
+
+//                                        String world = "w",sport = "s" , election = "el" , business = "b" , technology = "tc" , entertain = "e"
+//                            ,science = "snc" , health = "m";
+                HandleXML handle = new HandleXML(link);
+                handle.fetchXML();
+                while (handle.parsingComplete);
+
+                // now we have the news
+                int count = 0;
+                StringTokenizer str = new StringTokenizer(handle.getTitle() , "\n");
+
+                while (str.hasMoreTokens() && count < 3){
+                    String news = str.nextToken();
+                    textToSpeechHelper.speak(news);
+                    while (textToSpeechHelper.isSpeaking());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                    count++;
+                }
+
+            }
+        }
     }
 
     private void doTalk(Result result) {
