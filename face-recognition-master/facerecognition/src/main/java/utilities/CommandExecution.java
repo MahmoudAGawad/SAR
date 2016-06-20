@@ -21,6 +21,7 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.opencv.javacv.facerecognition.FdActivity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -34,7 +35,16 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.StringTokenizer;
+
+import javax.mail.Address;
+import javax.mail.BodyPart;
+import javax.mail.Folder;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Store;
 
 import ai.api.model.Fulfillment;
 import ai.api.model.Result;
@@ -84,6 +94,14 @@ public class CommandExecution {
         this.context = context;
     }
 
+    public void speak(String text){
+
+        textToSpeechHelper.speak(text);
+        while (textToSpeechHelper.isSpeaking());
+
+    }
+
+
     public void executeCommand(){
         //translation commands also needs to be handled
         if (result.getAction().startsWith("small")
@@ -93,6 +111,10 @@ public class CommandExecution {
         }
 
         switch (result.getAction()) {
+                Log.e("reading my emailllllll", "here");
+
+                doReading(result);
+                break;
             case "email.write":
                 doSending(result);
                 break;
@@ -121,6 +143,52 @@ public class CommandExecution {
         }
 
     }
+
+    private void doReading(Result result) {
+        Properties props = new Properties();
+        props.setProperty("mail.store.protocol", "imaps");
+//        speak("inside Method");
+        try {
+            Session session = Session.getInstance(props, null);
+            Store store = session.getStore();
+            String userEmail = FdActivity.getUserEmail();
+            String password = FdActivity.getUserPassword();
+            store.connect("imap.gmail.com", "hamo220022@gmail.com", "159753221993");
+            // store.connect("imap.gmail.com", userEmail, password);
+
+            Folder inbox = store.getFolder("INBOX");
+            inbox.open(Folder.READ_ONLY);
+            Message msg = inbox.getMessage(1);
+            Address[] in = msg.getFrom();
+//            speak("before loop");
+            for (Address address : in) {
+                System.out.println("FROM:" + address.toString());
+                StringTokenizer str = new StringTokenizer(address.toString(),"<");
+                speak("from "+str.nextToken());
+            }
+
+            Multipart mp = (Multipart) msg.getContent();
+            BodyPart bp = mp.getBodyPart(0);
+
+            System.out.println("SENT DATE:" + msg.getSentDate());
+            System.out.println("SUBJECT:" + msg.getSubject());
+            System.out.println("CONTENT:" + bp.getContent());
+            textToSpeechHelper.speak(msg.getSubject()+"");
+            while (textToSpeechHelper.isSpeaking());
+
+
+        } catch (Exception mex) {
+//            speak(mex.toString());
+            Log.e("MYAPP", "exception: " + mex.toString());
+
+            mex.printStackTrace();
+
+        }
+
+
+    }
+
+
 
     private void translateSentence(Result result) {
         String text = ""+result.getFulfillment().getSpeech();
