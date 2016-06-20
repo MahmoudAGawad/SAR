@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.io.File;
+import java.io.IOException;
 
 import utilities.DatabaseHelper;
 
@@ -32,6 +36,31 @@ public class signup_activity extends Activity {
                 SharedPreferences.Editor editor = getSharedPreferences("first_use_flag", MODE_PRIVATE).edit();
                 editor.putBoolean("signedup",true);
                 editor.commit();
+
+
+                File SARDirectory = new File(Environment.getExternalStorageDirectory() +File.separator+"SAR");
+                // have the object build the directory structure, if needed.
+                SARDirectory.mkdirs();
+
+                boolean success = true ;
+
+                if (!SARDirectory.exists()) {
+                    success = SARDirectory.mkdir();
+                }
+                if (success) {
+                    // Do something on success
+
+                    File outputFile = new File(SARDirectory, "tasks.txt");
+                    try {
+                        outputFile.createNewFile();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+
+                }
+
 
                 addUserToDatabase(username,email,pass);
 
