@@ -28,12 +28,16 @@ import org.opencv.core.Mat;
 import org.opencv.javacv.facerecognition.FdActivity;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -71,7 +75,7 @@ public class CommandExecution {
     private FileInputStream fis;
     private BufferedReader bufferedReader;
     private HashMap<String, String> tasksToRemind;
-
+    private BufferedWriter write;
     private CameraBridgeViewBase.CvCameraViewFrame currentFrame;
 
     private TextToSpeechHelper textToSpeechHelper;
@@ -90,11 +94,13 @@ public class CommandExecution {
         this.context = context;
 
         try {
-            fos = new FileOutputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
-
-        } catch (FileNotFoundException e) {
+//            fos =
+             write = new BufferedWriter(new FileWriter(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt"));
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
+
         try {
             fis = new FileInputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
             InputStreamReader isr = new InputStreamReader(fis);
@@ -151,16 +157,33 @@ public class CommandExecution {
                 break;
             case "translate.text":
                 translateSentence(result);
+                break;
             case "notifications.add":
                 doAddingReminder(result);
                 break;
             case "notifications.search":
                 doSearchingForReminder(result);
                 break;
+            case "input.unknown":
+                handleUnsupportedFeature(result);
+                break;
+            default:speak("i can't help you with that");
+                break;
 
 
         }
 
+    }
+
+
+    private void handleUnsupportedFeature(Result result){
+        Fulfillment elem =result.getFulfillment();
+        String speech = elem.getSpeech();
+        if (speech.equals("")){
+            speak("i didn't understand what you said");
+            return;
+        }
+        speak(speech);
     }
 
     private void doReading(Result result) {
@@ -230,11 +253,17 @@ public class CommandExecution {
 
             String toCompare = TaskToRemind.toLowerCase();
             if (!tasksToRemind.containsValue(toCompare)) {
+
                 try {
+
+                    write = new BufferedWriter(new FileWriter(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt", true));
+
+                    write.append(TaskToRemind+"\n");
                     tasksToRemind.put(TaskToRemind, TaskToRemind);
-                    fos.write(TaskToRemind.getBytes());
-                    fos.write('\n');
-                    textToSpeechHelper.speak(TaskToRemind + " is added");
+//                    fos.write(TaskToRemind.getBytes());
+//                    fos.write('\n');
+                    write.close();
+                    speak(TaskToRemind + " is added");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -275,10 +304,10 @@ public class CommandExecution {
                 }
 
                 if (found) {
-                    textToSpeechHelper.speak("Yes,  i plan to remind you about " + taskToSearch);
+                    speak("Yes,  i plan to remind you about " + taskToSearch);
                 } else {
 
-                    textToSpeechHelper.speak("No, you do not ask me to remind you about  " + taskToSearch);
+                    speak("No, you do not ask me to remind you about  " + taskToSearch);
                 }
 
             } catch (IOException e) {
@@ -303,7 +332,9 @@ public class CommandExecution {
             StringBuilder stringBuilder = new StringBuilder();
 
             try {
-
+                fis = new FileInputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
+                InputStreamReader isr = new InputStreamReader(fis);
+                bufferedReader = new BufferedReader(isr);
                 while ((line = bufferedReader.readLine()) != null) {
 
                     stringBuilder.append(line);
@@ -311,10 +342,15 @@ public class CommandExecution {
 
                 }
 
-                textToSpeechHelper.speak("you want me to remind you about  " + stringBuilder.toString());
+                speak("you want me to remind you about  " + stringBuilder.toString());
 
 
-            } catch (IOException e) {
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -391,6 +427,10 @@ public class CommandExecution {
     private void doTalk(Result result) {
         Fulfillment elem =result.getFulfillment();
         String speech = elem.getSpeech();
+        if (speech.equals("")){
+            speak("i didn't understand what you said");
+            return;
+        }
 
         StringBuilder builder = new StringBuilder();
         short cnt = 2;
@@ -587,8 +627,11 @@ public class CommandExecution {
                 recEmail = "waleed.adel.mahmoud@gmail.com";
                 new SendEmail().execute(recEmail, mes.toString());
             }
+
+            speak("email has been sent");
         }
         catch (Exception e){
+            speak("something went wrong, i couldn't send the email");
          Log.e("exception here ", e.toString());
         }
     }
@@ -650,6 +693,8 @@ public class CommandExecution {
                 postParams.putString("message", toBePosted.getAsString());
                 request.setParameters(postParams);
                 request.executeAsync();
+                speak("facebook status updated");
+
             }
         }
     }
