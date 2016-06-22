@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
@@ -21,6 +22,9 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
 import org.opencv.javacv.facerecognition.FdActivity;
 
 import java.io.BufferedReader;
@@ -30,9 +34,12 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -56,16 +63,28 @@ import texttospeach.TextToSpeechHelper;
  */
 public class CommandExecution {
 
+    private static final String TAG = "CommandExecuter";
     private Result result;
     private Context context;
 
     private FileOutputStream fos;
     private FileInputStream fis;
     private BufferedReader bufferedReader;
-    private HashMap<String, String> tasksToRemind = new HashMap<String, String>();
+    private HashMap<String, String> tasksToRemind;
+
+    private CameraBridgeViewBase.CvCameraViewFrame currentFrame;
 
     private TextToSpeechHelper textToSpeechHelper;
+
+    private HashSet<String> cameraCommands;
+
     public CommandExecution(TextToSpeechHelper textToSpeechHelper , Context context){
+
+        currentFrame = null;
+        tasksToRemind = new HashMap<>();
+        cameraCommands = new HashSet<>();
+        cameraCommands.addAll(Arrays.asList(new String[]{"take photo", "take a photo", "take a picture", "take picture",
+                "sar take photo", "sar take a photo", "sar take picture", "sar take a picture"}));
 
         this.textToSpeechHelper = textToSpeechHelper;
         this.context = context;
@@ -111,8 +130,8 @@ public class CommandExecution {
         }
 
         switch (result.getAction()) {
-                Log.e("reading my emailllllll", "here");
 
+            case "email.read":
                 doReading(result);
                 break;
             case "email.write":
@@ -388,8 +407,64 @@ public class CommandExecution {
 
     }
 
+    private boolean savePicture(){
+        File pictureFile = getOutputMediaFile();
+        Log.e(TAG, "heey " + pictureFile);
+        if (pictureFile == null) {
+            // error
+            return false;
+        }
+
+        Mat matPic = currentFrame.rgba();
+        Bitmap pic = Bitmap.createBitmap(matPic.cols(), matPic.rows(), Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(matPic, pic);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            pic.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+        } catch (FileNotFoundException e) {
+            Log.d(TAG, "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d(TAG, "Error accessing file: " + e.getMessage());
+        }
+        return true;
+    }
+
+    /** Create a File for saving an image or video */
+    private  File getOutputMediaFile(){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory() +File.separator+
+                "SAR"+File.separator+"Images");
+
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        Log.e(TAG, "1111111111111111111111111111111111111111111111111111");
+        if (! mediaStorageDir.exists()){
+            return null;
+        }
+        Log.e(TAG, "222222222222222222222222222222222222222222222222222");
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName="SAR_"+ timeStamp +".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+        return mediaFile;
+    }
+
     private void doOpenning(Result result , Context context) {
-        if (result.getParameters() != null && !result.getParameters().isEmpty()) {
+
+        String query = result.getResolvedQuery();
+
+        if(cameraCommands.contains(query)){
+            if(currentFrame != null){
+
+                Log.d(TAG, "savvvvvvvvvvvvvvving piccccccccccccccccccccccccccccccc " + savePicture());
+            }
+        }else if (result.getParameters() != null && !result.getParameters().isEmpty()) {
             for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
                 if(entry.getKey().equalsIgnoreCase("app_name")){
                     Log.e("Testing here :" , "wid");
@@ -580,4 +655,7 @@ public class CommandExecution {
     }
 
 
+    public void setCurrentFrame(CameraBridgeViewBase.CvCameraViewFrame currentFrame) {
+        this.currentFrame = currentFrame;
+    }
 }

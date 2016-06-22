@@ -518,6 +518,8 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 
+        commandExecuter.setCurrentFrame(inputFrame);
+
         mRgba = inputFrame.rgba();
         mGray = inputFrame.gray();
 
