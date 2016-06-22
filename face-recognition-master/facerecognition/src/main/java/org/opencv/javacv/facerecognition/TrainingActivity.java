@@ -1,3 +1,4 @@
+
 package org.opencv.javacv.facerecognition;
 
 import android.app.Activity;
@@ -82,7 +83,7 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
 
     int faceOrder;
 
-    static final long MAXIMG = 10;
+    static final long MAXIMG = 1;
 
     ArrayList<Mat> alimgs = new ArrayList<Mat>();
 
@@ -116,7 +117,7 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
 
 
                     fr = new PersonRecognizer(mPath);
-                    fr.load();
+//                    fr.load();
 
                     try {
                         // load cascade file from application resources
@@ -246,8 +247,6 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
             countImages = 0;
             faceState = IDLE;
         }
-
-
     }
 
     @Override
@@ -334,7 +333,14 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
             Message msg = new Message();
             String textTochange = "IMG";
             msg.obj = textTochange;
-            if (countImages >= MAXIMG - 1) {
+
+            if (countImages < MAXIMG) {
+                fr.add(m, username.toString());
+                Log.d("PICADD",username.toString()+":"+countImages+":"+faceOrder);
+                countImages++;
+            }
+
+            if (countImages >= MAXIMG) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -345,16 +351,13 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
                         if(faceOrder<8) {
                             facePreview.setImageDrawable(facesResource.getDrawable(faceOrder));
                         }else{
-                            Toast.makeText(getApplicationContext(),"Training Succes",Toast.LENGTH_LONG);
+                            Toast.makeText(getApplicationContext(),"Training Succes",Toast.LENGTH_LONG).show();
                             finish();
                         }
                     }
                 });
             }
-            if (countImages < MAXIMG) {
-                    fr.add(m, username.toString());
-                    countImages++;
-            }
+
         }
 
         for (int i = 0; i < facesArray.length; i++) {
