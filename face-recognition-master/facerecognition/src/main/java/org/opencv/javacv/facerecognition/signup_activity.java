@@ -57,12 +57,12 @@ public class signup_activity extends Activity {
                         e.printStackTrace();
                     }
 
-                    File imageDirectory = new File(SARDirectory, "Images");
-                    if(!imageDirectory.exists()){
-                        imageDirectory.mkdirs();
-                    }
                 }
 
+                File imageDirectory = new File(SARDirectory, "Images");
+                if(!imageDirectory.exists()){
+                    imageDirectory.mkdirs();
+                }
 
                 addUserToDatabase(username,email,pass);
 
