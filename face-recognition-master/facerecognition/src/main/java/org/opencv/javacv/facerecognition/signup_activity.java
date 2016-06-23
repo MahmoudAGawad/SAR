@@ -40,16 +40,16 @@ public class signup_activity extends Activity {
 
                 File SARDirectory = new File(Environment.getExternalStorageDirectory() +File.separator+"SAR");
                 // have the object build the directory structure, if needed.
-                SARDirectory.mkdirs();
 
-                boolean success = true ;
+                boolean success = false;
 
                 if (!SARDirectory.exists()) {
                     success = SARDirectory.mkdir();
                 }
+
+
                 if (success) {
                     // Do something on success
-
                     File outputFile = new File(SARDirectory, "tasks.txt");
                     try {
                         outputFile.createNewFile();
@@ -57,10 +57,12 @@ public class signup_activity extends Activity {
                         e.printStackTrace();
                     }
 
-
-
                 }
 
+                File imageDirectory = new File(SARDirectory, "Images");
+                if(!imageDirectory.exists()){
+                    imageDirectory.mkdirs();
+                }
 
                 addUserToDatabase(username,email,pass);
 

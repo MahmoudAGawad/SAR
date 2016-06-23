@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.Uri;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
@@ -29,27 +30,31 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.opencv.javacv.facerecognition.AlarmService;
+import org.opencv.android.CameraBridgeViewBase;
+import org.opencv.android.Utils;
+import org.opencv.core.Mat;
 import org.opencv.javacv.facerecognition.FdActivity;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 
 import javax.mail.Address;
 import javax.mail.BodyPart;
@@ -69,13 +74,16 @@ import texttospeach.TextToSpeechHelper;
  */
 public class CommandExecution {
 
+    private static final String TAG = "CommandExecuter";
     private Result result;
     private Context context;
 
     private FileOutputStream fos;
     private FileInputStream fis;
     private BufferedReader bufferedReader;
-    private HashMap<String, String> tasksToRemind = new HashMap<String, String>();
+    private HashMap<String, String> tasksToRemind;
+    private BufferedWriter write;
+    private CameraBridgeViewBase.CvCameraViewFrame currentFrame;
 
     private TextToSpeechHelper textToSpeechHelper;
 
@@ -84,18 +92,27 @@ public class CommandExecution {
 
     boolean callFromApp = false; // To control the call has been made from the application
     boolean callFromOffHook = false; // To control the change to idle state is from the app call
+    private HashSet<String> cameraCommands;
 
     public CommandExecution(TextToSpeechHelper textToSpeechHelper , Context context){
+
+        currentFrame = null;
+        tasksToRemind = new HashMap<>();
+        cameraCommands = new HashSet<>();
+        cameraCommands.addAll(Arrays.asList(new String[]{"take photo", "take a photo", "take a picture", "take picture",
+                "sar take photo", "sar take a photo", "sar take picture", "sar take a picture"}));
 
         this.textToSpeechHelper = textToSpeechHelper;
         this.context = context;
 
         try {
-            fos = new FileOutputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
-
-        } catch (FileNotFoundException e) {
+//            fos =
+             write = new BufferedWriter(new FileWriter(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt"));
+        }
+        catch (IOException e){
             e.printStackTrace();
         }
+
         try {
             fis = new FileInputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
             InputStreamReader isr = new InputStreamReader(fis);
@@ -135,7 +152,6 @@ public class CommandExecution {
 
         switch (result.getAction()) {
             case "email.read":
-                Log.e("reading my emailllllll", "here");
                 doReading(result);
                 break;
             case "email.write":
@@ -155,6 +171,7 @@ public class CommandExecution {
                 break;
             case "translate.text":
                 translateSentence(result);
+                break;
             case "notifications.add":
                 doAddingReminder(result);
                 break;
@@ -166,6 +183,12 @@ public class CommandExecution {
                 break;
             case "clock.alarm_set":
                 setAlarm();
+                break;
+            case "input.unknown":
+                handleUnsupportedFeature(result);
+                break;
+            default:
+                speak("i can't help you with that");
                 break;
         }
 
@@ -270,6 +293,17 @@ public class CommandExecution {
         }
     }
 
+
+    private void handleUnsupportedFeature(Result result){
+        Fulfillment elem =result.getFulfillment();
+        String speech = elem.getSpeech();
+        if (speech.equals("")){
+            speak("i didn't understand what you said");
+            return;
+        }
+        speak(speech);
+    }
+
     private void doReading(Result result) {
         Properties props = new Properties();
         props.setProperty("mail.store.protocol", "imaps");
@@ -337,11 +371,17 @@ public class CommandExecution {
 
             String toCompare = TaskToRemind.toLowerCase();
             if (!tasksToRemind.containsValue(toCompare)) {
+
                 try {
+
+                    write = new BufferedWriter(new FileWriter(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt", true));
+
+                    write.append(TaskToRemind+"\n");
                     tasksToRemind.put(TaskToRemind, TaskToRemind);
-                    fos.write(TaskToRemind.getBytes());
-                    fos.write('\n');
-                    textToSpeechHelper.speak(TaskToRemind + " is added");
+//                    fos.write(TaskToRemind.getBytes());
+//                    fos.write('\n');
+                    write.close();
+                    speak(TaskToRemind + " is added");
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -382,10 +422,10 @@ public class CommandExecution {
                 }
 
                 if (found) {
-                    textToSpeechHelper.speak("Yes,  i plan to remind you about " + taskToSearch);
+                    speak("Yes,  i plan to remind you about " + taskToSearch);
                 } else {
 
-                    textToSpeechHelper.speak("No, you do not ask me to remind you about  " + taskToSearch);
+                    speak("No, you do not ask me to remind you about  " + taskToSearch);
                 }
 
             } catch (IOException e) {
@@ -410,7 +450,9 @@ public class CommandExecution {
             StringBuilder stringBuilder = new StringBuilder();
 
             try {
-
+                fis = new FileInputStream(Environment.getExternalStorageDirectory() + File.separator + "SAR/tasks.txt");
+                InputStreamReader isr = new InputStreamReader(fis);
+                bufferedReader = new BufferedReader(isr);
                 while ((line = bufferedReader.readLine()) != null) {
 
                     stringBuilder.append(line);
@@ -418,10 +460,15 @@ public class CommandExecution {
 
                 }
 
-                textToSpeechHelper.speak("you want me to remind you about  " + stringBuilder.toString());
+                speak("you want me to remind you about  " + stringBuilder.toString());
 
 
-            } catch (IOException e) {
+            }
+            catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            catch (IOException e) {
                 e.printStackTrace();
             }
 
@@ -498,6 +545,10 @@ public class CommandExecution {
     private void doTalk(Result result) {
         Fulfillment elem =result.getFulfillment();
         String speech = elem.getSpeech();
+        if (speech.equals("")){
+            speak("i didn't understand what you said");
+            return;
+        }
 
         StringBuilder builder = new StringBuilder();
         short cnt = 2;
@@ -514,8 +565,65 @@ public class CommandExecution {
 
     }
 
+    private boolean savePicture(){
+        File pictureFile = getOutputMediaFile();
+        Log.e(TAG, "heey " + pictureFile);
+        if (pictureFile == null) {
+            // error
+            return false;
+        }
+
+        Mat matPic = currentFrame.rgba();
+        Bitmap pic = Bitmap.createBitmap(matPic.cols(), matPic.rows(), Bitmap.Config.ARGB_8888);
+        Utils.matToBitmap(matPic, pic);
+
+        try {
+            FileOutputStream fos = new FileOutputStream(pictureFile);
+            pic.compress(Bitmap.CompressFormat.PNG, 90, fos);
+            fos.close();
+            speak("picture has been taken");
+        } catch (FileNotFoundException e) {
+            Log.d(TAG, "File not found: " + e.getMessage());
+        } catch (IOException e) {
+            Log.d(TAG, "Error accessing file: " + e.getMessage());
+        }
+        return true;
+    }
+
+    /** Create a File for saving an image or video */
+    private  File getOutputMediaFile(){
+        // To be safe, you should check that the SDCard is mounted
+        // using Environment.getExternalStorageState() before doing this.
+        File mediaStorageDir = new File(Environment.getExternalStorageDirectory() +File.separator+
+                "SAR"+File.separator+"Images");
+
+        // This location works best if you want the created images to be shared
+        // between applications and persist after your app has been uninstalled.
+
+        // Create the storage directory if it does not exist
+        Log.e(TAG, "1111111111111111111111111111111111111111111111111111");
+        if (! mediaStorageDir.exists()){
+            return null;
+        }
+        Log.e(TAG, "222222222222222222222222222222222222222222222222222");
+        // Create a media file name
+        String timeStamp = new SimpleDateFormat("ddMMyyyy_HHmm").format(new Date());
+        File mediaFile;
+        String mImageName="SAR_"+ timeStamp +".jpg";
+        mediaFile = new File(mediaStorageDir.getPath() + File.separator + mImageName);
+        return mediaFile;
+    }
+
     private void doOpenning(Result result , Context context) {
-        if (result.getParameters() != null && !result.getParameters().isEmpty()) {
+
+        String query = result.getResolvedQuery();
+
+        if(cameraCommands.contains(query)){
+            if(currentFrame != null){
+
+                Log.d(TAG, "savvvvvvvvvvvvvvving piccccccccccccccccccccccccccccccc " + savePicture());
+            }
+        }else if (result.getParameters() != null && !result.getParameters().isEmpty()) {
             for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
                 if(entry.getKey().equalsIgnoreCase("app_name")){
                     Log.e("Testing here :" , "wid");
@@ -638,8 +746,11 @@ public class CommandExecution {
                 recEmail = "waleed.adel.mahmoud@gmail.com";
                 new SendEmail().execute(recEmail, mes.toString());
             }
+
+            speak("email has been sent");
         }
         catch (Exception e){
+            speak("something went wrong, i couldn't send the email");
          Log.e("exception here ", e.toString());
         }
     }
@@ -701,6 +812,8 @@ public class CommandExecution {
                 postParams.putString("message", toBePosted.getAsString());
                 request.setParameters(postParams);
                 request.executeAsync();
+                speak("facebook status updated");
+
             }
         }
     }
@@ -749,4 +862,7 @@ public class CommandExecution {
     }
 
 
+    public void setCurrentFrame(CameraBridgeViewBase.CvCameraViewFrame currentFrame) {
+        this.currentFrame = currentFrame;
+    }
 }
