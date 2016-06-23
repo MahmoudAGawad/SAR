@@ -1,13 +1,23 @@
 package utilities;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.media.AudioManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Looper;
+import android.provider.ContactsContract;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.PhoneStateListener;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -21,6 +31,7 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.opencv.javacv.facerecognition.AlarmService;
 import org.opencv.javacv.facerecognition.FdActivity;
 
 import java.io.BufferedReader;
@@ -37,6 +48,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.StringTokenizer;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 import javax.mail.Address;
 import javax.mail.BodyPart;
@@ -65,6 +78,13 @@ public class CommandExecution {
     private HashMap<String, String> tasksToRemind = new HashMap<String, String>();
 
     private TextToSpeechHelper textToSpeechHelper;
+
+    private TelephonyManager manager;
+    private StatePhoneReceiver myPhoneStateListener;
+
+    boolean callFromApp = false; // To control the call has been made from the application
+    boolean callFromOffHook = false; // To control the change to idle state is from the app call
+
     public CommandExecution(TextToSpeechHelper textToSpeechHelper , Context context){
 
         this.textToSpeechHelper = textToSpeechHelper;
@@ -84,7 +104,8 @@ public class CommandExecution {
             e.printStackTrace();
         }
 
-
+        myPhoneStateListener = new StatePhoneReceiver(context);
+        manager = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE));
 // Test
     }
 
@@ -103,6 +124,7 @@ public class CommandExecution {
 
 
     public void executeCommand(){
+
         //translation commands also needs to be handled
         if (result.getAction().startsWith("small")
                 || result.getAction().startsWith("wisdom")){
@@ -110,9 +132,10 @@ public class CommandExecution {
             return;
         }
 
-        switch (result.getAction()) {
-                Log.e("reading my emailllllll", "here");
 
+        switch (result.getAction()) {
+            case "email.read":
+                Log.e("reading my emailllllll", "here");
                 doReading(result);
                 break;
             case "email.write":
@@ -138,10 +161,113 @@ public class CommandExecution {
             case "notifications.search":
                 doSearchingForReminder(result);
                 break;
-
-
+            case "call.call":
+                makeCall();
+                break;
+            case "clock.alarm_set":
+                setAlarm();
+                break;
         }
 
+    }
+
+    public String getContact(String name){
+
+        ContentResolver cr = context.getContentResolver();
+        Cursor cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null,
+                "lower(" + ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + ")=lower('" + name + "')", null, null);
+        StringBuffer temp=new StringBuffer();
+        String phoneNumber= "400";
+        if (cursor.moveToFirst()) {
+
+            Log.d("Contact1","Enter IF");
+            String contactId =
+                    cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+            //
+            //  Get all phone numbers.
+            //
+            Cursor phones = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+
+            while (phones.moveToNext()) {
+                String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                int type = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+                Log.d("Contact1",type+" : "+number);
+                if(!number.isEmpty()) {
+                    temp.append(number + " : ");
+                    String num = number.replaceAll("\\s", "");
+                    if(phoneNumber.equals("400")){
+                        phoneNumber = num;
+                    }
+                    if (num.matches("012.*")) {
+                        return num;
+                    }
+                }
+            }
+            phones.close();
+        }
+        cursor.close();
+        Log.d("Contact1", temp.toString());
+
+        android.os.Handler mUiHandler = new android.os.Handler(Looper.getMainLooper());
+        final String temp1 = name + ":" + phoneNumber;
+        mUiHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context,temp1 , Toast.LENGTH_LONG).show();
+            }
+        });
+        return phoneNumber;
+    }
+
+    private void makeCall() {
+        String para;
+        try {
+            para  = result.getParameters().get("name_first").getAsString();
+        }catch (Exception e){
+            para  = result.getParameters().get("q").getAsString();
+        }
+        String number = getContact(para);
+        Log.d("parameter1",para+" : "+para.length());
+        Log.d("parameter2",number);
+        manager.listen(myPhoneStateListener,
+                PhoneStateListener.LISTEN_CALL_STATE); // start listening to the phone changes
+        callFromApp = true;
+        Intent i = new Intent(android.content.Intent.ACTION_CALL,
+                Uri.parse("tel:" + number)); // Make the call
+
+        if (ActivityCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+
+        context.startActivity(i);
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Intent intent1 = new Intent("org.opencv.javacv.facerecognition.StartUpActivity");
+        intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent1);
+    }
+
+    private void setAlarm() {
+        String parameterString = "";
+        if (result.getParameters() != null && !result.getParameters().isEmpty()) {
+            for (final Map.Entry<String, JsonElement> entry : result.getParameters().entrySet()) {
+                parameterString += "(" + entry.getKey() + ", " + entry.getValue() + ") ";
+            }
+        }
+        try {
+            String time = parameterString.split("T")[1];
+            String time1 = time.split(":")[0];
+            Log.d("parameter123", time.split(":")[0]+":"+time.split(":")[1]);
+            Intent serviceIntent = new Intent(context, AlarmService.class);
+            serviceIntent.putExtra("time", time.split(":")[0]+":"+time.split(":")[1]);
+            context.startService(serviceIntent);
+        } catch (Exception e) {
+        }
     }
 
     private void doReading(Result result) {
@@ -575,6 +701,49 @@ public class CommandExecution {
                 postParams.putString("message", toBePosted.getAsString());
                 request.setParameters(postParams);
                 request.executeAsync();
+            }
+        }
+    }
+    public class StatePhoneReceiver extends PhoneStateListener {
+        Context context;
+
+        public StatePhoneReceiver(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onCallStateChanged(int state, String incomingNumber) {
+            super.onCallStateChanged(state, incomingNumber);
+
+            switch (state) {
+
+                case TelephonyManager.CALL_STATE_OFFHOOK: //Call is established
+                    if (callFromApp) {
+                        callFromApp = false;
+                        callFromOffHook = true;
+
+                        try {
+                            Thread.sleep(500); // Delay 0,5 seconds to handle better turning on loudspeaker
+                        } catch (InterruptedException e) {
+                        }
+
+                        //Activate loudspeaker
+                        AudioManager audioManager = (AudioManager)
+                                context.getSystemService(Context.AUDIO_SERVICE);
+                        audioManager.setMode(AudioManager.MODE_IN_CALL);
+                        audioManager.setSpeakerphoneOn(true);
+                    }
+                    break;
+
+                case TelephonyManager.CALL_STATE_IDLE: //Call is finished
+                    if (callFromOffHook) {
+                        callFromOffHook = false;
+                        AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                        audioManager.setMode(AudioManager.MODE_NORMAL); //Deactivate loudspeaker
+                        manager.listen(myPhoneStateListener, // Remove listener
+                                PhoneStateListener.LISTEN_NONE);
+                    }
+                    break;
             }
         }
     }

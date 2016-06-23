@@ -135,6 +135,7 @@
                         android:textColor="@color/aidialog_background"
                         android:layout_gravity="left|top" />
 
+
                 </FrameLayout>
 
             </LinearLayout>
