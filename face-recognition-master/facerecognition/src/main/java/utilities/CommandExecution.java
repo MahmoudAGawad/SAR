@@ -463,6 +463,7 @@ public class CommandExecution {
             FileOutputStream fos = new FileOutputStream(pictureFile);
             pic.compress(Bitmap.CompressFormat.PNG, 90, fos);
             fos.close();
+            speak("picture has been taken");
         } catch (FileNotFoundException e) {
             Log.d(TAG, "File not found: " + e.getMessage());
         } catch (IOException e) {
