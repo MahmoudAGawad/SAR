@@ -589,63 +589,64 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         FdActivity.userEmail = userEmail;
     }
 
-
     private void moveSAR(Rect rect) {
-        Point topLeft = rect.tl();
-        Point bottomRight = rect.br();
-        Log.e("Top Leftttttttttttttt", "" + topLeft.toString());
-        Log.e("Bottom Rightttttttttt", "" + bottomRight.toString());
+            Point topLeft = rect.tl();
+            Point bottomRight = rect.br();
+            Log.e("Top Leftttttttttttttt", "" + topLeft.toString());
+            Log.e("Bottom Rightttttttttt", "" + bottomRight.toString());
 
-        Point center = new Point((topLeft.x + bottomRight.x) / 2, (topLeft.y + bottomRight.y) / 2);
+            Point center = new Point((topLeft.x + bottomRight.x) / 2, (topLeft.y + bottomRight.y) / 2);
 
-        Tutorial3View opencvDis = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
+            controller.move((int) center.x, (int) center.y);
 
-        int opencvDisHeight = opencvDis.getHeight();
-        int opencvDisWidth = opencvDis.getWidth();
-
-        Log.e("Screen Widthh", "" + opencvDisWidth + "");
-        Log.e("Screen Heighttt", "" + opencvDisHeight + "");
-
-        int horizontalBlock = checkHorizontalGrid(center.x, opencvDisWidth);
-
-        Log.e("Horizontal blockkkk", horizontalBlock + "");
-
-        int verticalBlock = checkVerticalGrid(center.y, opencvDisHeight);
-
-        Log.e("Vertical blockkk", verticalBlock + "");
-
-        if (horizontalBlock == 2 && verticalBlock == 1) {
-            return; // almost in center
-        }
-
-        // horizontal
-        switch (horizontalBlock) {
-            case 0: // far left
-                Log.e("Go", "Lefttttttttttttttttttttttttttttttttttttttt");
-                controller.goLeft(10);
-                break;
-            case 1: // left
-                Log.e("Go", "Leftttttttttttttttttttttttttttttttttttttt");
-                controller.goLeft(5);
-                break;
-            case 3: // rgiht
-                Log.e("Go", "Rightttttttttttttttttttttttttttttttttttttt");
-                controller.goRight(5);
-                break;
-            case 4: // far right
-                Log.e("Go", "Rightttttttttttttttttttttttttttttttttttttt");
-                controller.goRight(10);
-                break;
-        }
-
-        switch (verticalBlock) {
-            case 0:
-                controller.goUp(5);
-                break;
-            case 2:
-                controller.goDown(5);
-                break;
-        }
+//        Tutorial3View opencvDis = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
+//
+//        int opencvDisHeight = opencvDis.getHeight();
+//        int opencvDisWidth = opencvDis.getWidth();
+//
+//        Log.e("Screen Widthh", "" + opencvDisWidth + "");
+//        Log.e("Screen Heighttt", "" + opencvDisHeight + "");
+//
+//        int horizontalBlock = checkHorizontalGrid(center.x, opencvDisWidth);
+//
+//        Log.e("Horizontal blockkkk", horizontalBlock + "");
+//
+//        int verticalBlock = checkVerticalGrid(center.y, opencvDisHeight);
+//
+//        Log.e("Vertical blockkk", verticalBlock + "");
+//
+//        if (horizontalBlock == 2 && verticalBlock == 1) {
+//            return; // almost in center
+//        }
+//
+//        // horizontal
+//        switch (horizontalBlock) {
+//            case 0: // far left
+//                Log.e("Go", "Lefttttttttttttttttttttttttttttttttttttttt");
+//                controller.goLeft(10);
+//                break;
+//            case 1: // left
+//                Log.e("Go", "Leftttttttttttttttttttttttttttttttttttttt");
+//                controller.goLeft(5);
+//                break;
+//            case 3: // rgiht
+//                Log.e("Go", "Rightttttttttttttttttttttttttttttttttttttt");
+//                controller.goRight(5);
+//                break;
+//            case 4: // far right
+//                Log.e("Go", "Rightttttttttttttttttttttttttttttttttttttt");
+//                controller.goRight(10);
+//                break;
+//        }
+//
+//        switch (verticalBlock) {
+//            case 0:
+//                controller.goUp(5);
+//                break;
+//            case 2:
+//                controller.goDown(5);
+//                break;
+//        }
     }
 
     private int checkVerticalGrid(double y, int opencvDisHeight) {
@@ -705,11 +706,11 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //                    Intent trainingIntent = new Intent(org.opencv.javacv.facerecognition.FdActivity.this, org.opencv.javacv.facerecognition.TrainingActivity.class);
 //                    startActivity(trainingIntent);
 
-                controller.connectToSAR();
+                controller.connectToSAR(mOpenCvCameraView.getWidth(), mOpenCvCameraView.getHeight());
                 Log.d("SAR", "Connect");
                 connectSAR.setChecked(true);
             } else {
-                //    controller.disconnectToSAR();
+                    controller.disconnectToSAR();
                 Log.d("SAR", "Disconnect");
                 connectSAR.setChecked(false);
             }
