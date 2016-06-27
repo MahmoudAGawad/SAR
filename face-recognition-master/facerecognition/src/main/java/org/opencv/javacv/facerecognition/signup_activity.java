@@ -66,7 +66,7 @@ public class signup_activity extends Activity {
 
                 addUserToDatabase(username,email,pass);
 
-                Intent intent = new Intent(getApplicationContext(),org.opencv.javacv.facerecognition.FdActivity.class);
+                Intent intent = new Intent(getApplicationContext(),org.opencv.javacv.facerecognition.StartUpActivity.class);
                 startActivity(intent);
                 finish();
             }

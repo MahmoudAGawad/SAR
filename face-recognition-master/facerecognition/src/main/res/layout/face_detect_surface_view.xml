@@ -66,13 +66,6 @@
                         android:src="@drawable/ic_green"
                         android:layout_gravity="left|bottom" />
 
-                    <Button
-                        android:id="@+id/popupStart"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="popup"
-                        android:layout_gravity="left|center_vertical" />
-
 
                     <LinearLayout
                         android:layout_width="wrap_content"

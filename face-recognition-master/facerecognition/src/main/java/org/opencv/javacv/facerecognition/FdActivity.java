@@ -10,6 +10,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -26,6 +27,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -188,20 +190,20 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
 
-        ContentResolver cr = getContentResolver();
-        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
-                null, null, null, null);
-        if (cur.getCount() > 0) {
-            while (cur.moveToNext()) {
-                String id = cur.getString(
-                        cur.getColumnIndex(ContactsContract.Contacts._ID));
-                String name = cur.getString(
-                        cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
-                    //Query phone here.  Covered next
-                }
-            }
-        }
+//        ContentResolver cr = getContentResolver();
+//        Cursor cur = cr.query(ContactsContract.Contacts.CONTENT_URI,
+//                null, null, null, null);
+//        if (cur.getCount() > 0) {
+//            while (cur.moveToNext()) {
+//                String id = cur.getString(
+//                        cur.getColumnIndex(ContactsContract.Contacts._ID));
+//                String name = cur.getString(
+//                        cur.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+//                if (Integer.parseInt(cur.getString(cur.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER))) > 0) {
+//                    //Query phone here.  Covered next
+//                }
+//            }
+//        }
 
         Log.d("Loading", "OnCreate");
 
@@ -215,63 +217,64 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        mLoaderCallback = new BaseLoaderCallback(this) {
-            @Override
-            public void onManagerConnected(int status) {
-                switch (status) {
-                    case LoaderCallbackInterface.SUCCESS: {
+//        mLoaderCallback = new BaseLoaderCallback(this) {
+//            @Override
+//            public void onManagerConnected(int status) {
+//                switch (status) {
+//                    case LoaderCallbackInterface.SUCCESS: {
+//
+//                        Log.d("Loading", "enter");
+////                        fr = new PersonRecognizer(mPath);
+//                          fr  = StartUpActivity.fr;
+//
+//                        String s = getResources().getString(R.string.Straininig);
+//                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+////                        fr.load();
+//
+//                        try {
+//                            // load cascade file from application resources
+//                            InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
+//                            File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
+//                            File mCascadeFile = new File(cascadeDir, "lbpcascade.xml");
+//                            FileOutputStream os = new FileOutputStream(mCascadeFile);
+//
+//                            byte[] buffer = new byte[4096];
+//                            int bytesRead;
+//                            while ((bytesRead = is.read(buffer)) != -1) {
+//                                os.write(buffer, 0, bytesRead);
+//                            }
+//                            is.close();
+//                            os.close();
+//
+//                            mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
+//                            if (mJavaDetector.empty()) {
+//                                Log.e(TAG, "Failed to load cascade classifier");
+//                                mJavaDetector = null;
+//                            } else
+//                                Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
+//
+//                            //                 mNativeDetector = new DetectionBasedTracker(mCascadeFile.getAbsolutePath(), 0);
+//
+//                            cascadeDir.delete();
+//
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                            Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
+//                        }
+//
+//                        mOpenCvCameraView.enableView();
+//                        Log.d("Loading", "exit");
+//                    }
+//                    break;
+//                    default: {
+//                        super.onManagerConnected(status);
+//                    }
+//                    break;
+//                }
+//            }
+//        };
 
-                        Log.d("Loading", "enter");
-                        fr = new PersonRecognizer(mPath);
-
-
-                        String s = getResources().getString(R.string.Straininig);
-                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
-                        fr.load();
-
-                        try {
-                            // load cascade file from application resources
-                            InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
-                            File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
-                            File mCascadeFile = new File(cascadeDir, "lbpcascade.xml");
-                            FileOutputStream os = new FileOutputStream(mCascadeFile);
-
-                            byte[] buffer = new byte[4096];
-                            int bytesRead;
-                            while ((bytesRead = is.read(buffer)) != -1) {
-                                os.write(buffer, 0, bytesRead);
-                            }
-                            is.close();
-                            os.close();
-
-                            mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
-                            if (mJavaDetector.empty()) {
-                                Log.e(TAG, "Failed to load cascade classifier");
-                                mJavaDetector = null;
-                            } else
-                                Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
-
-                            //                 mNativeDetector = new DetectionBasedTracker(mCascadeFile.getAbsolutePath(), 0);
-
-                            cascadeDir.delete();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
-                        }
-
-                        mOpenCvCameraView.enableView();
-                        Log.d("Loading", "exit");
-                    }
-                    break;
-                    default: {
-                        super.onManagerConnected(status);
-                    }
-                    break;
-                }
-            }
-        };
-        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, this, mLoaderCallback);
+        new LoadOpenCV().execute();
 
 
         // facebook
@@ -338,27 +341,23 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //        });
 
 
-        textVoice = (TextView) findViewById(R.id.text);
-        textResultVoice = (TextView) findViewById(R.id.result);
-        popUp = (Button) findViewById(R.id.popupStart);
-        listenIndicator = (ImageView) findViewById(R.id.listen_indicator);
-        bubbleName = (TextView) findViewById(R.id.bubble_name);
-        aiResponseText = (TextView) findViewById(R.id.ai_response);
+        textVoice =         (TextView)  findViewById(R.id.text);
+        textResultVoice =   (TextView)  findViewById(R.id.result);
+        popUp =             (Button)    findViewById(R.id.popupStart);
+        listenIndicator =   (ImageView) findViewById(R.id.listen_indicator);
+        bubbleName =        (TextView)  findViewById(R.id.bubble_name);
+        aiResponseText =    (TextView)  findViewById(R.id.ai_response);
+
         final TextToSpeechHelper textToSpeechHelper = new TextToSpeechHelper(getApplicationContext());
-        commandExecuter = new CommandExecution(textToSpeechHelper, getApplicationContext());
+        commandExecuter = new CommandExecution(textToSpeechHelper, FdActivity.this);
+
 
         context = getApplicationContext(); // Needs to be set
-        VoiceRecognitionListener.getInstance().setListener(this); // Here we set the current listener
+//        VoiceRecognitionListener.getInstance().setListener(this); // Here we set the current listener
         Log.d("State", "Ready to listen");
         listenState = "Ready to listen";
 
 
-        popUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
 
         mOpenCvCameraView = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
@@ -402,7 +401,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         }
 
 
-        startListening(); // starts listening
+//        startListening(); // starts listening
 
     }
 
@@ -589,6 +588,8 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
         FdActivity.userEmail = userEmail;
     }
 
+    int opencvDisHeight = mOpenCvCameraView.getHeight();
+    int opencvDisWidth = mOpenCvCameraView.getWidth();
 
     private void moveSAR(Rect rect) {
         Point topLeft = rect.tl();
@@ -598,10 +599,7 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 
         Point center = new Point((topLeft.x + bottomRight.x) / 2, (topLeft.y + bottomRight.y) / 2);
 
-        Tutorial3View opencvDis = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
 
-        int opencvDisHeight = opencvDis.getHeight();
-        int opencvDisWidth = opencvDis.getWidth();
 
         Log.e("Screen Widthh", "" + opencvDisWidth + "");
         Log.e("Screen Heighttt", "" + opencvDisHeight + "");
@@ -663,7 +661,21 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
     }
 
     private int checkHorizontalGrid(double x, int opencvDisWidth) {
-        return (int) x / (opencvDisWidth / 5);
+        int tempGrid =  (int) x / (opencvDisWidth / 20);
+
+        if(tempGrid < 4){
+            return 0;
+        }else if(tempGrid < 8){
+            return 1;
+        }else if(tempGrid < 12){
+            return 2;
+        }
+        else if(tempGrid < 16){
+            return 3;
+        }else{
+            return 4;
+        }
+
     }
 
     @Override
@@ -917,6 +929,85 @@ public class FdActivity extends ListeningActivity implements CvCameraViewListene
 //            }
 //        }
 //    }
+private class LoadOpenCV extends AsyncTask<Void, Void, Void> {
 
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        // before making http calls
+
+    }
+
+    @Override
+    protected Void doInBackground(Void... arg0) {
+
+        VoiceRecognitionListener.getInstance().setListener(FdActivity.this); // Here we set the current listener
+        mLoaderCallback = new BaseLoaderCallback(FdActivity.this) {
+            @Override
+            public void onManagerConnected(int status) {
+                switch (status) {
+                    case LoaderCallbackInterface.SUCCESS: {
+
+                        Log.d("Loading", "enter");
+//                        fr = new PersonRecognizer(mPath);
+                        fr  = StartUpActivity.fr;
+
+                        String s = getResources().getString(R.string.Straininig);
+                        Toast.makeText(getApplicationContext(), s, Toast.LENGTH_LONG).show();
+//                        fr.load();
+
+                        try {
+                            // load cascade file from application resources
+                            InputStream is = getResources().openRawResource(R.raw.lbpcascade_frontalface);
+                            File cascadeDir = getDir("cascade", Context.MODE_PRIVATE);
+                            File mCascadeFile = new File(cascadeDir, "lbpcascade.xml");
+                            FileOutputStream os = new FileOutputStream(mCascadeFile);
+
+                            byte[] buffer = new byte[4096];
+                            int bytesRead;
+                            while ((bytesRead = is.read(buffer)) != -1) {
+                                os.write(buffer, 0, bytesRead);
+                            }
+                            is.close();
+                            os.close();
+
+                            mJavaDetector = new CascadeClassifier(mCascadeFile.getAbsolutePath());
+                            if (mJavaDetector.empty()) {
+                                Log.e(TAG, "Failed to load cascade classifier");
+                                mJavaDetector = null;
+                            } else
+                                Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
+
+                            //                 mNativeDetector = new DetectionBasedTracker(mCascadeFile.getAbsolutePath(), 0);
+
+                            cascadeDir.delete();
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
+                        }
+
+                        mOpenCvCameraView.enableView();
+                        Log.d("Loading", "exit");
+                    }
+                    break;
+                    default: {
+                        super.onManagerConnected(status);
+                    }
+                    break;
+                }
+            }
+        };
+        return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void result) {
+        super.onPostExecute(result);
+        OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_2_4_3, FdActivity.this, mLoaderCallback);
+        startListening(); // starts listening
+    }
+
+}
 
 }

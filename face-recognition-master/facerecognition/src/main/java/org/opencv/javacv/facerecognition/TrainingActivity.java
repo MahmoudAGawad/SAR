@@ -94,7 +94,7 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
     labels labelsFile;
 
     private TextView textVoice, textResultVoice;
-    CommandExecution commandExecuter;
+//    CommandExecution commandExecuter;
 
     String username;
 
@@ -200,7 +200,7 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
 
 
         final TextToSpeechHelper textToSpeechHelper = new TextToSpeechHelper(getApplicationContext());
-        commandExecuter = new CommandExecution(textToSpeechHelper, getApplicationContext());
+//        commandExecuter = new CommandExecution(textToSpeechHelper);
 
         ///////////////////////
         mTutorial3View = (Tutorial3View) findViewById(R.id.tutorial3_activity_java_surface_view);
@@ -262,8 +262,8 @@ public class TrainingActivity extends Activity implements CvCameraViewListener2 
     }
 
     private void checkResult(Result result) {
-        commandExecuter.setResult(result, this);
-        commandExecuter.executeCommand();
+//        commandExecuter.setResult(result, this);
+//        commandExecuter.executeCommand();
     }
 
     @Override

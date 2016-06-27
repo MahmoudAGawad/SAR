@@ -29,14 +29,14 @@ public class MainActivity extends ListeningActivity{
 
     private LinearLayout content;
     private TextView text , textResult;
-    CommandExecution commandExecuter;
+//    CommandExecution commandExecuter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         TextToSpeechHelper textToSpeechHelper = new TextToSpeechHelper(getApplicationContext());
-        commandExecuter = new CommandExecution(textToSpeechHelper , getApplicationContext());
+//        commandExecuter = new CommandExecution(textToSpeechHelper , getApplicationContext());
         setContentView(R.layout.activity_main);
 //        text = (TextView)findViewById(R.id.text);
 //        textResult = (TextView) findViewById(R.id.result);
@@ -150,8 +150,8 @@ public class MainActivity extends ListeningActivity{
 
 
     private void checkResult(Result result) {
-        commandExecuter.setResult(result , this);
-        commandExecuter.executeCommand();
+//        commandExecuter.setResult(result , this);
+//        commandExecuter.executeCommand();
     }
 
 
