@@ -18,6 +18,14 @@ int vertUpper = 720;
 int x, prevX;
 int y, prevY;
 
+int horiMinAngle = 0, horiMaxAngle = 100;
+int vertMinAngle = 0, vertMaxAngle = 100;
+
+int stepX = 12;
+int stepY = 3;
+int DELAY = 15;
+
+
 int curServoX = 110, curServoY = 45;
 void setup() { 
   Serial.begin(9600);
@@ -37,7 +45,7 @@ void loop() {
       if (mySerial.read() == 'Y') {
         y = mySerial.parseInt();
 
-        moveTurret();
+        track();
       }
     }
     else if(mySerial.read() == 'W'){
@@ -55,61 +63,9 @@ void loop() {
   
 }
 
-int horiMinAngle = 0, horiMaxAngle = 100;
-int vertMinAngle = 0, vertMaxAngle = 100;
 
-int stepX = 17;
-int stepY = 7;
-
-int DELAY = 15;
-
-void moveX(int x){
-  if(x == 1 && curServoX == 150)
-    return;
-
-  if(x == -1 && curServoX == 30)
-    return;
-  int cnt = stepX;
-  while(cnt > 0){
-
-    curServoX += x;
-    curServoX = min( 150, max(30, curServoX));
-
-    servoHorizontal.write(curServoX);
-
-    cnt--;
-    delay(DELAY);
-
-    SoftwareServo::refresh();
-  } 
-}
-
-void moveY(int y){
-
-  if(y == 1 && curServoY == 90)
-    return;
-
-  if(y == -1 && curServoY == 10)
-    return;
-
-  int cnt = stepY;
-  while(cnt > 0){
-
-    curServoY += y;
-    curServoY = min( 90, max(10, curServoY));
-
-    servoVertical.write(curServoY);
-
-    cnt--;
-    delay(DELAY);
-    SoftwareServo::refresh();
-  } 
-}
 
 void moveXY(int x, int y){
-
-
-
   int cntX = stepX;
   int cntY = stepY;
   
@@ -182,9 +138,7 @@ void moveXY(int x, int y){
 }
 
 
-int prevServoX = 0, prevServoY = 0;
-
-void moveTurret() {
+void track() {
   if (prevX != x || prevY != y) {
     prevX = x;
     prevY = y;
@@ -202,54 +156,20 @@ void moveTurret() {
     if(servoX <= 25){
       xx = 1;
     }
-    else if(servoX >= 55){
+    else if(servoX >= 45){
       xx = -1;
     }
 
     if(servoY <= 25){
       yy = 1; 
     }
-    else if(servoY >= 55){
+    else if(servoY >= 45){
       yy = -1; 
     }
     
     SoftwareServo::refresh();
     moveXY(xx, yy);
     SoftwareServo::refresh();
-    
-    
-    //    Serial.print(x);
-    //    Serial.write(' ');
-    //    Serial.print(xx);
-    //    Serial.print('\t');
-    //    Serial.print(y);
-    //    Serial.write(' ');
-    //    Serial.print(yy);
-    //    Serial.print('\t');
-    //    Serial.print('\t');
-
-    //    if(xx != 0){
-    //      moveX(xx);
-    //    }
-    //    if(yy != 0){
-    //      moveY(yy); 
-    //    }
-    
-    //        curServoX = min( 150, max(30, curServoX + xx));
-    //        curServoY = min( 90, max (10, curServoY + yy));
-    //    Serial.print(curServoX);
-    //    Serial.print(' ');
-    //    Serial.println(curServoY);
-    //        
-    //        if(prevServoX != curServoX){
-    //          servoHorizontal.write(curServoX);
-    //        }
-    //        if(prevServoY != curServoY){
-    //          servoVertical.write(curServoY);
-    //        }
-    //        prevServoX = curServoX;
-    //        prevServoY = curServoY;
-    //        delay(20);
   }
 }
 
